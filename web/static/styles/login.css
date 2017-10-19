@@ -1,0 +1,46 @@
+#username {
+    background-color: #ebebeb;
+    width: 250px;
+    height: 40px;
+}
+#password {
+    background-color: #ebebeb;
+    width: 250px;
+    height: 40px;
+}
+body {
+    background-image:url('../images/background.jpg');
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+#login {
+
+    background-color: #8b51f5;
+    color:#ffffff;
+    width: 250px;
+    height: 45px;
+}
+.parent {
+
+    margin-top: 100px;
+    margin-right: auto;
+    margin-bottom: 0;
+    margin-left: auto;
+    width: 350px;
+    height: 450px;
+    background: rgba(255,255,255,0.4);
+}
+.child {
+    padding: 50px;
+
+}
+#login {
+    width: 250px;
+    height: 45px;
+}
+.text {
+    margin-top: 10px;
+    margin-bottom: 40px;
+}
+
+
