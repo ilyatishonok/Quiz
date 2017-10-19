@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
-class User implements AdvancedUserInterface
+class User implements UserInterface
 {
     /**
      * @var int
@@ -22,7 +22,6 @@ class User implements AdvancedUserInterface
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
 
     /**
      * @var string
@@ -43,11 +42,6 @@ class User implements AdvancedUserInterface
      * @ORM\Column(name="enabled", type="boolean")
      */
     private $isEnabled = false;
-
-    public function setEnabled($enabled){
-        $this->isEnabled = $enabled;
-        return $this;
-    }
 
     /**
      * @var string
@@ -91,24 +85,21 @@ class User implements AdvancedUserInterface
      */
     private $middlename = null;
 
+    public function getSalt()
+    {
+        // TODO: Implement getSalt() method.
+    }
 
-    /**
-     * Get id
-     *
-     * @return int
-     */
+    public function isPasswordRequestNonExpired($ttl)
+    {
+        // TODO: Implement isPasswordRequestNonExpired() method.
+    }
+
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * Set username
-     *
-     * @param string $username
-     *
-     * @return User
-     */
     public function setUsername($username)
     {
         $this->username = $username;
@@ -124,25 +115,20 @@ class User implements AdvancedUserInterface
     public function setPlainPassword($password)
     {
         $this->plainPassword = $password;
+
+        return $this;
     }
 
-    /**
-     * Get username
-     *
-     * @return string
-     */
     public function getUsername()
     {
         return $this->username;
     }
 
-    /**
-     * Set email
-     *
-     * @param string $email
-     *
-     * @return User
-     */
+    public function setEnabled($enabled){
+        $this->isEnabled = $enabled;
+        return $this;
+    }
+
     public function setEmail($email)
     {
         $this->email = $email;
@@ -150,23 +136,11 @@ class User implements AdvancedUserInterface
         return $this;
     }
 
-    /**
-     * Get email
-     *
-     * @return string
-     */
     public function getEmail()
     {
         return $this->email;
     }
 
-    /**
-     * Set password
-     *
-     * @param string $password
-     *
-     * @return User
-     */
     public function setPassword($password)
     {
         $this->password = $password;
@@ -174,23 +148,11 @@ class User implements AdvancedUserInterface
         return $this;
     }
 
-    /**
-     * Get password
-     *
-     * @return string
-     */
     public function getPassword()
     {
         return $this->password;
     }
 
-    /**
-     * Set confirmationToken
-     *
-     * @param string $confirmationToken
-     *
-     * @return User
-     */
     public function setConfirmationToken($confirmationToken)
     {
         $this->confirmationToken = $confirmationToken;
@@ -220,7 +182,7 @@ class User implements AdvancedUserInterface
 
     public function eraseCredentials()
     {
-        // TODO: Implement eraseCredentials() method.
+        $this->plainPassword = null;
     }
 
     public function getRoles()
@@ -228,36 +190,11 @@ class User implements AdvancedUserInterface
         return array('ROLE_USER');
     }
 
-    public function getSalt()
-    {
-        // TODO: Implement getSalt() method.
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId(int $id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * Get confirmationToken
-     *
-     * @return string
-     */
     public function getConfirmationToken()
     {
         return $this->confirmationToken;
     }
 
-    /**
-     * Set firstname
-     *
-     * @param string $firstname
-     *
-     * @return User
-     */
     public function setFirstname($firstname)
     {
         $this->firstname = $firstname;
@@ -265,23 +202,11 @@ class User implements AdvancedUserInterface
         return $this;
     }
 
-    /**
-     * Get firstname
-     *
-     * @return string
-     */
     public function getFirstname()
     {
         return $this->firstname;
     }
 
-    /**
-     * Set lastname
-     *
-     * @param string $lastname
-     *
-     * @return User
-     */
     public function setLastname($lastname)
     {
         $this->lastname = $lastname;
@@ -289,23 +214,11 @@ class User implements AdvancedUserInterface
         return $this;
     }
 
-    /**
-     * Get lastname
-     *
-     * @return string
-     */
     public function getLastname()
     {
         return $this->lastname;
     }
 
-    /**
-     * Set middlename
-     *
-     * @param string $middlename
-     *
-     * @return User
-     */
     public function setMiddlename($middlename)
     {
         $this->middlename = $middlename;
@@ -313,11 +226,6 @@ class User implements AdvancedUserInterface
         return $this;
     }
 
-    /**
-     * Get middlename
-     *
-     * @return string
-     */
     public function getMiddlename()
     {
         return $this->middlename;

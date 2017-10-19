@@ -1,17 +1,26 @@
-{% if error %}
-    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-{% endif %}
+<html>
+    <head>
+     <link rel="stylesheet" href="{{ asset("/") }}">
+    </head>
 
-<form action="{{ path('login') }}" method="post">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="_username" value="{{ lastUsername }}" />
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="_password" />
+    <body>
+        {% if error %}
+            <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
 
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
+        <form action="{{ path('login') }}" method="post">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="_username" value="{{ lastUsername }}" />
 
-    <button style="background-color:green; color: white; text-align:center" type="submit">login</button>
-</form>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="_password" />
+
+            <input type="hidden" name="_csrf_token"
+                   value="{{ csrf_token('authenticate') }}"
+            >
+
+            <button style="background-color:green; color: white; text-align:center" type="submit">login</button>
+        </form>
+    </body>
+</html>
