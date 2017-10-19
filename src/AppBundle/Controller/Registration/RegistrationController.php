@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class RegistrationController extends Controller
 {
     /**
-     * @Route("/register")
+     * @Route("/register", name="register")
      */
     public function registerAction(Request $request, UserPasswordEncoderInterface $passwordEncoder) : Response
     {
@@ -25,8 +25,6 @@ class RegistrationController extends Controller
         if($form->isSubmitted() && $form->isValid()){
             $password = $passwordEncoder->encodePassword($user,$user->getPlainPassword());
             $user->setPassword($password);
-            $user->setLastname("Tishonok");
-            $user->setFirstname("Ilia");
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
