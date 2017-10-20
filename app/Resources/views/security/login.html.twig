@@ -25,9 +25,11 @@
                    value="{{ csrf_token('authenticate') }}"
             >
             <button id="login" class="btn btn-large btn-block btn-primary" type="submit">Sign in</button>
+            <input style="margin-left: 5px" type="checkbox" id="remember_me" name="_remember_me"  />
+            <label style="float: left" for="remember_me">Keep me logged in</label>
         </form>
         <div class="register-block">
-            <p>Don't have account yet? <a>Sign up</a></p>
+            <p>Don't have account yet? <a href="{{ path("registration") }}">Sign up</a></p>
         </div>
     </div>
 </div>
