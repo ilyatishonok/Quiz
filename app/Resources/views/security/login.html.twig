@@ -2,13 +2,11 @@
 <head>
     <link rel="stylesheet" href="{{ asset("static/styles/login.css") }}">
     <link rel="stylesheet" href="{{ asset("static/styles/bootstrap.css") }}">
+
 </head>
 <body>
-<div class="parent">
-    <div class="child">
-        <div class="text">
-        <h5 class="login-header" style="text-align: center"><p style="margin-right: 7px;">Sign in to access your account</p></h5>
-        </div>
+    <div class="parent">
+            <h5 class="login-header" style="text-align: center"><p style="margin-right: 7px;">Sign in to access your account</p></h5>
         <form action="{{ path('login') }}" method="post">
             <label for="username">Username:</label>
             <input type="text" id="username" name="_username" placeholder="type your username" value="{{ lastUsername }}" />
@@ -22,14 +20,13 @@
             </div>
             <a>Forgot password?</a>
             <input type="hidden" name="_csrf_token"
-                   value="{{ csrf_token('authenticate') }}"
-            >
+                   value="{{ csrf_token('authenticate') }}">
             <button id="login" class="btn btn-large btn-block btn-primary" type="submit">Sign in</button>
         </form>
         <div class="register-block">
             <p>Don't have account yet? <a>Sign up</a></p>
         </div>
+        </div>
     </div>
-</div>
 </body>
 </html>
