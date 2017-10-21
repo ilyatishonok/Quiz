@@ -1,58 +1,66 @@
+<html>
+<head>
+    <link rel="stylesheet" href="{{ asset("static/styles/register.css") }}">
+    <link rel="stylesheet" href="{{ asset("static/styles/bootstrap.css") }}">
 
-<form action="{{ path('registration') }}" method="POST">
+</head>
+    <body>
+        <div class="parent">
+                <h5 class="login-header" style="text-align: center"><p style="margin-right: 7px;">Sign in to access your account</p></h5>
+            <form action="{{ path('register') }}" method="POST">
+                    <div class="form-group">
+                        {{ form_label(form.email) }}
+                        {{ form_widget(form.email, { 'attr': {'class': 'form-control', 'placeholder': 'Insert email'} }) }}
+                        {{ form_errors(form.email, {'attr': {'class':'register-error'}}) }}
+                        <div class="help-block">Your email address is also used to log in, and verification</div>
+                    </div>
 
-    <div class="form-group">
-        {{ form_label(form.email) }}
-        {{ form_widget(form.email, { 'attr': {'class': 'form-control', 'placeholder': 'Insert email'} }) }}
-        {{ form_errors(form.email, {'attr': {'class':'register-error'}}) }}
-        <div class="help-block">Your email address is also used to log in, and verification</div>
-    </div>
+                    <div class="form-group">
+                        {{ form_label(form.username) }}
+                        {{ form_widget(form.username, { 'attr': {'class': 'form-control', 'placeholder': 'insert Username'} }) }}
+                        {{ form_errors(form.username, {'attr': {'class':'register-error'}}) }}
+                        <div class="help-block">Type username, that's help you to log in</div>
+                    </div>
 
-    <div class="form-group">
-        {{ form_label(form.username) }}
-        {{ form_widget(form.username, { 'attr': {'class': 'form-control', 'placeholder': 'insert Username'} }) }}
-        {{ form_errors(form.username, {'attr': {'class':'register-error'}}) }}
-        <div class="help-block">Type username, that's help you to log in</div>
-    </div>
+                    <div class="form-group">
+                        {{ form_label(form.plainPassword.first) }}
+                        {{ form_widget(form.plainPassword.first, { 'attr': {'class': 'form-control', 'placeholder': 'Insert password'} }) }}
+                        {{ form_errors(form.plainPassword.first, {'attr': {'class':'register-error'}}) }}
+                        <div class="help-block">Choose a password for your new account.</div>
+                    </div>
 
-    <div class="form-group">
-        {{ form_label(form.plainPassword.first) }}
-        {{ form_widget(form.plainPassword.first, { 'attr': {'class': 'form-control', 'placeholder': 'Insert password'} }) }}
-        {{ form_errors(form.plainPassword.first, {'attr': {'class':'register-error'}}) }}
-        <div class="help-block">Choose a password for your new account.</div>
-    </div>
+                    <div class="form-group">
+                        {{ form_label(form.plainPassword.second) }}
+                        {{ form_widget(form.plainPassword.second, { 'attr': {'class': 'form-control', 'placeholder': 'Confirm password'} }) }}
+                        {{ form_errors(form.plainPassword.second, {'attr': {'class':'register-error'}}) }}
+                        <div class="help-block">Type the password again. Passwords must match.</div>
+                    </div>
 
-    <div class="form-group">
-        {{ form_label(form.plainPassword.second) }}
-        {{ form_widget(form.plainPassword.second, { 'attr': {'class': 'form-control', 'placeholder': 'Confirm password'} }) }}
-        {{ form_errors(form.plainPassword.second, {'attr': {'class':'register-error'}}) }}
-        <div class="help-block">Type the password again. Passwords must match.</div>
-    </div>
+                    <div class="form-group">
+                        {{ form_label(form.firstname) }}
+                        {{ form_widget(form.firstname, { 'attr': {'class': 'form-control', 'placeholder': 'Type firstname'} }) }}
+                        {{ form_errors(form.firstname, {'attr': {'class':'register-error'}}) }}
+                        <div class="help-block">Type the your firstname.</div>
+                    </div>
 
-    <div class="form-group">
-        {{ form_label(form.firstname) }}
-        {{ form_widget(form.firstname, { 'attr': {'class': 'form-control', 'placeholder': 'Type firstname'} }) }}
-        {{ form_errors(form.firstname, {'attr': {'class':'register-error'}}) }}
-        <div class="help-block">Type the your firstname.</div>
-    </div>
+                    <div class="form-group">
+                        {{ form_label(form.lastname) }}
+                        {{ form_widget(form.lastname, { 'attr': {'class': 'form-control', 'placeholder': 'Type firstname'} }) }}
+                        {{ form_errors(form.lastname, {'attr': {'class':'register-error'}}) }}
+                        <div class="help-block">Type the your lastname.</div>
+                    </div>
 
-    <div class="form-group">
-        {{ form_label(form.lastname) }}
-        {{ form_widget(form.lastname, { 'attr': {'class': 'form-control', 'placeholder': 'Type firstname'} }) }}
-        {{ form_errors(form.lastname, {'attr': {'class':'register-error'}}) }}
-        <div class="help-block">Type the your lastname.</div>
-    </div>
+                    <div class="form-group">
+                        {{ form_label(form.middlename) }}
+                        {{ form_widget(form.middlename, { 'attr': {'class': 'form-control', 'placeholder': 'Type firstname'} }) }}
+                        {{ form_errors(form.firstname, {'attr': {'class':'register-error'}}) }}
+                        <div class="help-block">Type the your middlename.</div>
+                    </div>
 
-    <div class="form-group">
-        {{ form_label(form.middlename) }}
-        {{ form_widget(form.middlename, { 'attr': {'class': 'form-control', 'placeholder': 'Type firstname'} }) }}
-        {{ form_errors(form.firstname, {'attr': {'class':'register-error'}}) }}
-        <div class="help-block">Type the your middlename.</div>
-    </div>
-
-    {{ form_rest(form) }}
-    <div class="modal-footer">
-        <input type="hidden" name="isEmpty" value="">
-        <input class="btn btn-success" type="submit" value="{{ 'registration.submit'|trans }}">
-    </div>
-</form>
+                    {{ form_rest(form) }}
+                        <input type="hidden" name="isEmpty" value="">
+                        <input id="login" class="btn btn-large btn-block btn-primary" type="submit" value="{{ 'registration.submit'|trans }}">
+            </form>
+        </div>
+    </body>
+</html>
