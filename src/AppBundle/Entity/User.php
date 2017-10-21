@@ -9,7 +9,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * User
  *
- * @ORM\Table(name="user")
+ * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  * @UniqueEntity(
  *     fields={"email"},
@@ -22,6 +22,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class User implements UserInterface
 {
+
     /**
      * @var int
      *
@@ -93,6 +94,13 @@ class User implements UserInterface
      * @ORM\Column(name="middlename", type="string", length=255, nullable=true)
      */
     private $middlename = null;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="role", type="string", length=255)
+     */
+    private $role = "ROLE_USER";
 
     public function getSalt()
     {
@@ -196,7 +204,7 @@ class User implements UserInterface
 
     public function getRoles()
     {
-        return array('ROLE_USER');
+        return array($this->role);
     }
 
     public function getConfirmationToken()

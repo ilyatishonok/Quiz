@@ -4,6 +4,7 @@ namespace AppBundle\Controller\Registration;
 
 use AppBundle\Entity\User;
 use AppBundle\Form\UserType;
+use AppBundle\Service\TokenHandler\TokenGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,6 +26,13 @@ class RegistrationController extends Controller
         if($form->isSubmitted() && $form->isValid()){
             $password = $passwordEncoder->encodePassword($user,$user->getPlainPassword());
             $user->setPassword($password);
+
+            $tokenGenerator = new TokenGenerator();
+            $token = $tokenGenerator->createConfirmationToken();
+            $user->setConfirmationToken($token);
+
+            $mailer = $this->container->get("twig_mailer");
+            $mailer->sendConfirmationEmailMessage($user);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
@@ -50,7 +58,7 @@ class RegistrationController extends Controller
     }
 
     /**
-     * @Route("/confirm")
+     * @Route("/confirm", name="email_confirm")
      */
     public function confirmAction()
     {
