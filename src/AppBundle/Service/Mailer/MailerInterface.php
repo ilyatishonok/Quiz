@@ -1,11 +1,11 @@
 <?php
 
-namespace AppBundle\Service\Email;
+namespace AppBundle\Service\Mailer;
 
 use AppBundle\Entity\UserInterface;
 
 
-interface Mailer
+interface MailerInterface
 {
 
     public function sendConfirmationEmailMessage(UserInterface $user);
