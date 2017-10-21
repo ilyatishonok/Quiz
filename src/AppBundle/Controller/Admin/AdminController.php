@@ -23,6 +23,14 @@ class AdminController extends Controller
     }
 
     /**
+     * @Route("/admin")
+     */
+    public function showAdminPanel()
+    {
+        
+    }
+
+    /**
      * @Route("admin/create/question")
      */
     public function showQuestingCreationAction()
