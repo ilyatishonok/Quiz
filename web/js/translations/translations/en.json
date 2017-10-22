@@ -1,0 +1,3 @@
+{
+    "translations": {"en":{"translations":{"security.login.login_label":"Sign in to access your account","security.login.username":"Username","security.login.password":"Password","security.login.remember_me":"Remember me","security.login.submit":"Sign in","security.login.register":"Sign Up","security.login.register_question":"Don't have account yet?","security.login.resetting":"Forgot password","security.registration.registration_label":"Sign in to access your account"}}}
+}

@@ -1,0 +1,2 @@
+question_create:
+  error: "Can't create question without name"
