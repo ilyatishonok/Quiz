@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping\OneToMany as OneToMany;
  * @ORM\Table(name="questions")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\QuestionRepository")
  */
-class Question
+class Question implements \Serializable
 {
     public function __construct()
     {
@@ -41,14 +41,6 @@ class Question
     private $name;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="questionNumber", type="integer")
-     */
-    private $questionNumber;
-
-
-    /**
      * Get id
      *
      * @return int
@@ -56,6 +48,20 @@ class Question
     public function getId()
     {
         return $this->id;
+    }
+
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->name,
+            $this->answers,
+        ));
+    }
+
+    public function unserialize($serialized)
+    {
+        // TODO: Implement unserialize() method.
     }
 
     /**

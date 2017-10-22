@@ -2,6 +2,8 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Question;
+
 /**
  * QuestionRepository
  *
@@ -10,4 +12,24 @@ namespace AppBundle\Repository;
  */
 class QuestionRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function createQuestion(string $questionName) {
+        $entityManager = $this->getEntityManager();
+
+        $question = new Question();
+        $question->setName($questionName);
+
+        $entityManager->persist($question);
+        $entityManager->flush();
+
+        return $question;
+    }
+
+    public function loadQuestionsByRegular(string $regular){
+        return $this->createQueryBuilder("q")
+            ->where('q.name LIKE :regular')
+            ->setParameter("regular",$regular)
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult();
+    }
 }

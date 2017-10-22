@@ -105,28 +105,9 @@ class Answer
         return $this->isCorrect;
     }
 
-    /**
-     * Set questionId
-     *
-     * @param integer $questionId
-     *
-     * @return Answer
-     */
-    public function setQuestionId($questionId)
-    {
-        $this->questionId = $questionId;
-
-        return $this;
+    public function setQuestion($question){
+        $this->question = $question;
     }
 
-    /**
-     * Get questionId
-     *
-     * @return int
-     */
-    public function getQuestionId()
-    {
-        return $this->questionId;
-    }
 }
 
