@@ -19,7 +19,7 @@ class AdminController extends Controller
      */
     public function showQuizCreationAction()
     {
-
+        return $this->render("admin/quiz.html.twig");
     }
 
     /**
@@ -27,14 +27,15 @@ class AdminController extends Controller
      */
     public function showAdminPanel()
     {
-        
+        return $this->render("admin/panel.html.twig");
     }
 
     /**
      * @Route("admin/create/question")
      */
-    public function showQuestingCreationAction()
+    public function showQuestionCreationAction()
     {
+        return $this->render("admin/question.html.twig");
     }
 
     /**

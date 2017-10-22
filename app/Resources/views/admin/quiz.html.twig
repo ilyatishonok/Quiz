@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="quiz-creator">
+        <input class="quiz-name-input" placeholder="input quiz name">
+    </div>
+    <div class="question-handler">
+        <input class="question-search" placeholder="type question">
+    </div>
+    <button class="button">Click me</button>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset("static/scripts/admin/quiz.js?v1.2") }}"></script>
+{% endblock %}
+
+
+
