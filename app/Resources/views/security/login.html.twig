@@ -1,3 +1,5 @@
+{% trans_default_domain "translations" %}
+
 <html>
 <head>
     <link rel="stylesheet" href="{{ asset("static/styles/login.css") }}">
@@ -6,27 +8,27 @@
 </head>
 <body>
     <div class="parent">
-            <h5 class="login-header" style="text-align: center"><p style="margin-right: 7px;">Sign in to access your account</p></h5>
+            <h5 class="login-header" style="text-align: center"><p style="margin-right: 7px;">{{ 'security.login.login_label'|trans }}</p></h5>
         <form action="{{ path('login') }}" method="post">
-            <label for="username">Username:</label>
+            <label for="username">{{ 'security.login.username'|trans }}</label>
             <input type="text" id="username" name="_username" placeholder="type your username" value="{{ lastUsername }}" />
 
-            <label for="password">Password:</label>
+            <label for="password">{{ 'security.login.password'|trans }}</label>
             <input type="password" id="password" placeholder="type you password" name="_password" />
             <div class="error">
                 {% if error %}
                     <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                 {% endif %}
             </div>
-            <a>Forgot password?</a>
+            <a>{{ 'security.login.resetting'|trans }}?</a>
             <input type="hidden" name="_csrf_token"
                    value="{{ csrf_token('authenticate') }}">
-            <button id="login" class="btn btn-large btn-block btn-primary" type="submit">Sign in</button>
+            <button id="login" class="btn btn-large btn-block btn-primary" type="submit">{{ 'security.login.submit'|trans }}</button>
             <input style="margin-left: 5px" type="checkbox" id="remember_me" name="_remember_me"  />
-            <label style="float: left" for="remember_me">Keep me logged in</label>
+            <label style="float: left" for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
         </form>
         <div class="register-block">
-            <p>Don't have account yet? <a href="{{ path("registration") }}">Sign up</a></p>
+            <p>{{ 'security.login.register_question'|trans }} <a href="{{ path("registration") }}">{{ 'security.login.register'|trans }}</a></p>
         </div>
         </div>
     </div>
