@@ -9,9 +9,9 @@ body {
     margin: auto;
     margin-top: 100px;
     margin-bottom: 0;
-    width: 260px;
+    width: 350px;
     height: auto;
-    padding: 40px 40px 30px 50px;
+    padding: 40px 40px 30px 50px !important;
     background: rgba(0, 0, 0, 0.6);
 }
 
@@ -34,4 +34,11 @@ body {
 .login-header {
 
     font-size: 20px;
+}
+#login {
+
+    background-color: #8b51f5;
+    color: #ffffff;
+    width: 250px;
+    height: 45px;
 }
