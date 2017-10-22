@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% trans_default_domain "app" %}
+{% trans_default_domain "validators" %}
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset("static/styles/admin/question.css?v1.2") }}">
@@ -30,5 +30,7 @@
 {% endblock %}
 
 {% block javascripts %}
+    <script src="{{ asset('bundles/bazingajstranslation/js/translator.min.js') }}"></script>
+    <script src="{{ url('bazinga_jstranslation_js', { 'domain': 'translations' }) }}"></script>
     <script src="{{ asset("static/scripts/admin/question.js?v1.1") }}"></script>
 {% endblock %}
