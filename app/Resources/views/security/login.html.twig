@@ -11,10 +11,10 @@
             <h5 class="login-header" style="text-align: center"><p style="margin-right: 7px;">{{ 'security.login.login_label'|trans }}</p></h5>
         <form action="{{ path('login') }}" method="post">
             <label for="username">{{ 'security.login.username'|trans }}</label>
-            <input type="text" id="username" name="_username" placeholder="type your username" value="{{ lastUsername }}" />
+            <input class="form-control" type="text" id="username" name="_username" placeholder="type your username" value="{{ lastUsername }}" />
 
             <label for="password">{{ 'security.login.password'|trans }}</label>
-            <input type="password" id="password" placeholder="type you password" name="_password" />
+            <input class="form-control" type="password" id="password" placeholder="type you password" name="_password" />
             <div class="error">
                 {% if error %}
                     <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -23,7 +23,7 @@
             <a>{{ 'security.login.resetting'|trans }}?</a>
             <input type="hidden" name="_csrf_token"
                    value="{{ csrf_token('authenticate') }}">
-            <button id="login" class="btn btn-large btn-block btn-primary" type="submit">{{ 'security.login.submit'|trans }}</button>
+            <button id="login" class="btn btn-large" type="submit">{{ 'security.login.submit'|trans }}</button>
             <input style="margin-left: 5px" type="checkbox" id="remember_me" name="_remember_me"  />
             <label style="float: left" for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
         </form>
@@ -31,6 +31,5 @@
             <p>{{ 'security.login.register_question'|trans }} <a href="{{ path("registration") }}">{{ 'security.login.register'|trans }}</a></p>
         </div>
         </div>
-    </div>
 </body>
 </html>

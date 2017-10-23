@@ -1,7 +1,7 @@
 body {
     background-image:url('../images/background.jpg');
     background-repeat: no-repeat;
-    background-size: 100%;
+    background-size: cover;
 }
 
 .parent {
@@ -9,7 +9,7 @@ body {
     margin: auto;
     margin-top: 100px;
     margin-bottom: 0;
-    width: 260px;
+    width: 350px ;
     height: auto;
     padding: 40px 40px 30px 50px;
     background: rgba(0, 0, 0, 0.6);
@@ -29,6 +29,13 @@ body {
 .error {
     color: #942a25;
     font-size: 17px;
+}
+
+#login {
+    background-color: #8b51f5;
+    color: #ffffff;
+    width: 250px;
+    height: 45px;
 }
 
 .login-header {
