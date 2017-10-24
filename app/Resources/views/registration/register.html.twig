@@ -14,7 +14,7 @@
                         {{ form_label(form.email) }}
                         {{ form_widget(form.email, { 'attr': {'class': 'form-control', 'placeholder': 'Insert email'} }) }}
                         {{ form_errors(form.email, {'attr': {'class':'register-error'}}) }}
-                        <div class="help-block">Your email address is also used to log in, and verification</div>
+                        <div class="help-block">{{ 'security.registration.help_blocks.email'|trans }}</div>
                     </div>
 
                     <div class="form-group">
@@ -61,7 +61,7 @@
 
                     {{ form_rest(form) }}
                         <input type="hidden" name="isEmpty" value="">
-                        <input id="login" class="btn btn-large btn-block btn-primary" type="submit" value="{{ 'registration.submit'|trans }}">
+                        <input id="login" class="btn btn-large" type="submit" value="{{ 'registration.submit'|trans }}">
             </form>
         </div>
     </body>
