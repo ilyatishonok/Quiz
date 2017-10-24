@@ -12,6 +12,7 @@
 }
 
 .question-name-input{
+    color: black;
     border-radius: 6px;
     width: 80%;
     outline: none;
@@ -24,6 +25,18 @@
     min-height: 535px;
 }
 
+.answer-name-input{
+    color: black;
+}
+
+
+
+.add-answer{
+    color: white;
+    background: #8b51f5;
+}
+
+
 .answer-handler{
     display: none;
     background-color: black;
@@ -31,9 +44,57 @@
     height: 100px;
 }
 
+.add-answer{
+    display: block;
+}
+
+.question-submit-wrapper{
+    margin-top: 10px;
+}
+
+.answer-add-wrapper{
+    margin-top: 10px;
+}
+
+.answer-info{
+    color: gray;
+}
+
+.answer{
+    list-style: none;
+    margin-top: 8px;
+    border: 1px solid black;
+    border-radius: 7px;
+    box-shadow: 0px 0px 37px 0px rgba(91,66,130,1);
+    width: 100%;
+}
+
+.answer-wrapper{
+    border-radius: 10px;
+    border: 1px solid black;
+    padding: 10px;
+    box-shadow: 0 0 10px black;
+    margin-top: 10px;
+}
+
+.answers{
+    padding: 0px;
+    width: 100%;
+    text-align: left;
+}
+
+.answer{
+    padding: 5px;
+    padding-top: 4px;
+}
+
 .answer-handler{
     margin: 0 auto;
     margin-top: 50px;
+}
+
+.errors{
+    color: red;
 }
 
 .header{
@@ -50,12 +111,19 @@
 }
 
 .selected{
-    background-color: lawngreen;
+    border: 1px solid limegreen;
+    box-shadow: 0 0 10px #32cd32;
+    background-color: limegreen;
     cursor: pointer;
 }
 
 .question-header{
     font-size: 40px;
+}
+
+.submit-question{
+    color: white;
+    background-color: #8b51f5;
 }
 
 .question-name{

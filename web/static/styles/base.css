@@ -6,14 +6,15 @@ body {
 }
 
 .color_navbar {
-
     background-color: rgba(0, 0, 0, 0.6) !important;
     border-color: rgba(0, 0, 0, 0.6) !important;
 }
 
+.content{
+    min-height: 600px;
+}
+
 .footer {
-    position: absolute;
-    bottom: 0;
     width: 100%;
     height: 50px;
     background-color: rgba(0, 0, 0, 0.6);

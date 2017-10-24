@@ -3,43 +3,64 @@ $(document).ready(function() {
     let questionName;
     let selectedAnswer;
     let answers = {};
+    let error = false;
 
   $(".answer-name-input").keydown((event)=>{
         if(event.keyCode === 13){
             let answer = $(".answer-name-input").val();
             if(answer){
-                  $(".answers").append("<div class='answer'>" + answer + "</div>");
+              if(!answers.hasOwnProperty(answer.trim())){
+                  $(".answers").append("<li class='answer'>" + answer + "</li>");
                   answers[answer] = false;
+                  $(".answer-name-input").css("display","none");
+                  $(".answer-name-input").val("");
+                  if(!answers.length)
+                  {
+                    $(".answer-info").html("");
+                  }
+                  if(error === true){
+                    $(".errors").html();
+                  }
+              }
+              else{
+                error = true;
+                $(".errors").html(Translator.trans("errors.answer_duplicate"));
+              }
             } 
         }
   });
 
+  $(".add-answer").click(()=>{
+    $(".answer-name-input").css("display","block");
+  });
+
   $(".submit-question").click(()=>{
-
-    let questionName = $(".question-name-input").val();
-    let data = {
-        questionName: questionName,
-        answers: answers
-    }
-
-
-    let jsonData = JSON.stringify(data);
-
-    $.ajax({
-      url: "/app_dev.php/admin/api/create/question",
-      data: jsonData,
-      dataType: "json",
-      type: "POST",
-      success: (response)=>{
-        if(response.success){
-          console.log(true);
-        }
-        else{
-          console.log(response);
-          console.log(false);
-        }
+    if(checkQuestionForm()){
+      let questionName = $(".question-name-input").val();
+      let data = {
+          questionName: questionName,
+          answers: answers
       }
-    });
+
+
+      let jsonData = JSON.stringify(data);
+
+      $.ajax({
+        url: "/app_dev.php/admin/api/create/question",
+        data: jsonData,
+        dataType: "json",
+        type: "POST",
+        success: (response)=>{
+          if(response.success){
+            console.log(true);
+          }
+          else{
+            console.log(response);
+            console.log(false);
+          }
+        }
+      });
+    }
   });
 
   $(".content").on("click", ".answer", (event)=>{
@@ -58,4 +79,17 @@ $(document).ready(function() {
 
   });
 
-});
+  function checkQuestionForm(){
+    if(!$(".question-name-input").val()){
+      $(".errors").html(Translator.trans("errors.question_name"));
+      return false;
+    }
+    else if(!selectedAnswer){
+        error = true;
+        $(".errors").html(Translator.trans("errors.select_answer"));
+        return false;
+    }
+    return true;
+  }
+
+})
