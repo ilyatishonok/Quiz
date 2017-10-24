@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace AppBundle\Controller\Api;
 
 use AppBundle\Entity\Question;
+use AppBundle\Entity\Quiz;
 use AppBundle\Repository\AnswerRepository;
 use AppBundle\Repository\QuestionRepository;
+use AppBundle\Repository\QuizRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -20,11 +22,18 @@ class ApiController extends Controller
 {
 
     /**
-     * @Route("/api/check-question/{id}")
+     * @Route("/admin/api/create/quiz")
      */
-    public function checkQuestionAction(string $id) : Response
+    public function createQuizAction(Request $request) : Response
     {
+        $content = $request->getContent();
+        if(!empty($content)){
+            $data = json_decode($content,true);
+            $quizRepository = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\Quiz");
+            $quizRepository->createQuiz($data['quizName'], $data['questions']);
+            return new JsonResponse("Hello world");
 
+        }
     }
 
 
@@ -45,7 +54,7 @@ class ApiController extends Controller
             $question = $questionRepository->createQuestion($data['questionName']);
 
             $answerRepository->saveAnswers($data['answers'], $question);
-            return new JsonResponse("All work");
+            return new JsonResponse(array("id" => $question->getId()));
         }
     }
 

@@ -2,7 +2,12 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\ManyToMany as ManyToMany;
+use Doctrine\ORM\Mapping\JoinTable as JoinTable;
+use Doctrine\ORM\Mapping\JoinColumn as JoinColumn;
+use function Sodium\add;
 
 /**
  * Quiz
@@ -12,6 +17,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Quiz
 {
+
+    public function __construct()
+    {
+        $this->questions = new ArrayCollection();
+    }
+
     /**
      * @var int
      *
@@ -24,23 +35,34 @@ class Quiz
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, unique=true)
+     * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="firstQuestionID", type="integer", length=255)
+     * Many User have Many Phonenumbers.
+     * @ManyToMany(targetEntity="Question")
+     * @JoinTable(name="quizes_questions",
+     *      joinColumns={@JoinColumn(name="quiz_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@JoinColumn(name="question_id", referencedColumnName="id", unique=true)}
+     *      )
      */
-    private $firstQuestionID;
+    private $questions;
+
+    public function getQustions(){
+        return $this->questions;
+    }
+
+    public function getQuestion($position){
+        return $this->questions[$position];
+    }
 
     /**
      * @var string
      *
-     * @ORM\Column(name="lastQuestionID", type="integer", length=255)
+     * @ORM\Column(name="leader", type="string", nullable=true)
      */
-    private $lastQuestionID;
+    private $leader;
 
     /**
      * @var string
@@ -105,15 +127,15 @@ class Quiz
         return $this;
     }
 
+    public function addQuestion($question){
+        $this->questions->add($question);
+    }
+
     /**
      * Get firstQuestionID
      *
      * @return string
      */
-    public function getFirstQuestionID()
-    {
-        return $this->firstQuestionID;
-    }
 
     /**
      * Set lastQuestionID
@@ -134,10 +156,6 @@ class Quiz
      *
      * @return string
      */
-    public function getLastQuestionID()
-    {
-        return $this->lastQuestionID;
-    }
 
     /**
      * Set countOfQuestions

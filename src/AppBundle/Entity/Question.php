@@ -50,6 +50,10 @@ class Question implements \Serializable
         return $this->id;
     }
 
+    public function getAnswers(){
+        return $this->answers;
+    }
+
     public function serialize()
     {
         return serialize(array(
@@ -58,6 +62,11 @@ class Question implements \Serializable
             $this->answers,
         ));
     }
+
+    public function setId($id){
+        $this->id = $id;
+    }
+
 
     public function unserialize($serialized)
     {

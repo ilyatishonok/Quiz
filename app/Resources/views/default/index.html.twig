@@ -1,7 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    
+    {% for question in questions %}
+        <p>{{ question }}</p>
+    {% endfor %}
 {% endblock %}
 
 {% block stylesheets %}

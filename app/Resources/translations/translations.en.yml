@@ -11,4 +11,5 @@ security:
 
     registration:
         registration_label: "Sign in to access your account"
-
+        email: "Email:"
+        username: "Username:"
