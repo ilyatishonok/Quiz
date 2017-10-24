@@ -91,7 +91,7 @@ class Answer
         return $this;
     }
 
-    public function getQuestion() : Question{
+    public function getQuestion() : Question {
         return $this->question;
     }
 

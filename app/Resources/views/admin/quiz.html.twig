@@ -8,10 +8,31 @@
         <input class="question-search" placeholder="type question">
     </div>
     <button class="button">Click me</button>
+    <button class="question-submit">Add Question</button>
+    <div class="question-form">
+        <div class="container content">
+            <div class="col-md-6 col-md-offset-5 question-handler">
+                <div class="col-lg-12 content">
+                    <h1 class="question-header">Question name</h1>
+                    <input class="question-name-input" placeholder="input question name">
+                    <button class="submit-question">Submit</button>
+                    <p>Answers:</p>
+                    <div class="col-md-6 answers">
+
+                    </div>
+                    <input class="answer-name-input" placeholder="input answer name">
+                </div>
+            </div>
+            <div class="wrapper">
+                <div class="col-md-6 col-md-offset-5 answer-handler">
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block javascripts %}
-    <script src="{{ asset("static/scripts/admin/quiz.js?v1.2") }}"></script>
+    <script src="{{ asset("static/scripts/admin/quiz.js?v1.3") }}"></script>
 {% endblock %}
 
 

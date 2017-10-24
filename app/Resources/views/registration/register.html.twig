@@ -8,7 +8,7 @@
 </head>
     <body>
         <div class="parent">
-                <h5 class="login-header" style="text-align: center"><p style="margin-right: 7px;">Sign in to access your account</p></h5>
+                <h5 class="login-header" style="text-align: center"><p style="margin-right: 7px;">{{ 'security.registration.registration_label'|trans }}</p></h5>
             <form action="{{ path('registration') }}" method="POST">
                     <div class="form-group">
                         {{ form_label(form.email) }}

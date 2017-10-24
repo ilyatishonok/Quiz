@@ -31,10 +31,25 @@ class StartedQuiz
     private $startTime;
 
     /**
-     * @OneToOne(targetEntity="Question")
-     * @JoinColumn(name="lastquestion_id", referencedColumnName = "id")
+     * @var integer
+     *
+     * @ORM\Column(name="quiz_id", type="integer")
      */
-    private $lastQuestion;
+    private $quizId;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="question_number", type="integer")
+     */
+    private $lastQuestionNumber;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="user_id", type="integer")
+     */
+    private $userId;
 
     /**
      * Get id
