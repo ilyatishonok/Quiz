@@ -10,7 +10,7 @@ $(document).ready(function() {
             let answer = $(".answer-name-input").val();
             if(answer){
               if(!answers.hasOwnProperty(answer.trim())){
-                  $(".answers").append("<li class='answer'>" + answer + "</li>");
+                  $(".answers").append("<li class='answer'>" + answer + "<i class='fa fa-trash-o icon' aria-hidden='true'></i></li>");
                   answers[answer] = false;
                   $(".answer-name-input").css("display","none");
                   $(".answer-name-input").val("");
@@ -51,14 +51,11 @@ $(document).ready(function() {
         dataType: "json",
         type: "POST",
         success: (response)=>{
-          if(response.success){
-            console.log(true);
-          }
-          else{
-            console.log(response);
-            console.log(false);
-          }
-        }
+
+        },
+        error: (response)=>{
+          $(".errors").html(response.responseText);
+        } 
       });
     }
   });

@@ -6,9 +6,12 @@ namespace AppBundle\Controller\Api;
 
 use AppBundle\Entity\Question;
 use AppBundle\Entity\Quiz;
+use AppBundle\Exceptions\AnswerException;
+use AppBundle\Exceptions\QuestionException;
 use AppBundle\Repository\AnswerRepository;
 use AppBundle\Repository\QuestionRepository;
 use AppBundle\Repository\QuizRepository;
+use AppBundle\Service\Question\QuestionManager;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -43,25 +46,35 @@ class ApiController extends Controller
     public function createQuestionAction(Request $request)
     {
         $content = $request->getContent();
-        if(!empty($content)){
+        if(!empty($content))
+        {
             $data = json_decode($content,true);
 
-            /** @var QuestionRepository $questionRepository */
-            $questionRepository = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\Question");
-            /** @var AnswerRepository $answerRepository */
-            $answerRepository = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\Answer");
+            if(isset($data['questionName']) && isset($data['answers']))
+            {
+                try {
+                    $questionManager = $this->container->get("question_manager");
+                    $questionManager->createQuestion($data['questionName'], $data['answers']);
+                    return new Response("The question was created!");
+                } catch (QuestionException $exception) {
+                    return new Response($exception->getMessage(), 400);
+                } catch (AnswerException $exception) {
+                    return new Response($exception->getMessage(), 400);
+                }
+            } else {
+                return new Response("Bad request data!",400);
+            }
 
-            $question = $questionRepository->createQuestion($data['questionName']);
-
-            $answerRepository->saveAnswers($data['answers'], $question);
-            return new JsonResponse(array("id" => $question->getId()));
         }
+
+        return new Response("Bad request data!", 400);
     }
 
     /**
      * @Route("/api/questions");
      */
-    public function getQuestionsAction(Request $request){
+    public function getQuestionsAction(Request $request)
+    {
         $regular = $request->get("regular");
         $entityManager = $this->getDoctrine()->getManager();
 

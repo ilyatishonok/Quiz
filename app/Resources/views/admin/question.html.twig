@@ -3,10 +3,12 @@
 {% trans_default_domain "translations" %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset("static/styles/admin/question.css?v1.37") }}">
+    <link rel="stylesheet" href="{{ asset("static/styles/admin/question.css?v1.39") }}">
+    <link rel="stylesheet" href="{{ asset("static/styles/font-awesome/css/font-awesome.min.css") }}">
 {% endblock %}
 
 {% block body %}
+    <img class="preloader" src="{{ asset("static/images/Gear.svg") }}">
     <div class="container content">
         <div class="col-8 align-self-center question-handler">
             <div class="col content">
@@ -35,5 +37,5 @@
 {% block javascripts %}
     <script src="{{ asset('bundles/bazingajstranslation/js/translator.min.js') }}"></script>
     <script src="{{ url('bazinga_jstranslation_js', { 'domain': 'translations' }) }}"></script>
-    <script src="{{ asset("static/scripts/admin/question.js?v1.25") }}"></script>
+    <script src="{{ asset("static/scripts/admin/question.js?v1.29") }}"></script>
 {% endblock %}
