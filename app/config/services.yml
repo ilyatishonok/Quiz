@@ -35,7 +35,9 @@ services:
       class: AppBundle\Service\Mailer\TwigMailer
       arguments: ["@mailer","@router","@twig", "%mailer_user%","%mailer_template_name%"]
       public: true
-
+    question_manager:
+      class: AppBundle\Service\Question\QuestionManager
+      public: true
     # add more services, or override services that need manual wiring
     # AppBundle\Service\ExampleService:
     #     arguments:

@@ -13,3 +13,19 @@ security:
         registration_label: "Sign in to access your account"
         email: "Email:"
         username: "Username:"
+
+
+admin:
+  question:
+    question_placeholder: "input question"
+    answer_placeholder: "input answer and type enter"
+    question_name: "Question adding:"
+    answer_adding: "Add Answer"
+    question_create: "Create Question"
+    answer_info: "If you want to add answer click to button below."
+
+
+errors:
+  question_name: "You haven't choose question name!"
+  select_answer: "You haven't select any answer!"
+  answer_duplicate: "This answer is already exist!"

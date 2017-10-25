@@ -18,8 +18,7 @@ class QuestionRepository extends \Doctrine\ORM\EntityRepository
         $question = new Question();
         $question->setName($questionName);
 
-        $entityManager->persist($question);
-        $entityManager->flush();
+        $entityManager->persist($question);;
 
         return $question;
     }
