@@ -31,9 +31,6 @@ class RegistrationController extends Controller
             $token = $tokenGenerator->createConfirmationToken();
             $user->setConfirmationToken($token);
 
-            $mailer = $this->container->get("twig_mailer");
-            $mailer->sendConfirmationEmailMessage($user);
-
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
