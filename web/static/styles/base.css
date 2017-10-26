@@ -22,11 +22,13 @@ body {
     background-color: rgba(0, 0, 0, 0.6) !important;
     border-color: rgba(0, 0, 0, 0.6) !important;
     width: 12rem;
+    height: 22rem;
 }
 .header {
     background-color: rgba(0, 0, 0, 0.6)!important;
 }
 
 .size {
-    width: 9rem
+    width: 9rem;
+
 }
