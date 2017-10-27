@@ -1,27 +1,19 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="card panel">
-        <div class="card-body dark bg-dark expand-lg ">
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                    <button class="btn btn-sm align-middle btn-outline-secondary size" type="button"><a class="nav-link text-white" href="#">Create Question</a></button>
-                </li>
-                <li class="nav-item">
+    <div class=" display-table ">
+        <div class="display-table-row">
+            <div class="col-md-2 col-sm-1 hidden-xs display-table-cell  box panel" id="navigation">
 
-                    <button class="btn btn-sm align-middle btn-outline-secondary size" type="button"><a class="nav-link text-white" href="#">Create Quiz</a></button>
-                </li>
-                <li class="nav-item">
-
-                    <button class="btn btn-sm align-middle btn-outline-secondary size" type="button"><a class="nav-link text-white" href="#">Entity Manager</a></button>
-                </li>
-                <li class="nav-item">
-
-                    <button class="btn btn-sm align-middle btn-outline-secondary size" type="button"><a class="nav-link text-white" href="#">Quiz Manager</a></button>
-                </li>
-                <li class="nav-item">
-                </li>
-            </ul>
+                <div class="navi">
+                    <ul>
+                        <li><a href="#">Create Question</a></li>
+                        <li><a href="#"><span>Create Quiz</span></a></li>
+                        <li><a href="#"><span>Entity Manager</span></a></li>
+                        <li><a href="#"><span>Quiz Manager</span></a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

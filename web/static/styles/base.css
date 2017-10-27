@@ -5,8 +5,8 @@ body {
 }
 
 .color_navbar {
-    background-color: rgba(0, 0, 0, 0.6) !important;
-    border-color: rgba(0, 0, 0, 0.6) !important;
+    background-color: rgba(91,66,130,1) !important;
+    border-color: rgba(91,66,130,1) !important;
 }
 
 .content{
@@ -18,12 +18,6 @@ body {
     background-color: rgba(0, 0, 0, 0.6)!important;
 }
 
-.panel {
-    background-color: rgba(0, 0, 0, 0.6) !important;
-    border-color: rgba(0, 0, 0, 0.6) !important;
-    width: 12rem;
-    height: 22rem;
-}
 .header {
     background-color: rgba(0, 0, 0, 0.6)!important;
 }
@@ -32,3 +26,60 @@ body {
     width: 9rem;
 
 }
+
+.color {
+    background-color: #8b51f5 !important;
+}
+
+li,ul{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#navigation {
+    background: #0e1a35;
+}
+
+#navigation {
+    padding: 0;
+}
+
+.display-table {
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.display-table-row {
+    display: table-row;
+    height: 100%;
+}
+
+.display-table-cell {
+    display: table-cell;
+    float: none;
+    height: 100%;
+}
+
+.navi a {
+    border-bottom: 1px solid #0d172e;
+    border-top: 1px solid #0d172e;
+    color: #ffffff;
+    display: block;
+    font-size: 17px;
+    font-weight: 500;
+    padding: 28px 20px;
+    text-decoration: none;
+}
+
+.navi a:hover {
+    background: #122143 none repeat scroll 0 0;
+    border-left: 5px solid #8b51f5;
+    display: block;
+    padding-left: 15px;
+}
+
+
+
+
