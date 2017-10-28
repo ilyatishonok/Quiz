@@ -38,6 +38,24 @@ class ApiController extends Controller
         }
     }
 
+    public function checkAnswerAction(Request $request){
+        if($request->isXmlHttpRequest()) {
+            $answerId = $request->get("answerId");
+            if(isset($answerId)){
+                $answerRepository = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\Answer");
+                $answer = $answerRepository->findOneBy(array("id"=>$answerId));
+                if($answer){
+                    return new JsonResponse(array("correct"=>$answer->isCorrect()));
+                } else {
+                    return new Response("Bad request data!", 400);
+                }
+            } else {
+                return new Response("Bad request data!",400);
+            }
+        } else {
+            return new Response("XMLHttpRequest required!",400);
+        }
+    }
 
     /**
      * @Route("/admin/api/question");

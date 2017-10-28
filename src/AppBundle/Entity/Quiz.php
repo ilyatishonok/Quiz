@@ -78,6 +78,12 @@ class Quiz
      */
     private $countOfPlayers;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="enabled", type="boolean")
+     */
+    private $enabled;
 
     /**
      * Get id
@@ -87,6 +93,10 @@ class Quiz
     public function getId()
     {
         return $this->id;
+    }
+
+    public function isEnable(){
+        return $this->enabled;
     }
 
     /**

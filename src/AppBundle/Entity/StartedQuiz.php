@@ -4,7 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn as JoinColumn;
-use Doctrine\ORM\Mapping\OneToOne as OneToOne;
+use Doctrine\ORM\Mapping\ManyToOne as ManyToOne;
 
 /**
  * StartedQuiz
@@ -31,25 +31,22 @@ class StartedQuiz
     private $startTime;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="quiz_id", type="integer")
+     * @ManyToOne(targetEntity="Quiz")
+     * @JoinColumn(name="quiz_id", referencedColumnName="id")
      */
-    private $quizId;
+    private $quiz;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="question_number", type="integer")
+     * @ManyToOne(targetEntity="User")
+     * @JoinColumn(name="user_id", referencedColumnName="id")
      */
-    private $lastQuestionNumber;
+    private $user;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="user_id", type="integer")
+     * @ManyToOne(targetEntity="WiredQuestion")
+     * @JoinColumn(name="last_question_id", referencedColumnName="id")
      */
-    private $userId;
+    private $lastQuestion;
 
     /**
      * Get id
@@ -61,6 +58,23 @@ class StartedQuiz
         return $this->id;
     }
 
+    public function setQuiz(Quiz $quiz){
+        $this->quiz = $quiz;
+
+        return $this;
+    }
+
+    public function setLastQuestion(WiredQuestion $question){
+        $this->lastQuestion = $question;
+
+        return $this;
+    }
+
+    public function setUser($user){
+        $this->user = $user;
+
+        return $this;
+    }
 
     /**
      * Set startTime
@@ -86,28 +100,10 @@ class StartedQuiz
         return $this->startTime;
     }
 
-    /**
-     * Set lastQuestion
-     *
-     * @param integer $lastQuestion
-     *
-     * @return StartedQuiz
-     */
-    public function setLastQuestion($lastQuestion)
-    {
-        $this->lastQuestion = $lastQuestion;
 
-        return $this;
+    public function getLastQuestion(){
+        return $this->lastQuestion->getQuestion();
     }
 
-    /**
-     * Get lastQuestion
-     *
-     * @return int
-     */
-    public function getLastQuestion()
-    {
-        return $this->lastQuestion;
-    }
 }
 
