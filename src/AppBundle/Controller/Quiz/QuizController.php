@@ -12,7 +12,7 @@ class QuizController extends Controller
      */
     public function showQuizAction(string $id)
     {
-
+        $quizRepository = $this->getDoctrine()->getManager()->getRepository("AppBundle");
     }
 
 }

@@ -4,7 +4,30 @@ $(document).ready(function () {
     let selectedAnswer;
     let answers = {};
 
-    let questions = [];
+    let questionIds = [];
+
+    $(".questions").sortable().bind('sortupdate',function(){
+        let questions = $(".question").map(function(){
+            return $(this).data("id");
+        }).get();
+        
+        let newQuestionIds = [];
+        let isCorrect = true;
+
+        questions.forEach((element,index,array)=>{
+            if(questionIds.indexOf(element) !== -1){
+                newQuestionIds.push(element);
+            } else {
+                isCorrect = false;
+            }
+        });
+
+        if(isCorrect === true){
+            questionIds = newQuestionIds;
+        } else {
+            console.error("Incorrect data-id!");
+        }
+    });
 
     $(".question-search").autocomplete({
         source: function (request,response) {
@@ -15,80 +38,41 @@ $(document).ready(function () {
                 }
             })
         },
+        select: (event, ui)=>{
+            console.log(ui.item.value);
+            $.ajax({
+                url: "/app_dev.php/admin/api/question?questionName=" + ui.item.value,
+                success: (response)=>{
+                    if(questionIds.indexOf(response.id) !== -1){
+                        $(".errors").html("This is already exist!");
+                        return;
+                    }
+                    questionIds.push(response.id);
+                    
+                    renderQuestion(response.name,response.id,response.answers);
+                }
+            })
+        },
         minLength: 1
     });
 
-    $(".content").on("click", ".answer", (event)=>{
-      let target = event.target;
 
-      $(target).toggleClass("selected");
-      $(selectedAnswer).toggleClass("selected");
-
-      if(selectedAnswer){      
-        answers[$(selectedAnswer).html()] = false;
-      }
-
-      answers[$(target).html()] = true;
-
-      selectedAnswer = target;
-
-     });
-
-    $(".submit-question").click(()=>{
-        let questionName = $(".question-name-input").val();
-        let data = {
-            questionName: questionName,
-            answers: answers
-        }
-
-
-        let jsonData = JSON.stringify(data);
-
-        $.ajax({
-            url: "/app_dev.php/admin/api/create/question",
-            data: jsonData,
-            dataType: "json",
-            type: "POST",
-            success: (response)=>{
-                console.log(response.id);
-                questions.push(response.id);
-            } 
-        });
-    });
-
-    $(".button").click(()=>{
-        let quizName = $(".quiz-name-input").val();
-        let data = {
-            quizName: quizName,
-            questions: questions
-        }
-
-        let jsonData = JSON.stringify(data);
-
-        $.ajax({
-            url: "/app_dev.php/admin/api/create/quiz",
-            data: jsonData,
-            dataType: "json",
-            type: "POST",
-            success: (response)=>{
-                console.log(response);
+    function renderQuestion(questionName, questionId ,answers){
+        let html = "<li data-id=\'" + questionId + "\' class='question' draggable='true'><div class='question-header'>"
+                        + questionName + "</div><ul class='question-answers'>";
+                    
+        for(let key in  answers){
+            if(answers[key] === true){
+                html += "<li class='question-answer selected'>" + key + "</li>";
+            } else {
+                html += "<li class='question-answer unselected'>" + key + "</li>";
             }
-
-        });
-    });
-
-    $(".answer-name-input").keydown((event)=>{
-        if(event.keyCode === 13){
-            let answer = $(".answer-name-input").val();
-            if(answer){
-                  $(".answers").append("<div class='answer'>" + answer + "</div>");
-                  answers[answer] = false;
-            } 
         }
-  });
 
-    $(".add-question").click(()=>{
-        
-    })
+        html += "</div></li>";
 
+        $(".questions").append(html);
+    }
+
+    
 });

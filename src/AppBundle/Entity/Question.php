@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -14,10 +16,6 @@ use Doctrine\ORM\Mapping\OneToMany as OneToMany;
  */
 class Question implements \Serializable
 {
-    public function __construct()
-    {
-        $this->answers = new ArrayCollection();
-    }
 
     /**
      * @var int
@@ -29,7 +27,7 @@ class Question implements \Serializable
     private $id;
 
     /**
-     * @OneToMany(targetEntity="Answer", mappedBy="question")
+     * @OneToMany(targetEntity="Answer", mappedBy="question", fetch="EAGER")
      */
     private $answers;
 
@@ -70,7 +68,6 @@ class Question implements \Serializable
 
     public function unserialize($serialized)
     {
-        // TODO: Implement unserialize() method.
     }
 
     /**
@@ -110,7 +107,6 @@ class Question implements \Serializable
 
         return $this;
     }
-
 
     /**
      * Get questionNumber

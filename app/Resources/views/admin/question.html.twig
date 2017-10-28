@@ -3,20 +3,19 @@
 {% trans_default_domain "translations" %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset("static/styles/admin/question.css?v1.39") }}">
+    <link rel="stylesheet" href="{{ asset("static/styles/admin/question.css?v1.48") }}">
     <link rel="stylesheet" href="{{ asset("static/styles/font-awesome/css/font-awesome.min.css") }}">
 {% endblock %}
 
 {% block body %}
-    <img class="preloader" src="{{ asset("static/images/Gear.svg") }}">
     <div class="container content">
         <div class="col-8 align-self-center question-handler">
-            <div class="col content">
+            <div class="col question-content">
                 <h1 class="question-header">{{ "admin.question.question_name"|trans }}</h1>
                 <hr color="white">
                 <input class="form-control question-name-input" placeholder="{{ "admin.question.question_placeholder"|trans }}">
                 <div class="answer-wrapper">
-                    <h2>Answers:</h2>
+                    <h2>{{ "admin.question.answer_label"|trans }}</h2>
                     <p class="answer-info">{{ "admin.question.answer_info"|trans }}</p>
                     <ul class="answers">
                     </ul>
@@ -29,7 +28,7 @@
                 <div class="col align-self-end question-submit-wrapper">
                     <button class="btn btn-large submit-question">{{ "admin.question.question_create"|trans }}</button>
                 </div>
-        </div>
+            </div>
         </div>
     </div>
 {% endblock %}
@@ -37,5 +36,6 @@
 {% block javascripts %}
     <script src="{{ asset('bundles/bazingajstranslation/js/translator.min.js') }}"></script>
     <script src="{{ url('bazinga_jstranslation_js', { 'domain': 'translations' }) }}"></script>
-    <script src="{{ asset("static/scripts/admin/question.js?v1.29") }}"></script>
+    <script src="{{ asset("static/scripts/admin/question.js?v1.59") }}"></script>
+    <script src="{{ asset("static/scripts/jquery.question.js?v1.62") }}"></script>
 {% endblock %}
