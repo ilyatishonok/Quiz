@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\OneToOne as OneToOne;
+use Doctrine\ORM\Mapping\JoinColumn as JoinColumn;
 
 /**
  * WiredQuestion
@@ -22,23 +24,21 @@ class WiredQuestion
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="quizId", type="integer")
+     * @OneToOne(targetEntity="Quiz")
+     * @JoinColumn(name="quiz_id", referencedColumnName="id")
      */
     private $quiz;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="question", type="integer")
+     * @OneToOne(targetEntity="Question", fetch="EAGER")
+     * @JoinColumn(name="question_id", referencedColumnName="id")
      */
     private $question;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="questionNymber", type="integer")
+     * @ORM\Column(name="questionNumber", type="integer")
      */
     private $questionNumber;
 
@@ -52,6 +52,7 @@ class WiredQuestion
     {
         return $this->id;
     }
+
 
     /**
      * Set quiz
@@ -102,7 +103,7 @@ class WiredQuestion
     }
 
     /**
-     * Set questionNymber
+     * Set questionNumber
      *
      * @param integer $questionNymber
      *
