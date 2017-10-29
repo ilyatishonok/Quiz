@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% trans_default_domain "translations" %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset("static/styles/registration/email_confirmed.css") }}"
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="col-10 align-self-center content">
+            {% if error %}
+                <h3  class="success-text">{{ error }}</h3>
+                <a href="{{ path("homepage") }}" class="btn btn-large home"><h5>{{ "security.registration.btn_main_page"|trans }}</h5></a>
+            {% else %}
+                <h3  class="success-text">{{ error }}</h3>
+                <a href="{{ path("homepage") }}" class="btn btn-large home"><h5>{{ "security.registration.btn_main_page"|trans }}</h5></a>
+            {% endif %}
+        </div>
+
+    </div>
+{% endblock %}

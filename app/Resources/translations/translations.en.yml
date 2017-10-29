@@ -11,18 +11,38 @@ security:
 
     registration:
         registration_label: "Sign in to access your account"
-        email: "Email:"
+        email_label: "Email:"
         username: "Username:"
+        btn_main_page: "Go to home page"
+        email:
+            success: "You successfuly register your account, now you can sign in using your email or username!"
+            subject: "Welcome %username%"
+            message:
+                      Hello %username%!
+
+                      To finish activating your account - please visit %confirmationUrl%
+
+                      This link can only be used once to validate your account.
+
+                      Regards,
+                      the Team.
 
 
 admin:
   question:
     question_placeholder: "input question"
     answer_placeholder: "input answer and type enter"
+    answer_label: "Answers: "
     question_name: "Question adding:"
     answer_adding: "Add Answer"
     question_create: "Create Question"
     answer_info: "If you want to add answer click to button below."
+  quiz:
+    quiz_label: "Quiz adding: "
+    quiz_adding_question: "Add exist questions: "
+    quiz_question_label: "Questions: "
+    quiz_quiestion_info_label: "If you want to add answer click to button below or add exist question."
+
 
 
 errors:

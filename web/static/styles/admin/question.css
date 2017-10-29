@@ -74,12 +74,14 @@
 }
 
 .answer{
+    position: relative;
     list-style: none;
     margin-top: 8px;
     border: 1px solid black;
     border-radius: 7px;
     box-shadow: 0px 0px 37px 0px rgba(91,66,130,1);
     width: 100%;
+    padding: 8px;
 }
 
 .answer-wrapper{
@@ -96,10 +98,6 @@
     text-align: left;
 }
 
-.answer{
-    padding: 5px;
-    padding-top: 4px;
-}
 
 .answer-handler{
     margin: 0 auto;
@@ -123,6 +121,7 @@
     background: rgba(0,0,0,0.6);
 }
 
+
 .selected{
     border: 1px solid limegreen;
     box-shadow: 0 0 10px #32cd32;
@@ -132,6 +131,10 @@
 
 .question-header{
     font-size: 40px;
+}
+
+.question-success{
+    height: 200px;
 }
 
 .submit-question{
@@ -144,9 +147,42 @@
     width: 80%;
 }
 
+.edit-btn{
+    font: 10px/100% arial, sans-serif;
+    position: absolute;
+    right: 20px;
+    text-decoration: none;
+    text-shadow: 0 1px 0 black;
+    top: 5px;
+    font-size: 12px !important;
+}
 
-body{
-    background-image:url('../../images/background.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
+.trash-btn{
+    font: 10px/100% arial, sans-serif;
+    position: absolute;
+    right: 5px;
+    text-decoration: none;
+    text-shadow: 0 1px 0 black;
+    top: 5px;
+    font-size: 12px !important;
+}
+
+.close{
+    font: 12px/100% arial, sans-serif;
+    position: absolute;
+    right: 5px;
+    text-decoration: none;
+    text-shadow: 0 1px 0 black;
+    top: 5px;
+}
+
+.close:after {
+    content: '✖';
+}
+
+@media (max-width: 770px) {
+    .content{
+        width: 100%;
+        margin: 0px;
+    }
 }

@@ -100,7 +100,7 @@ class Answer
      *
      * @return bool
      */
-    public function getIsCorrect()
+    public function isCorrect()
     {
         return $this->isCorrect;
     }

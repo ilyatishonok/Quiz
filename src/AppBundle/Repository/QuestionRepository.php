@@ -26,7 +26,7 @@ class QuestionRepository extends \Doctrine\ORM\EntityRepository
     public function loadQuestionsByRegular(string $regular){
         return $this->createQueryBuilder("q")
             ->where('q.name LIKE :regular')
-            ->setParameter("regular",$regular)
+            ->setParameter("regular",$regular."%")
             ->setMaxResults(5)
             ->getQuery()
             ->getResult();

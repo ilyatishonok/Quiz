@@ -35,10 +35,47 @@ class ApiController extends Controller
             $quizRepository = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\Quiz");
             $quizRepository->createQuiz($data['quizName'], $data['questions']);
             return new JsonResponse("Hello world");
-
         }
     }
 
+    public function checkAnswerAction(Request $request){
+        if($request->isXmlHttpRequest()) {
+            $answerId = $request->get("answerId");
+            if(isset($answerId)){
+                $answerRepository = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\Answer");
+                $answer = $answerRepository->findOneBy(array("id"=>$answerId));
+                if($answer){
+                    return new JsonResponse(array("correct"=>$answer->isCorrect()));
+                } else {
+                    return new Response("Bad request data!", 400);
+                }
+            } else {
+                return new Response("Bad request data!",400);
+            }
+        } else {
+            return new Response("XMLHttpRequest required!",400);
+        }
+    }
+
+    /**
+     * @Route("/admin/api/question");
+     */
+    public function getQuestionAction(Request $request){
+        $questionName = $request->get("questionName");
+        if (isset($questionName))
+        {
+            $questionRepository = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\Question");
+            $question = $questionRepository->findOneBy(array("name"=>$questionName));
+            $answers = $question->getAnswers();
+            $answerNames = array();
+            foreach ($answers as $answer){
+                $answersArray[$answer->getName()] = $answer->getIsCorrect();
+            }
+            return new JsonResponse(array("id" => $question->getId(), "answers" => $answersArray, "name" => $question->getName()));
+        } else {
+            return new Response("Bad request", 400);
+        }
+    }
 
     /**
      * @Route("/admin/api/create/question");
@@ -49,13 +86,12 @@ class ApiController extends Controller
         if(!empty($content))
         {
             $data = json_decode($content,true);
-
             if(isset($data['questionName']) && isset($data['answers']))
             {
                 try {
                     $questionManager = $this->container->get("question_manager");
                     $questionManager->createQuestion($data['questionName'], $data['answers']);
-                    return new Response("The question was created!");
+                    return new JsonResponse("The question was created!");
                 } catch (QuestionException $exception) {
                     return new Response($exception->getMessage(), 400);
                 } catch (AnswerException $exception) {
