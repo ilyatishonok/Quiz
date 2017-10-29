@@ -2,7 +2,7 @@
 
 <html>
 <head>
-    <link rel="stylesheet" href="{{ asset("static/styles/login.css?1.0.1") }}">
+    <link rel="stylesheet" href="{{ asset("static/styles/login.css") }}">
     <link rel="stylesheet" href="{{ asset("static/styles/bootstrap.min.css") }}">
 
 </head>
@@ -26,6 +26,7 @@
             <button id="login" class="btn btn-large" type="submit">{{ 'security.login.submit'|trans }}</button>
             <input style="margin-left: 5px" type="checkbox" id="remember_me" name="_remember_me"  />
             <label style="float: left" for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+
         </form>
         <div class="register-block">
             <p>{{ 'security.login.register_question'|trans }} <a href="{{ path("registration") }}">{{ 'security.login.register'|trans }}</a></p>
