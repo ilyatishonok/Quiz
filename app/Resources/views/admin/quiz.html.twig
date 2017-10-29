@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/panel.html.twig' %}
 
 {% trans_default_domain "translations" %}
 
@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{ asset("static/styles/admin/quiz.css?v1.20") }}">
 {% endblock %}
 
-{% block body %}
+{% block content %}
     <div class="container content">
         <div class="col col-lg-12 quiz-handler">
             <div class="form-group quiz-creator ">

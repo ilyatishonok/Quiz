@@ -55,7 +55,7 @@
   		let target = event.target;
   		let answer = $(target).siblings(".answer-text").html();
   		delete answers[answer];
-  		$(target).closest(".answer").replaceWith("<input class='edit-answer-input' value='" +  answer +"'>");
+  		$(target).closest(".answer").replaceWith("<input class='edit-answer-input form-control' value='" +  answer +"'>");
   	});
 
   	$(".content").on("keydown", ".edit-answer-input", (event)=>{

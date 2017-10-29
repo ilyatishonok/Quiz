@@ -1,20 +1,55 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale|split('_')[0] }}">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" href="{{ asset("static/styles/base.css?v1.0") }}">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link rel="stylesheet" href="{{ asset("static/styles/admin/panel.css?v1.2") }}">
+        <link rel="stylesheet" href="{{ asset("static/styles/navbar-fixed-side.css") }}">
+        <link rel="stylesheet" href="{{ asset("static/styles/bootstrap.min.css") }}">
+        <link rel="stylesheet" href="{{ asset("static/styles/bootstrap-grid.min.css") }}">
+        <script src="{{ asset("static/scripts/jquery-3.2.1.min.js") }}"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-3 col-lg-2">
+                    <nav class="navbar navbar-fixed-side navbar-inverse admin-navbar">
+                        <div class="container navbar-content">
+                            <div class="navbar-header">
+                                <a class="navbar-brand">Admin panel</a>
+                                <div class="navbar-collapse">
+                                    <div class="nav navbar-nav">
+                                        <li{% if app.request.get('_route') == 'quiz_creation' %} class="active"{% endif %}>
+                                            <a class="nav-item nav-link" href="{{ path('quiz_creation') }}">Create quiz</a>
+                                        </li>
+                                        <li{% if app.request.get('_route') == 'question_creation' %} class="active"{% endif %}>
+                                            <a class="nav-item nav-link" href="{{ path('question_creation') }}">Create question</a>
+                                        </li>
+                                        <a class="nav-item nav-link" href="#">User manager</a>
+                                        <a class="nav-item nav-link" href="#">Quiz manager</a>
+                                        <a class="nav-item nav-link" href="">Entity manager</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+                <div class="col-sm-9 col-lg-10">
+                    {% block content %}
 
-
-
-{% block body %}
-    <div class=" display-table ">
-        <div class="display-table-row">
-            <div class="col-md-2 col-sm-1 hidden-xs display-table-cell  box panel" id="navigation">
-
-                <div class="navi">
-                    <ul>
-                        <li><a href="#">Create Question</a></li>
-                        <li><a href="#"><span>Create Quiz</span></a></li>
-                        <li><a href="#"><span>Entity Manager</span></a></li>
-                        <li><a href="#"><span>Quiz Manager</span></a></li>
-                    </ul>
+                    {% endblock %}
                 </div>
             </div>
         </div>
-    </div>
-{% endblock %}
+    </body>
+    {% block javascripts %}
+    {% endblock %}
+</html>

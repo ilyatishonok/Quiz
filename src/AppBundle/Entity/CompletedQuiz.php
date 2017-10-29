@@ -3,7 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\Mapping\JoinColumn;
 /**
  * CompletedQuiz
  *
@@ -34,6 +35,19 @@ class CompletedQuiz
      * @ORM\Column(name="rightQuestions", type="integer")
      */
     private $rightQuestions;
+
+
+    /**
+     * @OneToOne(targetEntity="User")
+     * @JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $user;
+
+    /**
+     * @OneToOne(targetEntity="Quiz")
+     * @JoinColumn(name="quiz_id", referencedColumnName="id")
+     */
+    private $quiz;
 
 
     /**

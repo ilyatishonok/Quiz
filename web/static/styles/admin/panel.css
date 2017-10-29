@@ -1,0 +1,17 @@
+.admin-navbar{
+    border: 1px solid black;
+    border-radius: 7px;
+    background: rgba(0,0,0,0.6);
+    color: white;
+    box-shadow: 0 0 10px black;
+    align-items: inherit !important;
+    text-align: left;
+}
+
+
+.navbar-content{
+    text-align: left;
+    display: block;
+    color: white;
+    align-items: inherit !important;
+}

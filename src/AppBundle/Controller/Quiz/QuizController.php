@@ -27,15 +27,18 @@ class QuizController extends Controller
         $startedQuizRepository = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\StartedQuiz");
         $startedQuiz = $startedQuizRepository->findOneBy(array("user"=>$this->getUser(), "quiz"=>$quiz));
 
-        if($startedQuiz){
+        if($startedQuiz)
+        {
             return $this->render("quiz/started.html.twig", array("question"=>$startedQuiz->getLastQuestion()));
         }
 
         $completedQuizRepository = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\CompletedQuiz");
         $completedQuiz = $completedQuizRepository->findOneBy(array("user"=>$this->getUser(), "quiz"=>$quiz));
 
-        if($completedQuiz){
+        if($completedQuiz)
+        {
 
+            return $this->render("quiz/leader_board.html.twig");
         }
 
     }
