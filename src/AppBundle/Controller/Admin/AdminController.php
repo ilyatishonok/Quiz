@@ -15,7 +15,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("admin/create/quiz")
+     * @Route("admin/create/quiz", name="quiz_creation")
      */
     public function showQuizCreationAction()
     {
@@ -31,7 +31,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("admin/create/question")
+     * @Route("admin/create/question", name="question_creation")
      */
     public function showQuestionCreationAction()
     {
