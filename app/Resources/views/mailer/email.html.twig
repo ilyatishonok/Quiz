@@ -1,0 +1,12 @@
+{% trans_default_domain "translations" %}
+
+{% block subject %}
+    {{ "security.registration.email.subject"|trans({'%username%': user.username})  }}
+{% endblock %}
+
+{% block body_text %}
+{% endblock %}
+
+{% block body_html %}
+    {{ "security.registration.email.message"|trans({'%username%': user.username, '%confirmationUrl%': confirmationUrl})  }}
+{% endblock %}

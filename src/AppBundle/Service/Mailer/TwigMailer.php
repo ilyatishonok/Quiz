@@ -45,11 +45,28 @@ class TwigMailer implements MailerInterface
 
     protected function sendMessage($templateName, $context, $fromEmail, $toEmail)
     {
-        $message = \Swift_Message::newInstance()
-            ->setSubject('Some Subject')
+        $template = $this->twig->load($templateName);
+        $subject = $template->renderBlock('subject', $context);
+        $textBody = $template->renderBlock('body_text', $context);
+
+        $htmlBody = '';
+
+        if ($template->hasBlock('body_html', $context)) {
+            $htmlBody = $template->renderBlock('body_html', $context);
+        }
+
+        $message = (new \Swift_Message())
+            ->setSubject($subject)
             ->setFrom($fromEmail)
-            ->setTo('tishonook@ya.ru')
-            ->setBody('mailer\mail.html.twig', 'text/html');
+            ->setTo($toEmail);
+
+        if (!empty($htmlBody)) {
+            $message->setBody($htmlBody, 'text/html')
+                ->addPart($textBody, 'text/plain');
+        } else {
+            $message->setBody($textBody);
+        }
+
         $this->mailer->send($message);
     }
 }
