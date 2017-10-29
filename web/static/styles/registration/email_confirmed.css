@@ -1,0 +1,22 @@
+.content{
+    margin: 0 auto;
+    border-radius: 7px;
+    border: 1px solid black;
+    background: rgba(0, 0, 0, 0.6);
+    text-align: center;
+    box-shadow: 0 0 10px black;
+    color: white;
+    margin-top: 200px;
+    min-height: 200px !important;
+}
+
+.success-text{
+    margin-top:40px;
+}
+
+.home{
+    margin: 10px;
+    border:1px solid #8b51f5;
+    background-color: #8b51f5;
+    color: white;
+}

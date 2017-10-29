@@ -3,12 +3,15 @@
 namespace AppBundle\Controller\Registration;
 
 use AppBundle\Entity\User;
+use AppBundle\Exceptions\UserException;
 use AppBundle\Form\UserType;
+use AppBundle\Service\RegistrationHandler\RegistationHandler;
 use AppBundle\Service\TokenHandler\TokenGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class RegistrationController extends Controller
@@ -31,6 +34,10 @@ class RegistrationController extends Controller
             $token = $tokenGenerator->createConfirmationToken();
             $user->setConfirmationToken($token);
 
+            $twigMailer = $this->get("twig_mailer");
+
+            $twigMailer->sendConfirmationEmailMessage($user);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
@@ -47,27 +54,26 @@ class RegistrationController extends Controller
     }
 
     /**
-     * @Route("/checkEmail")
-     */
-    public function checkEmailAction()
-    {
-
-    }
-
-    /**
      * @Route("/confirm", name="email_confirm")
      */
-    public function confirmAction()
+    public function confirmAction(Request $request)
     {
+        try {
+            $token = $request->get("token");
 
-    }
+            /** @var RegistationHandler $registrationHandler */
+            $registrationHandler = $this->get("registration_handler");
 
-    /**
-     * @Route("/confirmed")
-     */
-    public function confirmedAction()
-    {
+            $user = $registrationHandler->confirmEmailByToken($token);
 
+            $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
+            $this->get('security.token_storage')->setToken($token);
+            $this->get('session')->set('_security_main', serialize($token));
+
+            return $this->render("registration/email_confirmed.html.twig", array("error"=>null));
+        } catch (UserException $exception) {
+            return $this->render("registration/email_confirmed.html.twig", array("error"=>$exception->getMessage()));
+        }
     }
 
 }

@@ -11,8 +11,21 @@ security:
 
     registration:
         registration_label: "Sign in to access your account"
-        email: "Email:"
+        email_label: "Email:"
         username: "Username:"
+        btn_main_page: "Go to home page"
+        email:
+            success: "You successfuly register your account, now you can sign in using your email or username!"
+            subject: "Welcome %username%"
+            message:
+                      Hello %username%!
+
+                      To finish activating your account - please visit %confirmationUrl%
+
+                      This link can only be used once to validate your account.
+
+                      Regards,
+                      the Team.
 
 
 admin:
