@@ -16,10 +16,20 @@ class HomeController extends Controller
      */
     public function showHomePageAction(Request $request)
     {
+        $em    = $this->get('doctrine.orm.entity_manager');
 
-        // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
-        ]);
+        $dql   = "SELECT q FROM AppBundle\Entity\Quiz q ";
+
+        $query = $em->createQuery($dql);
+
+        $paginator  = $this->get('knp_paginator');
+
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            9
+        );
+
+        return $this->render('default/index.html.twig', array('pagination' => $pagination));
     }
 }
