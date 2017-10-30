@@ -33,7 +33,9 @@
                                         <li{% if app.request.get('_route') == 'question_creation' %} class="active"{% endif %}>
                                             <a class="nav-item nav-link" href="{{ path('question_creation') }}">Create question</a>
                                         </li>
-                                        <a class="nav-item nav-link" href="#">User manager</a>
+                                        <li{% if app.request.get('_route') == 'user_manager' %} class="active"{% endif %}>
+                                            <a class="nav-item nav-link" href="{{ path('user_manager') }}">User manager</a>
+                                        </li>
                                         <a class="nav-item nav-link" href="#">Quiz manager</a>
                                         <a class="nav-item nav-link" href="">Entity manager</a>
                                     </div>
