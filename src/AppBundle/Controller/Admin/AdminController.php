@@ -49,13 +49,13 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/admin/user", name="user_manager")
+     * @Route("/admin/user-manager", name="user_manager")
      */
     public function showAdminUserManager(Request $request)
     {
         $em    = $this->get('doctrine.orm.entity_manager');
 
-        $dql   = "SELECT q FROM AppBundle\Entity\User q ";
+        $dql   = "SELECT u FROM AppBundle\Entity\User u ";
 
         $query = $em->createQuery($dql);
 
@@ -87,4 +87,5 @@ class AdminController extends Controller
         );
         return $this->render("admin/quiz-manager.html.twig", array('pagination' => $pagination));
     }
+
 }
