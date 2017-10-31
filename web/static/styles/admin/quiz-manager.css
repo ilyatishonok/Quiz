@@ -1,10 +1,10 @@
-.user-creator {
+.quiz-creator {
     color: white;
     padding: 15px;
     border-radius: 7px;
 }
 
-.user-header {
+.quiz-header {
     border: 1px solid black;
     border-radius: 7px;
     box-shadow: 0 0 10px black;
@@ -19,11 +19,19 @@
     background: rgba(0, 0, 0, 0.6);
 }
 
-.user-indent {
+.quiz-indent {
     margin-top: 10px;
     margin-bottom: 20px;
 }
 
+.quiz-table {
+    border-collapse: inherit;
+}
+
+.quiz_td {
+    padding-top: 0!important;
+    padding-bottom: 0!important;
+}
 .text-color {
     color: white;
 }
