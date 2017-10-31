@@ -35,7 +35,7 @@ class Answer
      *
      * @ORM\Column(name="isCorrect", type="boolean")
      */
-    private $isCorrect;
+    private $isCorrect = false;
 
     /**
      * @ManyToOne(targetEntity="Question", inversedBy="answers")

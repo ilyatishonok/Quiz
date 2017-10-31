@@ -43,10 +43,11 @@ class StartedQuiz
     private $user;
 
     /**
-     * @ManyToOne(targetEntity="WiredQuestion")
-     * @JoinColumn(name="last_question_id", referencedColumnName="id")
+     *@var integer
+     *
+     * @ORM\Column(name="last_question_number", type="integer")
      */
-    private $lastQuestion;
+    private $lastQuestionNumber;
 
     /**
      * Get id
@@ -101,8 +102,8 @@ class StartedQuiz
     }
 
 
-    public function getLastQuestion(){
-        return $this->lastQuestion->getQuestion();
+    public function getLastQuestionNumber(){
+        return $this->lastQuestionNumber;
     }
 
 }

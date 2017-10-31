@@ -10,10 +10,13 @@ use AppBundle\Exceptions\QuestionException;
 use AppBundle\Repository\AnswerRepository;
 use AppBundle\Repository\QuestionRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\Config\Tests\Util\Validator;
 
 class QuestionManager implements QuestionManagerInterface
 {
     private $entityManager;
+    private $validator;
 
     public function __construct(EntityManagerInterface $manager)
     {
@@ -42,30 +45,8 @@ class QuestionManager implements QuestionManagerInterface
 
     public function createQuestion(string $questionName, array $answers): Question
     {
-        if($questionName === "")
-        {
-            throw new QuestionException("Incorrect question name!");
-        }
-        if(!$this->checkAnswers($answers)){
-            throw new AnswerException("Incorrect answers for question!");
-        }
-
-        /** @var QuestionRepository $questionRepository */
-        $questionRepository = $this->entityManager->getRepository("AppBundle\Entity\Question");
-
-        if($questionRepository->findBy(array("name"=>$questionName))){
-            throw new QuestionException("This question is already exist!");
-        }
-
-        /** @var AnswerRepository $answerRepository */
-        $answerRepository = $this->entityManager->getRepository("AppBundle\Entity\Answer");
-
-        $question = $questionRepository->createQuestion($questionName);
-
-        $answerRepository->createAnswers($answers, $question);
-
-        $this->entityManager->flush();
-
+        $question = new Question();
+        $question->setName($questionName);
         return $question;
     }
 }

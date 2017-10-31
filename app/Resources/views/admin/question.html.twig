@@ -9,9 +9,9 @@
 
 {% block content %}
     <div class="container content">
-            <div class="col-8 align-self-center question-handler">
+        <div class="col-8 align-self-center question-handler">
             <div class="col question-content">
-                <h1 class="question-header">{{ "admin.question.question_name"|trans }}</h1>
+                <h1 class="question-header">{{ "admin.question.question_header"|trans }}</h1>
                 <hr color="white">
                 <input class="form-control question-name-input" placeholder="{{ "admin.question.question_placeholder"|trans }}">
                 <div class="answer-wrapper">
@@ -28,7 +28,6 @@
                 <div class="col align-self-end question-submit-wrapper">
                     <button class="btn btn-large submit-question">{{ "admin.question.question_create"|trans }}</button>
                 </div>
-                <input class="form-control" value="hello world" style="color:white;resize:none;overflow:auto;border-radius:7px;padding-left: 5px;px; box-shadow: 0px 0px 37px 0px rgba(91,66,130,1); border: 1px solid black; outline:0px;background:transparent" disabled>
             </div>
         </div>
     </div>
@@ -38,5 +37,5 @@
     <script src="{{ asset('bundles/bazingajstranslation/js/translator.min.js') }}"></script>
     <script src="{{ url('bazinga_jstranslation_js', { 'domain': 'translations' }) }}"></script>
     <script src="{{ asset("static/scripts/admin/question.js?v1.59") }}"></script>
-    <script src="{{ asset("static/scripts/jquery.question.js?v1.65") }}"></script>
+    <script src="{{ asset("static/scripts/jquery.question.js?v1.78") }}"></script>
 {% endblock %}

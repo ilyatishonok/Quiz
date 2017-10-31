@@ -3,7 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\OneToOne as OneToOne;
+use Doctrine\ORM\Mapping\ManyToOne as ManyToOne;
 use Doctrine\ORM\Mapping\JoinColumn as JoinColumn;
 
 /**
@@ -24,13 +24,13 @@ class WiredQuestion
     private $id;
 
     /**
-     * @OneToOne(targetEntity="Quiz")
+     * @ManyToOne(targetEntity="Quiz")
      * @JoinColumn(name="quiz_id", referencedColumnName="id")
      */
     private $quiz;
 
     /**
-     * @OneToOne(targetEntity="Question", fetch="EAGER")
+     * @ManyToOne(targetEntity="Question")
      * @JoinColumn(name="question_id", referencedColumnName="id")
      */
     private $question;

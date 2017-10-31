@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace AppBundle\Controller\Api;
 
+use AppBundle\Entity\Answer;
 use AppBundle\Entity\Question;
 use AppBundle\Entity\Quiz;
 use AppBundle\Exceptions\AnswerException;
 use AppBundle\Exceptions\QuestionException;
+use AppBundle\Form\QuestionType;
 use AppBundle\Repository\AnswerRepository;
 use AppBundle\Repository\QuestionRepository;
 use AppBundle\Repository\QuizRepository;
@@ -38,22 +40,16 @@ class ApiController extends Controller
         }
     }
 
+    /**
+     * @Route("/api/check-question")
+     */
     public function checkAnswerAction(Request $request){
-        if($request->isXmlHttpRequest()) {
-            $answerId = $request->get("answerId");
-            if(isset($answerId)){
-                $answerRepository = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\Answer");
-                $answer = $answerRepository->findOneBy(array("id"=>$answerId));
-                if($answer){
-                    return new JsonResponse(array("correct"=>$answer->isCorrect()));
-                } else {
-                    return new Response("Bad request data!", 400);
-                }
-            } else {
-                return new Response("Bad request data!",400);
-            }
+        $content = $request->getContent();
+        if(!empty($content)){
+            $startedQuizRepository = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\StartedQuiz");
+            $startedQuiz = $startedQuizRepository->findByQuizAndUserIds($this->getUser()->getId(), $content['quizId']);
         } else {
-            return new Response("XMLHttpRequest required!",400);
+            return new Response("Bad request",400);
         }
     }
 
@@ -82,28 +78,17 @@ class ApiController extends Controller
      */
     public function createQuestionAction(Request $request)
     {
-        $content = $request->getContent();
-        if(!empty($content))
-        {
-            $data = json_decode($content,true);
-            if(isset($data['questionName']) && isset($data['answers']))
-            {
-                try {
-                    $questionManager = $this->container->get("question_manager");
-                    $questionManager->createQuestion($data['questionName'], $data['answers']);
-                    return new JsonResponse("The question was created!");
-                } catch (QuestionException $exception) {
-                    return new Response($exception->getMessage(), 400);
-                } catch (AnswerException $exception) {
-                    return new Response($exception->getMessage(), 400);
-                }
-            } else {
-                return new Response("Bad request data!",400);
-            }
-
+        try{
+            $content = $request->getContent();
+            $data = json_decode($content, true);
+            $questionManager = $this->container->get("question_manager");
+            $questionManager->createQuestion($data['questionName'], $data['answers']);
+            return new JsonResponse("The question was created!");
+        } catch (QuestionException $exception) {
+            return new Response($exception->getMessage(),400);
+        } catch (AnswerException $exception) {
+            return new Response($exception->getMessage(),400);
         }
-
-        return new Response("Bad request data!", 400);
     }
 
     /**
