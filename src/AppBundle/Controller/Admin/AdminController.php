@@ -4,6 +4,8 @@ namespace AppBundle\Controller\Admin;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use AppBundle\Entity\User;
+use Symfony\Component\HttpFoundation\Request;
 
 class AdminController extends Controller
 {
@@ -43,6 +45,28 @@ class AdminController extends Controller
      */
     public function showQuizEditingAction(){
 
+    }
+
+    /**
+     * @Route("/admin/user", name="user_manager")
+     */
+    public function showAdminUserManager(Request $request)
+    {
+        $em    = $this->get('doctrine.orm.entity_manager');
+
+        $dql   = "SELECT q FROM AppBundle\Entity\User q ";
+
+        $query = $em->createQuery($dql);
+
+        $paginator  = $this->get('knp_paginator');
+
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            10
+        );
+
+        return $this->render('admin/user.html.twig', array('pagination' => $pagination));
     }
 
 
