@@ -137,6 +137,10 @@ class Quiz
         return $this;
     }
 
+    public function getLeader(){
+        return $this->leader;
+    }
+
     public function addQuestion($question){
         $this->questions->add($question);
     }

@@ -207,6 +207,10 @@ class User implements UserInterface
         return array($this->role);
     }
 
+    public function getRole(){
+        return $this->role;
+    }
+
     public function getConfirmationToken()
     {
         return $this->confirmationToken;

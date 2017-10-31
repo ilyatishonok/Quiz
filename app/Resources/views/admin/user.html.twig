@@ -14,23 +14,26 @@
         </nav>
         <div class="container-fluid user-indent">
             <div class="col col-lg-12 user-creator user-header">
-                <table class="table table-inverse">
+                <table data-token="{{ csrf_token("intention") }}" class="table table-inverse users-table">
                     <tbody>
                         <tr>
                             <th>User name</th>
                             <th>Email</th>
                             <th>Role</th>
-                            <td></td>
+                            <th>Status</th>
+                            <th></th>
                         </tr>
                         {% for user in pagination %}
-                            <tr>
+                            <tr class="user-row"  data-id="{{ user.id }}">
                                 <td scope="row">{{ user.username }}</td>
                                 <td>{{ user.email }}</td>
-                                <td> user.role </td>
+                                <td> {{ user.role }} </td>
                                 {% if user.enabled == true %}
-                                    <td><button type="button" class="btn btn-outline-danger button-size">Block</button></td>
+                                    <td>Active</td>
+                                    <td><button type="button" class="btn btn-default btn-block">Block</button></td>
                                 {% else %}
-                                    <td><button type="button" class="btn btn-outline-success button-size">Unblock</button></td>
+                                    <td>Active</td>
+                                    <td><button type="button" class="btn btn-default btn-block">Block</button></td>
                                 {% endif %}
                             </tr>
                         {% endfor%}
@@ -42,4 +45,8 @@
             </div>
         </div>
     </nav>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset("static/scripts/admin/user_manager.js?v1.1") }}"></script>
 {% endblock %}

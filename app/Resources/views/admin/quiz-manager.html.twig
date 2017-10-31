@@ -8,7 +8,7 @@
     <nav class="quiz-header bg-color">
         <nav class="navbar navbar-light justify-content-between quiz-header">
             <form class="form-inline">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <input class="form-control" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
         </nav>
@@ -28,7 +28,11 @@
                             <td class="quiz_td" scope="row">{{ quiz.name }}</td>
                             <td class="quiz_td" >{{ quiz.countOfQuestions }}</td>
                             <td class="quiz_td" >{{ quiz.countOfPlayers }}</td>
-                            <td class="quiz_td"></td>
+                            {% if quiz.leader == null %}
+                                <td class="quiz_td">None</td>
+                            {% else %}
+                                <td class="quiz_td">{{ quiz.leader }}</td>
+                            {% endif %}
                             <td class="quiz_td"><button type="button" class="btn btn-outline-danger button-size">Block</button></td>
                         </tr>
                     {% endfor%}
