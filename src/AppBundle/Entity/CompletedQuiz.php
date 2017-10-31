@@ -3,8 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\OneToOne;
-use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne as ManyToOne;
+use Doctrine\ORM\Mapping\JoinColumn as JoinColumn;
 /**
  * CompletedQuiz
  *
@@ -38,13 +38,13 @@ class CompletedQuiz
 
 
     /**
-     * @OneToOne(targetEntity="User")
+     * @ManyToOne(targetEntity="User")
      * @JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
 
     /**
-     * @OneToOne(targetEntity="Quiz")
+     * @ManyToOne(targetEntity="Quiz")
      * @JoinColumn(name="quiz_id", referencedColumnName="id")
      */
     private $quiz;

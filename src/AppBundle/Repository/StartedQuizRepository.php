@@ -32,4 +32,9 @@ class StartedQuizRepository extends \Doctrine\ORM\EntityRepository
 
         return $startedQuiz;
     }
+
+
+    public function findByQuizAndUserIds(integer $quizId, integer $userId){
+        $this->createQueryBuilder("q");
+    }
 }

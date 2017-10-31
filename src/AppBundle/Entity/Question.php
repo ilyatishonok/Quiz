@@ -7,6 +7,7 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OneToMany as OneToMany;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Question
@@ -16,6 +17,11 @@ use Doctrine\ORM\Mapping\OneToMany as OneToMany;
  */
 class Question implements \Serializable
 {
+
+    public function __construct()
+    {
+        $this->answers = new ArrayCollection();
+    }
 
     /**
      * @var int
@@ -27,7 +33,7 @@ class Question implements \Serializable
     private $id;
 
     /**
-     * @OneToMany(targetEntity="Answer", mappedBy="question", fetch="EAGER")
+     * @OneToMany(targetEntity="Answer", mappedBy="question", fetch="EAGER", cascade={"persist"})
      */
     private $answers;
 
@@ -35,6 +41,8 @@ class Question implements \Serializable
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, unique=true)
+     *
+     * @Assert\NotNull
      */
     private $name;
 
@@ -106,6 +114,10 @@ class Question implements \Serializable
         $this->questionNumber = $questionNumber;
 
         return $this;
+    }
+
+    public function addAnswer(Answer $answer){
+        $this->answers->add($answer);
     }
 
     /**

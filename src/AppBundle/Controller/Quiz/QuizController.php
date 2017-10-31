@@ -29,7 +29,9 @@ class QuizController extends Controller
 
         if($startedQuiz)
         {
-            return $this->render("quiz/started.html.twig", array("question"=>$startedQuiz->getLastQuestion()));
+            $wiredQuestionRepository = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\WiredQuestion");
+            $wiredQuestion = $wiredQuestionRepository->findOneBy(array("quiz"=>$quiz, "questionNumber"=>$startedQuiz->getLastQuestionNumber()));
+            return $this->render("quiz/started.html.twig", array("question"=>$wiredQuestion->getQuestion(), "quiz"=>$quiz));
         }
 
         $completedQuizRepository = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\CompletedQuiz");

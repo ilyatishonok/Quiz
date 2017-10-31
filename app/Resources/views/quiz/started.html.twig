@@ -11,7 +11,7 @@
 {% block body %}
 
     <div class="container">
-        <div class="col-8 align-self-center question">
+        <div data-quiz-id="{{ quiz.id|escape }}" data-question-id="{{ question.id }}" class="col-8 align-self-center question">
             <div class="answered-questions">
 
             </div>
@@ -23,7 +23,7 @@
                     {{ answer.name }}
                 </div>
             {% endfor %}
-            <button class="btn btn-large submit-btn">Submit</button>
+            <button class="btn btn-large submit-btn" data-token="{{ csrf_token('intention') }}">Submit</button>
         </div>
     </div>
 

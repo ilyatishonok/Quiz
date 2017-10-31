@@ -33,7 +33,7 @@ admin:
     question_placeholder: "input question"
     answer_placeholder: "input answer and type enter"
     answer_label: "Answers: "
-    question_name: "Question adding:"
+    question_header: "Add question:"
     answer_adding: "Add Answer"
     question_create: "Create Question"
     answer_info: "If you want to add answer click to button below."
