@@ -15,3 +15,18 @@
     color: white;
     align-items: inherit !important;
 }
+
+.page-link{
+    background: rgba(0,0,0,0.3) !important;
+    border: 1px solid #8b51f5 !important;
+    color: white !important;
+}
+
+.page-link:focus{
+    background-color: limegreen;
+}
+
+.page-item.active .page-link {
+    border-color: limegreen !important;
+    background-color: limegreen !important;
+}
