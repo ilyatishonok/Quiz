@@ -22,7 +22,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
     {
         $user = $this->findOneByUsernameOrEmail($username);
         if (!$user) {
-            throw new UsernameNotFoundException('No user found for username ' . $username);
+            throw new UsernameNotFoundException('No user found for username or email ' . $username);
         }
         return $user;
     }

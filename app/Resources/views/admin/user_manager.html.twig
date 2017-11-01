@@ -1,18 +1,52 @@
 {% extends 'admin/panel.html.twig' %}
 
-{% trans_default_domain "translations" %}
-
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset("static/styles/admin/quiz.css?v1.20") }}">
+    <link rel="stylesheet" href="{{ asset("static/styles/admin/user.css") }}">
 {% endblock %}
 
 {% block content %}
-    <div>
-
-    </div>
+    <nav class="user-header bg-color">
+        <nav class="navbar navbar-light justify-content-between user-header">
+            <form class="form-inline">
+                <input class="form-control mr-sm-2 search-input" type="search" disabled placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0 search-btn" type="submit">Search</button>
+            </form>
+        </nav>
+        <div class="container-fluid user-indent">
+            <div class="col col-lg-12 user-creator user-header">
+                <table data-token="{{ csrf_token("intention") }}" class="table table-inverse users-table">
+                    <tbody>
+                        <tr>
+                            <th>User name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                        {% for user in pagination %}
+                            <tr class="user-row"  data-id="{{ user.id }}">
+                                <td scope="row">{{ user.username }}</td>
+                                <td class="email">{{ user.email }}</td>
+                                <td class="role"> {{ user.role }} </td>
+                                {% if user.enabled == true %}
+                                    <td class="status">Active</td>
+                                    <td><button type="button" class="btn btn-outline-danger button-size btn-block">Block</button></td>
+                                {% else %}
+                                    <td class="status">Blocked</td>
+                                    <td><button type="button" class="btn btn-outline-success button-size btn-unblock">Unblock</button></td>
+                                {% endif %}
+                            </tr>
+                        {% endfor%}
+                    </tbody>
+                </table>
+            </div>
+            <div class="navbar text-color" >
+                {{ knp_pagination_render(pagination) }}
+            </div>
+        </div>
+    </nav>
 {% endblock %}
 
-
 {% block javascripts %}
-    <script src="{{ asset("static/scripts/admin/quiz.js?v1.56") }}"></script>
+    <script src="{{ asset("static/scripts/admin/user_manager.js?v1.14") }}"></script>
 {% endblock %}

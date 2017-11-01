@@ -65,10 +65,13 @@ class ApiController extends Controller
             $userRepository = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\User");
             $user = $userRepository->findOneBy(array("id" => $id));
 
+            if($user->getId() === $this->getUser()->getId()){
+                return new Response("You can't block yourself!",400);
+            }
+
             if ($user) {
                 $user->setEnabled(false);
                 $this->getDoctrine()->getManager()->flush();
-
                 return new Response("User was blocked!", 200);
             } else {
                 return new Response("Bad request!", 400);
@@ -77,6 +80,33 @@ class ApiController extends Controller
             return new Response("Invalid CSRF token!", 400);
         }
     }
+
+
+    /**
+     * @Route("/admin/api/unblock-user")
+     */
+    public function unBlockUserAction(Request $request)
+    {
+        $token = $request->get("token");
+
+        if($this->isCsrfTokenValid('intention',$token)) {
+            $id = $request->get("id");
+
+            $userRepository = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\User");
+            $user = $userRepository->findOneBy(array("id" => $id));
+
+            if ($user) {
+                $user->setEnabled(true);
+                $this->getDoctrine()->getManager()->flush();
+                return new Response("User was unblocked!", 200);
+            } else {
+                return new Response("Bad request!", 400);
+            }
+        } else {
+            return new Response("Invalid CSRF token!", 400);
+        }
+    }
+
 
     /**
      * @Route("/admin/api/question");

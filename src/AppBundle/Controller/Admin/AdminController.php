@@ -29,13 +29,6 @@ class AdminController extends Controller
 
 
     /**
-     * @Route("admin/user-manager", name="user_manager")
-     */
-    public function showUserManagerAction(){
-        return $this->render("admin/user_manager.html.twig");
-    }
-
-    /**
      * @Route("/admin")
      */
     public function showAdminPanel()
@@ -65,41 +58,46 @@ class AdminController extends Controller
     /**
      * @Route("/admin/user-manager", name="user_manager")
      */
-    public function showAdminUserManager(Request $request)
+    public function showUserManagerAction(Request $request)
     {
-        $em    = $this->get('doctrine.orm.entity_manager');
+        $search = $request->get("search");
 
-        $dql   = "SELECT u FROM AppBundle\Entity\User u ";
+        $entityManager = $this->getDoctrine()->getManager();
 
-        $query = $em->createQuery($dql);
+        if($search) {
+            $query = $entityManager->createQuery("SELECT u FROM AppBundle\Entity\User u WHERE u.username LIKE :username OR u.email LIKE :username");
+            $query->setParameter("username",$search."%");
+        } else {
+            $query  = $entityManager->createQuery("SELECT u FROM AppBundle\Entity\User u ");
+        }
 
         $paginator  = $this->get('knp_paginator');
-
         $pagination = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1),
             10
         );
 
-        return $this->render('admin/user.html.twig', array('pagination' => $pagination));
+        return $this->render('admin/user_manager.html.twig', array('pagination' => $pagination));
     }
 
 
     /**
      *@Route("/admin/quiz-manager", name="quiz_manager")
      */
-    public function showQuizManagerPanel(Request $request)
+    public function showQuizManagerPanelAction(Request $request)
     {
-        $em    = $this->get('doctrine.orm.entity_manager');
-        $dql   = "SELECT q FROM AppBundle\Entity\Quiz q ";
+        $em = $this->get('doctrine.orm.entity_manager');
+        $dql = "SELECT quiz FROM AppBundle\Entity\Quiz quiz";
         $query = $em->createQuery($dql);
-        $paginator  = $this->get('knp_paginator');
+
+        $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1),
             13
         );
-        return $this->render("admin/quiz-manager.html.twig", array('pagination' => $pagination));
+        return $this->render("admin/quiz_manager.html.twig", array('pagination' => $pagination));
     }
 
 }
