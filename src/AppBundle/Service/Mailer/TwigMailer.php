@@ -14,15 +14,15 @@ class TwigMailer implements MailerInterface
     protected $router;
     protected $twig;
     protected $serverName;
-    protected $templateName;
+    protected $options;
 
-    public function __construct(\Swift_Mailer $mailer, UrlGeneratorInterface $router, \Twig_Environment $twig, string $serverName, string $templateName)
+    public function __construct(\Swift_Mailer $mailer, UrlGeneratorInterface $router, \Twig_Environment $twig, string $serverName, array $options)
     {
         $this->mailer = $mailer;
         $this->router = $router;
         $this->twig = $twig;
         $this->serverName = $serverName;
-        $this->templateName = $templateName;
+        $this->options = $options;
     }
 
     public function sendConfirmationEmailMessage(UserInterface $user)
@@ -34,13 +34,20 @@ class TwigMailer implements MailerInterface
             'confirmationUrl' => $url,
         );
 
-        $this->sendMessage($this->templateName, $context, $this->serverName, (string) $user->getEmail());
+        $this->sendMessage($this->options['email_confirm_template'], $context, $this->serverName, (string) $user->getEmail());
     }
 
 
     public function sendResettingEmailMessage(UserInterface $user)
     {
+        $url = $this->router->generate('resetting', array('token' => $user->getResettingToken()), UrlGeneratorInterface::ABSOLUTE_URL);
 
+        $context = array(
+            'user' => $user,
+            'resettingUrl' => $url,
+        );
+
+        $this->sendMessage($this->options['resetting_confirm_template'], $context, $this->serverName, (string) $user->getEmail());
     }
 
     protected function sendMessage($templateName, $context, $fromEmail, $toEmail)

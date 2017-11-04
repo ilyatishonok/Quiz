@@ -31,6 +31,10 @@ interface UserInterface extends AdvancedUserInterface
 
     public function setConfirmationToken($confirmationToken);
 
+    public function getResettingToken();
+
+    public function setResettingToken($resettingToken);
+
     public function isPasswordRequestNonExpired($ttl);
 
 }

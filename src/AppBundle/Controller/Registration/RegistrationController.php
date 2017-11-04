@@ -27,24 +27,24 @@ class RegistrationController extends Controller
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-            $password = $passwordEncoder->encodePassword($user,$user->getPlainPassword());
-            $user->setPassword($password);
+        $password = $passwordEncoder->encodePassword($user,$user->getPlainPassword());
+        $user->setPassword($password);
 
-            $tokenGenerator = new TokenGenerator();
-            $token = $tokenGenerator->createConfirmationToken();
-            $user->setConfirmationToken($token);
+        $tokenGenerator = new TokenGenerator();
+        $token = $tokenGenerator->createConfirmationToken();
+        $user->setConfirmationToken($token);
 
-            $twigMailer = $this->get("twig_mailer");
+        $twigMailer = $this->get("twig_mailer");
 
-            $twigMailer->sendConfirmationEmailMessage($user);
+        $twigMailer->sendConfirmationEmailMessage($user);
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
 
 
-            return $this->redirectToRoute("homepage");
-        }
+        return $this->redirectToRoute("homepage");
+    }
 
         return $this->render(
             'registration/register.html.twig',
