@@ -40,7 +40,7 @@ class TwigMailer implements MailerInterface
 
     public function sendResettingEmailMessage(UserInterface $user)
     {
-        $url = $this->router->generate('resetting', array('token' => $user->getResettingToken()), UrlGeneratorInterface::ABSOLUTE_URL);
+        $url = $this->router->generate('_resetting', array('token' => $user->getResettingToken()), UrlGeneratorInterface::ABSOLUTE_URL);
 
         $context = array(
             'user' => $user,

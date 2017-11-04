@@ -1,0 +1,12 @@
+{% trans_default_domain "translations" %}
+
+{% block subject %}
+    {{ "security.resetting.email.subject"|trans }}
+{% endblock %}
+
+{% block body_text %}
+{% endblock %}
+
+{% block body_html %}
+    {{ "security.resetting.email.message"|trans({'%username%': user.username, '%resettingUrl%': resettingUrl})  }}
+{% endblock %}
