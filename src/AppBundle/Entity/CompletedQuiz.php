@@ -1,5 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
+//TODO TYPEHINT, REFACTORING.
+
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -23,7 +27,7 @@ class CompletedQuiz
     private $id;
 
     /**
-     * @var dateinterval
+     * @var \DateInterval
      *
      * @ORM\Column(name="time", type="dateinterval")
      */
@@ -63,7 +67,7 @@ class CompletedQuiz
     /**
      * Set time
      *
-     * @param dateinterval $time
+     * @param \DateInterval $time
      *
      * @return CompletedQuiz
      */
@@ -77,7 +81,7 @@ class CompletedQuiz
     /**
      * Get time
      *
-     * @return dateinterval
+     * @return \DateInterval
      */
     public function getTime()
     {
@@ -106,6 +110,20 @@ class CompletedQuiz
     public function getRightQuestions()
     {
         return $this->rightQuestions;
+    }
+
+    public function setQuiz(Quiz $quiz): CompletedQuiz
+    {
+        $this->quiz = $quiz;
+
+        return $this;
+    }
+
+    public function setUser(UserInterface $user): CompletedQuiz
+    {
+        $this->user = $user;
+
+        return $this;
     }
 }
 

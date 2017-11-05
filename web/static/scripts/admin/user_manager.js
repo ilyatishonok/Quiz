@@ -49,7 +49,7 @@ $(document).ready(()=>{
 
 	$(".search-btn").click((event)=>{
 		let searchQuery = $(".search-input").val();
-		window.href.location = "?search="+searchQuery;	
+		window.href = "?search="+searchQuery;	
 	});
 
 });

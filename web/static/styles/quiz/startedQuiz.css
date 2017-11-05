@@ -7,7 +7,7 @@
     color: white;
     box-shadow: 0 0 10px black;
     padding: 15px;
-    height: 200px;
+    min-height: 200px;
 }
 
 .answer{
@@ -19,12 +19,53 @@
     border-radius: 7px;
 }
 
-.selected{
-    border: 1px solid limegreen;
-    box-shadow: 0px 0px 37px 0px limegreen;
-    background-color: limegreen;
+.content{
+    margin-top: 150px;
+}
+
+.question-text{
+    text-align: left;
 }
 
 .submit-btn{
+    color: white;
+    margin-top: 20px;
+    background-color: #8b51f5;
+    box-shadow: 0 0 10px black;
+}
+
+input {
+    visibility:hidden;
+    display: none;
+}
+
+.form_wrapper{
+    margin-top: 15px;
+    border: 1px solid black;
+    border-radius: 7px;
+    box-shadow: 0 0 10px black;
+    padding: 10px;
+}
+
+.question-header{
+    border-radius: 7px;
+    border: 1px solid black;
+    box-shadow: 0 0 10px black;
+    padding: 10px;
+}
+
+label {
     margin-top: 10px;
+    text-align: left;
+    border: 1px solid black;
+    padding: 5px;
+    border-radius: 7px;
+    box-shadow: 0px 0px 37px 0px rgba(91,66,130,1);
+    cursor: pointer;
+    width: 100%;
+}
+input:checked + label {
+    border: 1px solid limegreen;
+    box-shadow: 0px 0px 37px 0px limegreen;
+    background-color: limegreen;
 }

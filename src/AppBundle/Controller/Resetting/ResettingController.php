@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AppBundle\Controller\Resetting;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -32,7 +34,7 @@ class ResettingController extends Controller
     }
 
     /**
-     * @Route("/reset")
+     * @Route("/reset", name="resetting_password")
      */
     public function resetAction()
     {

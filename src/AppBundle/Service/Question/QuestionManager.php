@@ -23,6 +23,7 @@ class QuestionManager implements QuestionManagerInterface
         $this->entityManager = $manager;
     }
 
+
     private function checkAnswers(array $answers): bool
     {
         $correctAnswer = false;

@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset("static/styles/index.css?v1.0") }}"
+{% endblock %}
+
+{% block body %}
+    <main>
+        <div class="container-fluid">
+            <div class="col-12 align-self-center question-handler">
+                <div class="row">
+                    {% for quiz in  pagination %}
+                        <a href="{{ path('_quiz', {'id': quiz.id}) }}" class="col answer-wrapper hidden-xs display-table-cell box panel" >
+                            <div class="row">
+                                <div class="col"><h5>{{ quiz.name }}</h5></div>
+                            </div>
+                            <div class="row">
+                                <div class="col">question:{{ quiz.countOfQuestions }}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col">players:{{ quiz.countOfPlayers }}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col">leader:</div>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+                <div class="navbar" >
+                    {{ knp_pagination_render(pagination) }}
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
+{% block javascripts %}
+
+{% endblock %}

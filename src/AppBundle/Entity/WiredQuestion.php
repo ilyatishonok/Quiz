@@ -121,7 +121,7 @@ class WiredQuestion
      *
      * @return int
      */
-    public function getQuestionNymber()
+    public function getQuestionNumber()
     {
         return $this->questionNumber;
     }

@@ -33,7 +33,7 @@ class Question implements \Serializable
     private $id;
 
     /**
-     * @OneToMany(targetEntity="Answer", mappedBy="question", fetch="EAGER", cascade={"persist"})
+     * @OneToMany(targetEntity="Answer", mappedBy="question")
      */
     private $answers;
 
@@ -54,6 +54,10 @@ class Question implements \Serializable
     public function getId()
     {
         return $this->id;
+    }
+
+    public function setAnswers($answers){
+        $this->answers = $answers;
     }
 
     public function getAnswers(){

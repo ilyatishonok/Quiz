@@ -1,34 +1,31 @@
 {% extends 'base.html.twig' %}
 
-
 {% trans_default_domain "translations" %}
 
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset("static/styles/quiz/startedQuiz.css?v1.1") }}">
+    <link rel="stylesheet" href="{{ asset("static/styles/quiz/startedQuiz.css?v1.23") }}">
 {% endblock %}
 
 {% block body %}
 
-    <div class="container">
-        <div data-quiz-id="{{ quiz.id|escape }}" data-question-id="{{ question.id }}" class="col-8 align-self-center question">
-            <div class="answered-questions">
-
+    <div class="container content">
+        <div  class="col-8 align-self-center question">
+            <div class="question-header">
+                <h2>{{ "quiz.question.question_label"|trans }}:</h2>
+                <h4 class="question-text">{{ question_name }}</h4>
             </div>
-            <h2 class="question-name">
-                {{ question.name }}
-            </h2>
-            {% for answer in question.answers %}
-                <div class="answer" data-id="{{ answer.id }}">
-                    {{ answer.name }}
-                </div>
-            {% endfor %}
-            <button class="btn btn-large submit-btn" data-token="{{ csrf_token('intention') }}">Submit</button>
+            <div class="form_wrapper">
+                {{ form_start(form) }}
+                <h2>{{ "quiz.question.answer_label"|trans }}:</h2>
+                {{ form_widget(form) }}
+                {{ form_end(form) }}
+            </div>
         </div>
     </div>
 
 {% endblock %}
 
 {% block javascripts %}
-    <script src="{{ asset("static/scripts/quiz/quiz.answer.js?v1.0") }}"></script>
+
 {% endblock %}
