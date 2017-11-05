@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset("static/styles/quiz/quizStart.css") }}">
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="col-4 quiz-start bg-color text-color">
+            <h2>Name quiz</h2>
+            <p>Questions:</p>
+            <p>Players:</p>
+            <p>Leader:</p>
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
