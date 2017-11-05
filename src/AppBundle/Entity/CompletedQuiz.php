@@ -2,13 +2,12 @@
 
 declare(strict_types=1);
 
-//TODO TYPEHINT, REFACTORING.
-
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ManyToOne as ManyToOne;
 use Doctrine\ORM\Mapping\JoinColumn as JoinColumn;
+
 /**
  * CompletedQuiz
  *
@@ -53,61 +52,31 @@ class CompletedQuiz
      */
     private $quiz;
 
-
-    /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * Set time
-     *
-     * @param \DateInterval $time
-     *
-     * @return CompletedQuiz
-     */
-    public function setTime($time)
+    public function setTime(\DateInterval $time): CompletedQuiz
     {
         $this->time = $time;
 
         return $this;
     }
 
-    /**
-     * Get time
-     *
-     * @return \DateInterval
-     */
-    public function getTime()
+    public function getTime(): \DateInterval
     {
         return $this->time;
     }
 
-    /**
-     * Set rightQuestions
-     *
-     * @param integer $rightQuestions
-     *
-     * @return CompletedQuiz
-     */
-    public function setRightQuestions($rightQuestions)
+    public function setRightQuestions(int $rightQuestions): CompletedQuiz
     {
         $this->rightQuestions = $rightQuestions;
 
         return $this;
     }
 
-    /**
-     * Get rightQuestions
-     *
-     * @return int
-     */
-    public function getRightQuestions()
+    public function getRightQuestions(): int
     {
         return $this->rightQuestions;
     }

@@ -13,13 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
 class AdminController extends Controller
 {
     /**
-     * @Route("/admin/main")
-     */
-    public function showAdminPageAction()
-    {
-    }
-
-    /**
      * @Route("admin/create/quiz", name="quiz_creation")
      */
     public function showQuizCreationAction()

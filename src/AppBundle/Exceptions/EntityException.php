@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace AppBundle\Exceptions;
 
-
 use Symfony\Component\Config\Definition\Exception\Exception;
 
 class EntityException extends Exception

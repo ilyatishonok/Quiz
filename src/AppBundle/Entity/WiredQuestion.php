@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -42,86 +44,43 @@ class WiredQuestion
      */
     private $questionNumber;
 
-
-    /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-
-    /**
-     * Set quiz
-     *
-     * @param string $quiz
-     *
-     * @return WiredQuestion
-     */
-    public function setQuiz($quiz)
+    public function setQuiz(Quiz $quiz): WiredQuestion
     {
         $this->quiz = $quiz;
 
         return $this;
     }
 
-    /**
-     * Get quiz
-     *
-     * @return string
-     */
-    public function getQuiz()
+    public function getQuiz(): Quiz
     {
         return $this->quiz;
     }
 
-    /**
-     * Set question
-     *
-     * @param string $question
-     *
-     * @return WiredQuestion
-     */
-    public function setQuestion($question)
+    public function setQuestion(Question $question): WiredQuestion
     {
         $this->question = $question;
 
         return $this;
     }
 
-    /**
-     * Get question
-     *
-     * @return string
-     */
-    public function getQuestion()
+    public function getQuestion(): Question
     {
         return $this->question;
     }
 
-    /**
-     * Set questionNumber
-     *
-     * @param integer $questionNymber
-     *
-     * @return WiredQuestion
-     */
-    public function setQuestionNumber($questionNumber)
+    public function setQuestionNumber(int $questionNumber): WiredQuestion
     {
         $this->questionNumber = $questionNumber;
 
         return $this;
     }
 
-    /**
-     * Get questionNymber
-     *
-     * @return int
-     */
-    public function getQuestionNumber()
+    public function getQuestionNumber(): int
     {
         return $this->questionNumber;
     }

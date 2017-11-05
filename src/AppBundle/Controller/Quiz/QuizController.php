@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace AppBundle\Controller\Quiz;
 
 use AppBundle\Entity\StartedQuiz;
-use AppBundle\Form\AnswerChoice;
+use AppBundle\Form\StartQuizType;
+use AppBundle\Choices\AnswerChoice;
 use AppBundle\Form\QuestionChoiceType;
+use AppBundle\Repository\WiredQuestionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class QuizController extends Controller
@@ -35,6 +36,7 @@ class QuizController extends Controller
 
         if($startedQuiz)
         {
+            /** @var WiredQuestionRepository $wiredQuestionRepository */
             $wiredQuestionRepository = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\WiredQuestion");
             $wiredQuestion = $wiredQuestionRepository->findOneBy(array("quiz"=>$quiz, "questionNumber"=>$startedQuiz->getLastQuestionNumber()));
 
@@ -57,9 +59,35 @@ class QuizController extends Controller
 
         if($completedQuiz)
         {
-
             return $this->render("quiz/leader_board.html.twig");
         }
 
+
+        $form = $this->createForm(StartQuizType::class);
+        $form->handleRequest($request);
+        if($form->isSubmitted()){
+            $startedQuiz = new StartedQuiz();
+            $startedQuiz->setUser($this->getUser());
+            $startedQuiz->setStartTime(new \DateTime());
+            $startedQuiz->setQuiz($quiz);
+            $startedQuiz->setLastQuestionNumber(0);
+
+            $this->getDoctrine()->getManager()->persist($startedQuiz);
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute("_quiz",array("id"=>$id));
+        }
+        return $this->render("quiz/quiz_start.html.twig", array("quiz"=>$quiz,"form"=>$form->createView()));
+
+    }
+
+
+    /**
+     * @Route("/start_quiz")
+     */
+    public function testStartQuiz(Request $request)
+    {
+        $form = $this->createForm(StartQuizType::class);
+        return $this->render("quiz/quiz_start.html.twig", array('form' => $form->createView()));
     }
 }

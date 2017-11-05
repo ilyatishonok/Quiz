@@ -7,27 +7,28 @@
 {% block content %}
     <nav class="user-header bg-color">
         <nav class="navbar navbar-light justify-content-between user-header">
-            <form class="form-inline">
-                <input class="form-control mr-sm-2 search-input" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0 search-btn" type="submit">Search</button>
-            </form>
+            {{ knp_pagination_filter(pagination, {'u.id': 'id', 'u.username': 'User Name', 'u.email': "Email", 'u.role': "Role", "u.isEnabled":"Status"}) }}
         </nav>
         <div class="container-fluid user-indent">
             <div class="col col-lg-12 user-creator user-header">
                 <table data-token="{{ csrf_token("intention") }}" class="table table-inverse users-table">
                     <tbody>
                         <tr>
-                            <th>User name</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                            <th>Status</th>
+                            <th>{{ knp_pagination_sortable(pagination, 'id' , 'u.id') }}</th>
+                            <th>{{ knp_pagination_sortable(pagination, 'User Name' , 'u.username') }}</th>
+                            <th>{{ knp_pagination_sortable(pagination, 'Email' , 'u.email') }}</th>
+                            <th>{{ knp_pagination_sortable(pagination, 'Role' , 'u.role') }}</th>
+                            <th>{{ knp_pagination_sortable(pagination, 'Confirmation Token', 'u.confirmationToken') }}</th>
+                            <th>{{ knp_pagination_sortable(pagination, 'Status' , 'u.isEnabled') }}</th>
                             <th></th>
                         </tr>
                         {% for user in pagination %}
                             <tr class="user-row"  data-id="{{ user.id }}">
-                                <td scope="row">{{ user.username }}</td>
+                                <td scope="row">{{ user.id }}</td>
+                                <td>{{ user.username }}</td>
                                 <td class="email">{{ user.email }}</td>
                                 <td class="role"> {{ user.role }} </td>
+                                <td class="confirm-token">{{ user.confirmationToken }}</td>
                                 {% if user.enabled == true %}
                                     <td class="status">Active</td>
                                     <td><button type="button" class="btn btn-outline-danger button-size btn-block">Block</button></td>
