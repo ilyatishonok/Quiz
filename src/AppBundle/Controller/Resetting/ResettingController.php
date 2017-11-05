@@ -46,10 +46,8 @@ class ResettingController extends Controller
         /** @var User $user */
         $user = $userRepository->findOneBy(array("resettingToken"=>$token));
 
-
-        //TODO UserByTokenNotFound
         if(!$user){
-            return new JsonResponse($token);
+            return $this->render("security/user_by_token_not_found.html.twig");
 
         }
 

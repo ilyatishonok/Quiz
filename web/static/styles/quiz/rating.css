@@ -1,0 +1,43 @@
+.quiz-creator {
+    color: white;
+    padding: 15px;
+    border-radius: 7px;
+}
+
+.rating {
+    margin-top: 100px;
+    border: 1px solid black;
+    border-radius: 7px;
+    box-shadow: 0 0 10px black;
+}
+
+.button-size {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.bg-color {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.quiz-indent {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.quiz-table {
+}
+
+.quiz_td {
+    padding-top: 0!important;
+    padding-bottom: 0!important;
+}
+.text {
+
+}
+
+.rating-tb {
+    border: 1px solid black;
+    border-radius: 7px;
+    box-shadow: 0 0 10px black;
+}
