@@ -55,6 +55,6 @@ class HomeController extends Controller
      */
     public function test(Request $request)
     {
-        return $this->render("quiz/rating.html.twig");
+        return $this->render("quiz/leader_board.html.twig");
     }
 }

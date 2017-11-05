@@ -5,12 +5,58 @@
 
 
 {% block stylesheets %}
-
+    <link rel="stylesheet" href="{{ asset("static/styles/quiz/leader_board.css") }}">
 {% endblock %}
 
 {% block body %}
-
-
+    <div class="container">
+        <div class="col-12 rating bg-color">
+            <div class="container-fluid quiz-indent">
+                <h1 class="text-white text-center">Leader board</h1>
+                <div class="col col-lg-12 quiz-creator rating-tb">
+                    <table class="table table-responsive-lg quiz-table">
+                        <tbody>
+                        <tr>
+                            <th scope="col">Position</th>
+                            <th scope="col">User name</th>
+                            <th scope="col">Right answers</th>
+                            <th scope="col">Time</th>
+                        </tr>
+                        <tr>
+                            <td scope="row">1</td>
+                            <td class="rating_td" scope="row">User name</td>
+                            <td class="rating_td" >Right answers</td>
+                            <td class="rating_td" >Time</td>
+                        </tr>
+                        <tr>
+                            <td scope="row">2</td>
+                            <td class="rating_td" scope="row">User name</td>
+                            <td class="rating_td" >Right answers</td>
+                            <td class="rating_td" >Time</td>
+                        </tr>
+                        <tr>
+                            <td scope="row">3</td>
+                            <td class="rating_td" scope="row">User name</td>
+                            <td class="rating_td" >Right answers</td>
+                            <td class="rating_td" >Time</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <h4 class="text-white text-center">Your position</h4>
+                    <table class="table table-inverse quiz-table">
+                        <tbody>
+                        <tr>
+                            <th>Position</th>
+                            <th>User name</th>
+                            <th>Right answers</th>
+                            <th>Time</th>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block javascripts %}
