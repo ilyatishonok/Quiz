@@ -1,13 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AppBundle\Controller\Home;
 
-use AppBundle\Entity\Question;
-use AppBundle\Entity\Quiz;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 class HomeController extends Controller
 {
@@ -16,13 +15,11 @@ class HomeController extends Controller
      */
     public function showHomePageAction(Request $request)
     {
-        $em    = $this->get('doctrine.orm.entity_manager');
-
-        $dql   = "SELECT q FROM AppBundle\Entity\Quiz q ";
-
+        $em = $this->get('doctrine.orm.entity_manager');
+        $dql = "SELECT q FROM AppBundle\Entity\Quiz q";
         $query = $em->createQuery($dql);
 
-        $paginator  = $this->get('knp_paginator');
+        $paginator = $this->get('knp_paginator');
 
         $pagination = $paginator->paginate(
             $query,
@@ -30,6 +27,14 @@ class HomeController extends Controller
             9
         );
 
-        return $this->render('default/index.html.twig', array('pagination' => $pagination));
+        return $this->render('home/homepage.html.twig', array('pagination' => $pagination));
+    }
+
+    /**
+     * @Route("/started-quizes", name="started_quizes")
+     */
+    public function showStartedQuizesAction(Request $request)
+    {
+        return $this->render("base.html.twig");
     }
 }

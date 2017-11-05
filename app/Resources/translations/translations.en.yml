@@ -1,8 +1,8 @@
 security:
     login:
         login_label: 'Sign in to access your account'
-        username: 'Username'
-        password: 'Password'
+        username: 'Username:'
+        password: 'Password:'
         remember_me: 'Remember me'
         submit: 'Sign in'
         register: 'Sign Up'
@@ -43,6 +43,11 @@ admin:
     quiz_question_label: "Questions: "
     quiz_quiestion_info_label: "If you want to add answer click to button below or add exist question."
 
+quiz:
+  question:
+    question_label: "Question"
+    answer_label: "Answers"
+    submit_question: "Submit question"
 
 
 errors:

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -43,70 +45,45 @@ class Answer
      */
     private $question;
 
-    /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return Answer
-     */
-    public function setName($name)
+    public function setName(string $name): Answer
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * Set isCorrect
-     *
-     * @param boolean $isCorrect
-     *
-     * @return Answer
-     */
-    public function setIsCorrect($isCorrect)
+    public function setIsCorrect(bool $isCorrect): Answer
     {
         $this->isCorrect = $isCorrect;
 
         return $this;
     }
 
-    public function getQuestion() : Question {
+    public function getQuestion(): Question
+    {
         return $this->question;
     }
 
-    /**
-     * Get isCorrect
-     *
-     * @return bool
-     */
-    public function isCorrect()
+    public function isCorrect(): bool
     {
         return $this->isCorrect;
     }
 
-    public function setQuestion($question){
+    public function setQuestion(Question $question): Answer
+    {
         $this->question = $question;
+
+        return $this;
     }
 
 }
