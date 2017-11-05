@@ -49,4 +49,12 @@ class HomeController extends Controller
         exit(dump($time));
         return $this->render("base.html.twig");
     }
+
+    /**
+     * @Route("/test")
+     */
+    public function test(Request $request)
+    {
+        return $this->render("quiz/rating.html.twig");
+    }
 }

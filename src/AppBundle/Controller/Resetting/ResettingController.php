@@ -29,10 +29,8 @@ class ResettingController extends Controller
         $userRepository = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\User");
         $user = $userRepository->findOneBy(array("resettingToken"=>$token));
 
-
-        //TODO UserByTokenNotFound
         if(!$user){
-            return new JsonResponse($token);
+            return $this->render("security/user_by_token_not_found.html.twig");
         }
 
         $form = $this->createForm(ResettingType::class,$user);
