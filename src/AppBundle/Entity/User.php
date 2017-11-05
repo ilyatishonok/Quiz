@@ -77,6 +77,13 @@ class User implements UserInterface
     /**
      * @var string
      *
+     * @ORM\Column(name="resetting_token", type="string", length=255, nullable=true)
+     */
+    private $resettingToken;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="firstname", type="string", length=255)
      */
     private $firstname;
@@ -124,6 +131,24 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getResettingToken()
+    {
+        return $this->resettingToken;
+    }
+
+    /**
+     * @param string $resettingToken
+     */
+    public function setResettingToken($resettingToken)
+    {
+        $this->resettingToken = $resettingToken;
+
+        return $this;
+    }
+
     public function getPlainPassword()
     {
         return $this->plainPassword;
@@ -136,7 +161,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getUsername()
+    public function getUsername(): ?string
     {
         return $this->username;
     }

@@ -26,6 +26,19 @@ security:
 
                       Regards,
                       the Team.
+    resetting:
+      email:
+        success: ""
+        subject: "Password recover"
+        message:
+                Hello %username%!
+
+                You resetting your password - please visit %resettingUrl%
+
+                This link can only be used once to reset password for your account.
+
+                Regards,
+                the Team
 
 
 admin:

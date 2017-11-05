@@ -1,8 +1,10 @@
 # Learn more about services, parameters and containers at
 # https://symfony.com/doc/current/service_container.html
 parameters:
-    #parameter_name: value
-    mailer_template_name : "mailer/email.html.twig"
+    mailer_params:
+      email_confirm_template: "mailer/mail_confirm.html.twig"
+      resetting_confirm_template: "mailer/mail_resetting.html.twig"
+
 
 services:
     # default configuration for services in *this* file
@@ -33,7 +35,7 @@ services:
 
     twig_mailer:
       class: AppBundle\Service\Mailer\TwigMailer
-      arguments: ["@mailer","@router","@twig", "%mailer_user%","%mailer_template_name%"]
+      arguments: ["@mailer","@router","@twig", "%mailer_user%","%mailer_params%"]
       public: true
     question_manager:
       class: AppBundle\Service\Question\QuestionManager
