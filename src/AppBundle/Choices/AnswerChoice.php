@@ -6,8 +6,7 @@
  * Time: 19:07
  */
 
-namespace AppBundle\Form;
-
+namespace AppBundle\Choices;
 
 use AppBundle\Entity\Answer;
 
@@ -15,11 +14,15 @@ class AnswerChoice
 {
     private $answer;
 
-    public function setAnswer(Answer $answer){
+    public function setAnswer(Answer $answer): AnswerChoice
+    {
         $this->answer = $answer;
+
+        return $this;
     }
 
-    public function getAnswer(){
+    public function getAnswer(): ?Answer
+    {
         return $this->answer;
     }
 }

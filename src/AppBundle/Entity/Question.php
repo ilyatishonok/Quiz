@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OneToMany as OneToMany;
+use Doctrine\ORM\PersistentCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -46,21 +48,20 @@ class Question implements \Serializable
      */
     private $name;
 
-    /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function setAnswers($answers){
+    public function setAnswers(Collection $answers): Question
+    {
         $this->answers = $answers;
+
+        return $this;
     }
 
-    public function getAnswers(){
+    public function getAnswers(): Collection
+    {
         return $this->answers;
     }
 
@@ -73,65 +74,27 @@ class Question implements \Serializable
         ));
     }
 
-    public function setId($id){
-        $this->id = $id;
-    }
-
-
     public function unserialize($serialized)
     {
     }
 
-    /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return Question
-     */
-    public function setName($name)
+    public function setName(string $name): Question
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * Set questionNumber
-     *
-     * @param integer $questionNumber
-     *
-     * @return Question
-     */
-    public function setQuestionNumber($questionNumber)
+    public function addAnswer(Answer $answer): Question
     {
-        $this->questionNumber = $questionNumber;
+        $this->answers->add($answer);
 
         return $this;
-    }
-
-    public function addAnswer(Answer $answer){
-        $this->answers->add($answer);
-    }
-
-    /**
-     * Get questionNumber
-     *
-     * @return int
-     */
-    public function getQuestionNumber()
-    {
-        return $this->questionNumber;
     }
 }
 

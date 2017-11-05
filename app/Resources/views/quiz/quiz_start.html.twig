@@ -7,10 +7,14 @@
 {% block body %}
     <div class="container">
         <div class="col-4 quiz-start bg-color text-color">
-            <h2>Name quiz</h2>
-            <p>Questions:</p>
-            <p>Players:</p>
-            <p>Leader:</p>
+            <h2>{{ quiz.name }}</h2>
+            <p>Questions: {{ quiz.countOfQuestions }}</p>
+            <p>Players: {{ quiz.countOfPlayers }}</p>
+            {% if quiz.leader %}
+                <p>Leader: {{ quiz.leader }}</p>
+            {% else %}
+                <p>Leader: None</p>
+            {% endif %}
             {{ form_start(form) }}
             {{ form_widget(form) }}
             {{ form_end(form) }}

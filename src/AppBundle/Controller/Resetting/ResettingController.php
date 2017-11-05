@@ -20,22 +20,6 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class ResettingController extends Controller
 {
     /**
-     * @Route("/request")
-     */
-    public function requestAction()
-    {
-
-    }
-
-    /**
-     * @Route("/sendEmail")
-     */
-    public function sendEmailAction()
-    {
-
-    }
-
-    /**
      * @Route("/resetting", name="_resetting")
      */
     public function resettingPasswordAction(Request $request, UserPasswordEncoderInterface $passwordEncoder)
@@ -43,14 +27,12 @@ class ResettingController extends Controller
         $token = $request->get("token");
 
         $userRepository = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\User");
-        /** @var User $user */
         $user = $userRepository->findOneBy(array("resettingToken"=>$token));
 
 
         //TODO UserByTokenNotFound
         if(!$user){
             return new JsonResponse($token);
-
         }
 
         $form = $this->createForm(ResettingType::class,$user);
@@ -64,10 +46,10 @@ class ResettingController extends Controller
             $this->getDoctrine()->getManager()->persist($user);
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->render("security/resetting.html.twig", array("form"=>$form->createView()));
+            return $this->render("resetting/resetting.html.twig", array("form"=>$form->createView()));
         }
 
-        return $this->render("security/resetting.html.twig", array("form"=>$form->createView()));
+        return $this->render("resetting/resetting.html.twig", array("form"=>$form->createView()));
     }
 
     /**
@@ -85,11 +67,10 @@ class ResettingController extends Controller
             $userRepository = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\User");
             $user = $userRepository->findOneBy(array("email"=>$emailChoice->getEmail()));
 
-
             //TODO USERNOTFOUND
             if(!$user){
                 $form->addError(new FormError("User with this email doesn't exist!"));
-                return $this->render("security/reset.html.twig",array("form"=>$form->createView()));
+                return $this->render("resetting/reset.html.twig",array("form"=>$form->createView()));
             }
 
             $tokenGenerator = new TokenGenerator();
@@ -104,11 +85,10 @@ class ResettingController extends Controller
             $em->persist($user);
             $em->flush();
 
-
             return new Response("A message has been sent to your email address.");
         }
 
-        return $this->render('security/reset.html.twig', array('form' => $form->createView()));
+        return $this->render('resetting/reset.html.twig', array('form' => $form->createView()));
     }
 
 }

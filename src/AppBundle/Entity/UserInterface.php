@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace AppBundle\Entity;
 
@@ -7,34 +8,35 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 interface UserInterface extends AdvancedUserInterface
 {
-    const ROLE_DEFAULT = 'ROLE_USER';
+    public function getId(): ?int;
 
-    const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
+    public function setUsername(string $username): UserInterface;
 
-    public function getId();
+    public function getUsername(): ?string;
 
-    public function setUsername($username);
+    public function getEmail(): ?string;
 
-    public function getEmail();
+    public function setEmail(string $email): UserInterface;
 
-    public function setEmail($email);
+    public function getPlainPassword(): ?string;
 
-    public function getPlainPassword();
+    public function setPlainPassword(string $password): UserInterface;
 
-    public function setPlainPassword($password);
+    public function setPassword(string $password): UserInterface;
 
-    public function setPassword($password);
+    public function getPassword(): ?string;
 
-    public function setEnabled($boolean);
+    public function getRole(): ?string;
 
-    public function getConfirmationToken();
+    public function setEnabled(bool $enabled): UserInterface;
 
-    public function setConfirmationToken($confirmationToken);
+    public function getConfirmationToken(): ?string;
 
-    public function getResettingToken();
+    public function setConfirmationToken(string $confirmationToken): UserInterface;
 
-    public function setResettingToken($resettingToken);
+    public function getResettingToken(): ?string;
+
+    public function setResettingToken(string $resettingToken): UserInterface;
 
     public function isPasswordRequestNonExpired($ttl);
-
 }

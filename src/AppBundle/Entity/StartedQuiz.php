@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn as JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne as ManyToOne;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * StartedQuiz
@@ -15,6 +16,11 @@ use Symfony\Component\Validator\Constraints\DateTime;
  */
 class StartedQuiz
 {
+    public function __construct()
+    {
+        $this->startTime = new \DateTime();
+    }
+
     /**
      * @var int
      *
@@ -62,25 +68,27 @@ class StartedQuiz
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function setQuiz(Quiz $quiz){
+    public function setQuiz(Quiz $quiz): StartedQuiz
+    {
         $this->quiz = $quiz;
 
         return $this;
     }
 
-    public function addRightAnswer()
+    public function addRightAnswer(): StartedQuiz
     {
         $this->rightAnswers += 1;
 
         return $this;
     }
 
-    public function getRightAnswers(){
+    public function getRightAnswers(): int
+    {
         return $this->rightAnswers;
     }
 
@@ -96,40 +104,29 @@ class StartedQuiz
         return $this;
     }
 
-    public function setUser($user){
+    public function setUser($user): StartedQuiz
+    {
         $this->user = $user;
 
         return $this;
     }
 
-    /**
-     * Set startTime
-     *
-     * @param \DateTime $startTime
-     *
-     * @return StartedQuiz
-     */
-    public function setStartTime($startTime)
+    public function setStartTime(\DateTime $startTime): StartedQuiz
     {
         $this->startTime = $startTime;
 
         return $this;
     }
 
-    /**
-     * Get startTime
-     *
-     * @return \DateTime
-     */
-    public function getStartTime()
+    public function getStartTime(): \DateTime
     {
         return $this->startTime;
     }
 
 
-    public function getLastQuestionNumber(){
+    public function getLastQuestionNumber(): int
+    {
         return $this->lastQuestionNumber;
     }
 
 }
-

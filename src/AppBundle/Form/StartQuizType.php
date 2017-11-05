@@ -8,7 +8,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class StartQuizType extends AbstractType
 {
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
