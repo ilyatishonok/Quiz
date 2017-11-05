@@ -31,4 +31,13 @@ class QuestionRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function loadQuestionWithAnswers($id){
+        return $this->createQueryBuilder("q")
+            ->leftJoin("q.answers", 'a')
+            ->where("q.id=:id")
+            ->setParameter('id',$id)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

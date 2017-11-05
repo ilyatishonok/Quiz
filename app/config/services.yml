@@ -43,6 +43,12 @@ services:
     registration_handler:
       class: AppBundle\Service\RegistrationHandler\RegistrationHandler
       public: true
+    started_quiz_manager:
+      class: AppBundle\Service\Quiz\StartedQuizManager
+      public: true
+    quiz_handler:
+      class: AppBundle\Service\QuizHandler\QuizHandler
+      public: true
     # add more services, or override services that need manual wiring
     # AppBundle\Service\ExampleService:
     #     arguments:

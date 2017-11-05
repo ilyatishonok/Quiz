@@ -8,6 +8,9 @@
     text-align: left;
 }
 
+body {
+    background-color: #534f9f !important;
+}
 
 .navbar-content{
     text-align: left;

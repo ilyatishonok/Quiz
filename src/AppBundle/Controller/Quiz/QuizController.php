@@ -1,17 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AppBundle\Controller\Quiz;
 
 use AppBundle\Entity\StartedQuiz;
+use AppBundle\Form\AnswerChoice;
+use AppBundle\Form\QuestionChoiceType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class QuizController extends Controller
 {
     /**
-     * @Route("/quiz/{id}")
+     * @Route("/quiz/{id}", name="_quiz")
      */
-    public function showQuizAction(string $id)
+    public function showQuizAction(Request $request,string $id)
     {
         $quizRepository = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\Quiz");
         $quiz = $quizRepository->find((integer)$id);
@@ -31,7 +37,19 @@ class QuizController extends Controller
         {
             $wiredQuestionRepository = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\WiredQuestion");
             $wiredQuestion = $wiredQuestionRepository->findOneBy(array("quiz"=>$quiz, "questionNumber"=>$startedQuiz->getLastQuestionNumber()));
-            return $this->render("quiz/started.html.twig", array("question"=>$wiredQuestion->getQuestion(), "quiz"=>$quiz));
+
+            $choice = new AnswerChoice();
+            $form = $this->createForm(QuestionChoiceType::class,$choice,array("question"=>$wiredQuestion->getQuestion(),"action"=>$this->generateUrl("_quiz",array('id'=>$id)),"method"=> "GET"));
+
+            $form->handleRequest($request);
+
+            if($form->isSubmitted() && $form->isValid()){
+                $quizHandler = $this->get("quiz_handler");
+                $quizHandler->proccessSubmitAnswer($this->getUser(),$startedQuiz,$wiredQuestion,$choice->getAnswer()->isCorrect());
+                return new JsonResponse("Blath");
+            }
+
+            return $this->render("quiz/started.html.twig",array("question_name"=>$wiredQuestion->getQuestion()->getName(),"form"=>$form->createView()));
         }
 
         $completedQuizRepository = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\CompletedQuiz");
@@ -44,5 +62,4 @@ class QuizController extends Controller
         }
 
     }
-
 }

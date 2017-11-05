@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn as JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne as ManyToOne;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * StartedQuiz
@@ -24,9 +25,9 @@ class StartedQuiz
     private $id;
 
     /**
-     * @var datetime_immutable
+     * @var \DateTime
      *
-     * @ORM\Column(name="startTime", type="datetime_immutable")
+     * @ORM\Column(name="startTime", type="datetime")
      */
     private $startTime;
 
@@ -50,6 +51,13 @@ class StartedQuiz
     private $lastQuestionNumber;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="right_answers", type="integer")
+     */
+    private $rightAnswers = 0;
+
+    /**
      * Get id
      *
      * @return int
@@ -65,8 +73,25 @@ class StartedQuiz
         return $this;
     }
 
-    public function setLastQuestion(WiredQuestion $question){
-        $this->lastQuestion = $question;
+    public function addRightAnswer()
+    {
+        $this->rightAnswers += 1;
+
+        return $this;
+    }
+
+    public function getRightAnswers(){
+        return $this->rightAnswers;
+    }
+
+    public function getQuiz(): Quiz
+    {
+        return $this->quiz;
+    }
+
+    public function setLastQuestionNumber(int $lastQuestionNumber): StartedQuiz
+    {
+        $this->lastQuestionNumber = $lastQuestionNumber;
 
         return $this;
     }
@@ -80,7 +105,7 @@ class StartedQuiz
     /**
      * Set startTime
      *
-     * @param datetime_immutable $startTime
+     * @param \DateTime $startTime
      *
      * @return StartedQuiz
      */
@@ -94,7 +119,7 @@ class StartedQuiz
     /**
      * Get startTime
      *
-     * @return datetime_immutable
+     * @return \DateTime
      */
     public function getStartTime()
     {

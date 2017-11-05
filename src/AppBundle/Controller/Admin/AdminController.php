@@ -1,13 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AppBundle\Controller\Admin;
 
 use AppBundle\Entity\Question;
 use AppBundle\Form\QuestionType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use AppBundle\Entity\User;
-use AppBundle\Entity\Quiz;
 use Symfony\Component\HttpFoundation\Request;
 
 class AdminController extends Controller
@@ -96,6 +96,7 @@ class AdminController extends Controller
             $request->query->getInt('page', 1),
             13
         );
+
         return $this->render("admin/quiz_manager.html.twig", array('pagination' => $pagination));
     }
 
