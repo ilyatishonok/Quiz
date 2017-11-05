@@ -16,7 +16,7 @@
                 <h4 class="question-text">{{ question_name }}</h4>
             </div>
             {% for answer in answers %}
-                <div class="answer">answer.name</div>
+                <div class="answer">{{ answer.name }}</div>
             {% endfor %}
             <a href="{{ path('_quiz', {'id': id}) }}" >Next Question</a>
         </div>

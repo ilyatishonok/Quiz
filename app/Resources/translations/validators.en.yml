@@ -1,2 +1,4 @@
-question_create:
-  error: "Can't create question without name"
+security:
+  registration:
+     email_error: "This email is already exists!"
+     username_error: "This username is already exists!"

@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
@@ -13,16 +16,15 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  * @UniqueEntity(
  *     fields={"email"},
- *     message="This email is already exists."
+ *     message="security.registration.email_error"
  * )
  * * @UniqueEntity(
  *     fields={"username"},
- *     message="This username is already exists."
+ *     message="security.registration.username_error"
  * )
  */
 class User implements UserInterface
 {
-
     /**
      * @var int
      *
@@ -46,7 +48,7 @@ class User implements UserInterface
     private $plainPassword;
 
     /**
-     * @var string
+     * @var bool
      *
      * @ORM\Column(name="enabled", type="boolean")
      */
@@ -86,21 +88,21 @@ class User implements UserInterface
      *
      * @ORM\Column(name="firstname", type="string", length=255)
      */
-    private $firstname;
+    private $firstName;
 
     /**
      * @var string
      *
      * @ORM\Column(name="lastname", type="string", length=255)
      */
-    private $lastname;
+    private $lastName;
 
     /**
      * @var string
      *
      * @ORM\Column(name="middlename", type="string", length=255, nullable=true)
      */
-    private $middlename = null;
+    private $middleName = null;
 
     /**
      * @var string
@@ -119,42 +121,36 @@ class User implements UserInterface
         // TODO: Implement isPasswordRequestNonExpired() method.
     }
 
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function setUsername($username)
+    public function setUsername(string $username): UserInterface
     {
         $this->username = $username;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getResettingToken()
+    public function getResettingToken(): ?string
     {
         return $this->resettingToken;
     }
 
-    /**
-     * @param string $resettingToken
-     */
-    public function setResettingToken($resettingToken)
+    public function setResettingToken(string $resettingToken): UserInterface
     {
         $this->resettingToken = $resettingToken;
 
         return $this;
     }
 
-    public function getPlainPassword()
+    public function getPlainPassword(): ?string
     {
         return $this->plainPassword;
     }
 
-    public function setPlainPassword($password)
+    public function setPlainPassword(string $password): UserInterface
     {
         $this->plainPassword = $password;
 
@@ -166,115 +162,116 @@ class User implements UserInterface
         return $this->username;
     }
 
-    public function setEnabled($enabled){
+    public function setEnabled(bool $enabled): UserInterface
+    {
         $this->isEnabled = $enabled;
         return $this;
     }
 
-    public function setEmail($email)
+    public function setEmail(string $email): UserInterface
     {
         $this->email = $email;
 
         return $this;
     }
 
-    public function getEmail()
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    public function setPassword($password)
+    public function setPassword(string $password): UserInterface
     {
         $this->password = $password;
 
         return $this;
     }
 
-    public function getPassword()
+    public function getPassword(): ?string
     {
         return $this->password;
     }
 
-    public function setConfirmationToken($confirmationToken)
+    public function setConfirmationToken(string $confirmationToken): UserInterface
     {
         $this->confirmationToken = $confirmationToken;
 
         return $this;
     }
 
-    public function isEnabled()
+    public function isEnabled(): ?bool
     {
         return $this->isEnabled;
     }
 
-    public function isCredentialsNonExpired()
+    public function isCredentialsNonExpired(): ?bool
     {
        return true;
     }
 
-    public function isAccountNonExpired()
+    public function isAccountNonExpired(): ?bool
     {
         return true;
     }
 
-    public function isAccountNonLocked()
+    public function isAccountNonLocked(): ?bool
     {
         return true;
     }
 
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
         $this->plainPassword = null;
     }
 
-    public function getRoles()
+    public function getRoles(): array
     {
         return array($this->role);
     }
 
-    public function getRole(){
+    public function getRole(): ?string
+    {
         return $this->role;
     }
 
-    public function getConfirmationToken()
+    public function getConfirmationToken(): ?string
     {
         return $this->confirmationToken;
     }
 
-    public function setFirstname($firstname)
+    public function setFirstName($firstName): User
     {
-        $this->firstname = $firstname;
+        $this->firstName = $firstName;
 
         return $this;
     }
 
-    public function getFirstname()
+    public function getFirstName(): ?string
     {
-        return $this->firstname;
+        return $this->firstName;
     }
 
-    public function setLastname($lastname)
+    public function setLastName(string $lastName): User
     {
-        $this->lastname = $lastname;
+        $this->lastName = $lastName;
 
         return $this;
     }
 
-    public function getLastname()
+    public function getLastName(): ?string
     {
-        return $this->lastname;
+        return $this->lastName;
     }
 
-    public function setMiddlename($middlename)
+    public function setMiddleName(string $middleName): User
     {
-        $this->middlename = $middlename;
+        $this->middleName = $middleName;
 
         return $this;
     }
 
-    public function getMiddlename()
+    public function getMiddleName(): ?string
     {
-        return $this->middlename;
+        return $this->middleName;
     }
 }
-

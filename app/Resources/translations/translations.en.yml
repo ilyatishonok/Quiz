@@ -10,10 +10,28 @@ security:
         resetting: 'Forgot password'
 
     registration:
-        registration_label: "Sign in to access your account"
-        email_label: "Email:"
-        username: "Username:"
+        labels:
+          registration: "Sign in to access your account"
+          email: "Email:"
+          username: "Username:"
+          middlename: "Middle name"
+          lastname: "Last name:"
+          firstname: "First name:"
+          firstpass: "Password: "
+          secondpass: "Repeat password: "
+
+        placeholders:
+          email: "input email"
+          username: "input username"
+          firstpass: "input password"
+          secondpass: "repeat password"
+          middlename: "input middlename"
+          lastname: "input lastname"
+          firstname: "input firstname"
+
         btn_main_page: "Go to home page"
+        btn_submit_registration: "Create my account"
+
         email:
             success: "You successfuly register your account, now you can sign in using your email or username!"
             subject: "Welcome %username%"

@@ -104,4 +104,3 @@ class UserAnswer
         return $this;
     }
 }
-

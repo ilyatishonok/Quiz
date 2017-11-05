@@ -18,11 +18,6 @@ use function Sodium\add;
 class Quiz
 {
 
-    public function __construct()
-    {
-        $this->questions = new ArrayCollection();
-    }
-
     /**
      * @var int
      *
@@ -38,24 +33,6 @@ class Quiz
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
-
-    /**
-     * Many User have Many Phonenumbers.
-     * @ManyToMany(targetEntity="Question")
-     * @JoinTable(name="quizes_questions",
-     *      joinColumns={@JoinColumn(name="quiz_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="question_id", referencedColumnName="id", unique=true)}
-     *      )
-     */
-    private $questions;
-
-    public function getQustions(){
-        return $this->questions;
-    }
-
-    public function getQuestion($position){
-        return $this->questions[$position];
-    }
 
     /**
      * @var string
@@ -76,145 +53,63 @@ class Quiz
      *
      * @ORM\Column(name="countOfPlayers", type="integer")
      */
-    private $countOfPlayers;
+    private $countOfPlayers = 0;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="enabled", type="boolean")
      */
-    private $enabled;
+    private $enabled = true;
 
-    /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
+
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function isEnable(){
+    public function isEnable(): bool
+    {
         return $this->enabled;
     }
 
-    /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return Quiz
-     */
-    public function setName($name)
+    public function setName($name): Quiz
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * Set firstQuestionID
-     *
-     * @param string $firstQuestionID
-     *
-     * @return Quiz
-     */
-    public function setFirstQuestionID($firstQuestionID)
+    public function getLeader(): ?string
     {
-        $this->firstQuestionID = $firstQuestionID;
-
-        return $this;
-    }
-
-    public function getLeader(){
         return $this->leader;
     }
 
-    public function addQuestion($question){
-        $this->questions->add($question);
-    }
-
-    /**
-     * Get firstQuestionID
-     *
-     * @return string
-     */
-
-    /**
-     * Set lastQuestionID
-     *
-     * @param string $lastQuestionID
-     *
-     * @return Quiz
-     */
-    public function setLastQuestionID($lastQuestionID)
-    {
-        $this->lastQuestionID = $lastQuestionID;
-
-        return $this;
-    }
-
-    /**
-     * Get lastQuestionID
-     *
-     * @return string
-     */
-
-    /**
-     * Set countOfQuestions
-     *
-     * @param string $countOfQuestions
-     *
-     * @return Quiz
-     */
-    public function setCountOfQuestions($countOfQuestions)
+    public function setCountOfQuestions($countOfQuestions): Quiz
     {
         $this->countOfQuestions = $countOfQuestions;
 
         return $this;
     }
 
-    /**
-     * Get countOfQuestions
-     *
-     * @return string
-     */
-    public function getCountOfQuestions()
+    public function getCountOfQuestions(): int
     {
         return $this->countOfQuestions;
     }
 
-    /**
-     * Set countOfPlayers
-     *
-     * @param integer $countOfPlayers
-     *
-     * @return Quiz
-     */
-    public function setCountOfPlayers($countOfPlayers)
+    public function addPlayer(): Quiz
     {
-        $this->countOfPlayers = $countOfPlayers;
+        $this->countOfPlayers += 1;
 
         return $this;
     }
 
-    /**
-     * Get countOfPlayers
-     *
-     * @return int
-     */
-    public function getCountOfPlayers()
+    public function getCountOfPlayers(): int
     {
         return $this->countOfPlayers;
     }
