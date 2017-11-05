@@ -17,10 +17,10 @@
                 <table class="table table-inverse quiz-table">
                     <tbody>
                     <tr>
-                        <th>Quiz name</th>
-                        <th>Question</th>
-                        <th>Players</th>
-                        <th>Leader</th>
+                        <th>{{ knp_pagination_sortable(pagination, 'Quiz name' , 'quiz.name') }}</th>
+                        <th>{{ knp_pagination_sortable(pagination, 'Question' , 'quiz.countOfQuestions') }}</th>
+                        <th>{{ knp_pagination_sortable(pagination, 'Players' , 'quiz.countOfPlayers') }}</th>
+                        <th>{{ knp_pagination_sortable(pagination, 'Leader' , 'quiz.leader') }}</th>
                         <td></td>
                     </tr>
                     {% for quiz in pagination %}
