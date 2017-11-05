@@ -46,7 +46,7 @@ class QuizController extends Controller
             if($form->isSubmitted() && $form->isValid()){
                 $quizHandler = $this->get("quiz_handler");
                 $quizHandler->proccessSubmitAnswer($this->getUser(),$startedQuiz,$wiredQuestion,$choice->getAnswer()->isCorrect());
-                return new JsonResponse("Blath");
+                return $this->render("quiz/answered_question.html.twig",array('id'=>$quiz->getId(),"question_name"=>$wiredQuestion->getQuestion()->getName(),"answers"=>$wiredQuestion->getQuestion()->getAnswers()));
             }
 
             return $this->render("quiz/started.html.twig",array("question_name"=>$wiredQuestion->getQuestion()->getName(),"form"=>$form->createView()));

@@ -22,9 +22,13 @@ class QuizHandler
         $this->entityManager = $entityManager;
     }
 
-    public function updateQuizState(StartedQuiz $startedQuiz, int $questionNumber): StartedQuiz
+    public function updateQuizState(StartedQuiz $startedQuiz, int $questionNumber, bool $isCorrect): StartedQuiz
     {
         $startedQuiz->setLastQuestionNumber($questionNumber+1);
+
+        if($isCorrect){
+            $startedQuiz->addRightAnswer();
+        }
 
         $this->entityManager->persist($startedQuiz);
 
@@ -56,7 +60,7 @@ class QuizHandler
         $this->createUserAnswer($user,$quiz->getQuiz(),$question->getQuestionNumber(),$isCorrect);
 
         if(!($quiz->getQuiz()->getCountOfQuestions()-1 == $question->getQuestionNumber())){
-           $this->updateQuizState($quiz,$question->getQuestionNumber());
+           $this->updateQuizState($quiz,$question->getQuestionNumber(),$isCorrect);
            $this->entityManager->flush();
            return;
         }

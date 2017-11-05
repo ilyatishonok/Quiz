@@ -20,7 +20,7 @@
                     <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                 {% endif %}
             </div>
-            <a href="{{ path("resetting_password") }}">{{ 'security.login.resetting'|trans }}?</a>
+            <a href="{{ path("_reset") }}">{{ 'security.login.resetting'|trans }}?</a>
             <input type="hidden" name="_csrf_token"
                    value="{{ csrf_token('authenticate') }}">
             <button id="login" class="btn btn-large" type="submit">{{ 'security.login.submit'|trans }}</button>

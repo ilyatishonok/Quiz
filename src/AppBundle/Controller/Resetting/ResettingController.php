@@ -49,7 +49,7 @@ class ResettingController extends Controller
 
         //TODO UserByTokenNotFound
         if(!$user){
-            return $this->render("", array());
+            return new JsonResponse($token);
 
         }
 
