@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AppBundle\Controller\Quiz;
 
 use AppBundle\Entity\StartedQuiz;
+use AppBundle\Form\StartQuizType;
 use AppBundle\Form\AnswerChoice;
 use AppBundle\Form\QuestionChoiceType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -61,5 +62,15 @@ class QuizController extends Controller
             return $this->render("quiz/leader_board.html.twig");
         }
 
+    }
+
+
+    /**
+     * @Route("/start_quiz")
+     */
+    public function testStartQuiz(Request $request)
+    {
+        $form = $this->createForm(StartQuizType::class);
+        return $this->render("quiz/quiz_start.html.twig", array('form' => $form->createView()));
     }
 }
