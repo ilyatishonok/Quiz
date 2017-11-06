@@ -86,27 +86,6 @@ class User implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="firstname", type="string", length=255)
-     */
-    private $firstName;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="lastname", type="string", length=255)
-     */
-    private $lastName;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="middlename", type="string", length=255, nullable=true)
-     */
-    private $middleName = null;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="role", type="string", length=255)
      */
     private $role = "ROLE_USER";
@@ -237,41 +216,5 @@ class User implements UserInterface
     public function getConfirmationToken(): ?string
     {
         return $this->confirmationToken;
-    }
-
-    public function setFirstName($firstName): User
-    {
-        $this->firstName = $firstName;
-
-        return $this;
-    }
-
-    public function getFirstName(): ?string
-    {
-        return $this->firstName;
-    }
-
-    public function setLastName(string $lastName): User
-    {
-        $this->lastName = $lastName;
-
-        return $this;
-    }
-
-    public function getLastName(): ?string
-    {
-        return $this->lastName;
-    }
-
-    public function setMiddleName(string $middleName): User
-    {
-        $this->middleName = $middleName;
-
-        return $this;
-    }
-
-    public function getMiddleName(): ?string
-    {
-        return $this->middleName;
     }
 }

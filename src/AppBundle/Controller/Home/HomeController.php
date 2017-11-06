@@ -50,11 +50,4 @@ class HomeController extends Controller
         return $this->render("base.html.twig");
     }
 
-    /**
-     * @Route("/test")
-     */
-    public function test(Request $request)
-    {
-        return $this->render("quiz/rating.html.twig");
-    }
 }

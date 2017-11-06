@@ -7,20 +7,17 @@
 {% block content %}
     <nav class="quiz-header bg-color">
         <nav class="navbar navbar-light justify-content-between quiz-header">
-            <form class="form-inline">
-                <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
+            {{ knp_pagination_filter(pagination, {'quiz.name': 'Quiz name', 'quiz.countOfQuestions': 'Question', 'quiz.countOfPlayers': "Players", 'quiz.leader': "Leader"}) }}
         </nav>
         <div class="container-fluid quiz-indent">
             <div class="col col-lg-12 quiz-creator quiz-header">
-                <table class="table table-inverse quiz-table">
+                <table data-token="{{ csrf_token("intention") }}" class="table table-inverse quiz-table">
                     <tbody>
                     <tr>
-                        <th>Quiz name</th>
-                        <th>Question</th>
-                        <th>Players</th>
-                        <th>Leader</th>
+                        <th>{{ knp_pagination_sortable(pagination, 'Quiz name' , 'quiz.name') }}</th>
+                        <th>{{ knp_pagination_sortable(pagination, 'Question' , 'quiz.countOfQuestions') }}</th>
+                        <th>{{ knp_pagination_sortable(pagination, 'Players' , 'quiz.countOfPlayers') }}</th>
+                        <th>{{ knp_pagination_sortable(pagination, 'Leader' , 'quiz.leader') }}</th>
                         <td></td>
                     </tr>
                     {% for quiz in pagination %}

@@ -81,7 +81,7 @@ class AdminController extends Controller
     public function showQuizManagerPanelAction(Request $request)
     {
         $em = $this->get('doctrine.orm.entity_manager');
-        $dql = "SELECT quiz FROM AppBundle\Entity\Quiz quiz";
+        $dql = "SELECT quiz FROM AppBundle\Entity\Quiz quiz ";
         $query = $em->createQuery($dql);
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(

@@ -1,5 +1,20 @@
+
 {% trans_default_domain "translations" %}
 
-{{ form_start(form) }}
-{{ form_widget(form) }}
-{{ form_end(form) }}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset("static/styles/resetting/resetting.css?v1.12") }}">
+    <link rel="stylesheet" href="{{ asset("static/styles/bootstrap.min.css") }}">
+{% endblock %}
+
+{% block body %}
+    <div class="col-4 user-password bg-color accommodation">
+        <div class="container text">
+            <h2>Change Password</h2>
+            <form action="{{ path("_resetting") }}" method="PATCH">
+                {{ form_widget(form.plainPassword) }}
+                {{ form_errors(form) }}
+                {{ form_widget(form.submit) }}
+            </form>
+        </div>
+    </div>
+{% endblock %}

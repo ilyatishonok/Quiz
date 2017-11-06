@@ -1,12 +1,12 @@
 {% extends 'admin/panel.html.twig' %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset("static/styles/admin/user.css") }}">
+    <link rel="stylesheet" href="{{ asset("static/styles/admin/user-manager.css") }}">
 {% endblock %}
 
 {% block content %}
     <nav class="user-header bg-color">
-        <nav class="navbar navbar-light justify-content-between user-header">
+        <nav class="navbar navbar-light justify-content-between user-header ">
             {{ knp_pagination_filter(pagination, {'u.id': 'id', 'u.username': 'User Name', 'u.email': "Email", 'u.role': "Role", "u.isEnabled":"Status"}) }}
         </nav>
         <div class="container-fluid user-indent">

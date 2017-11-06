@@ -2,24 +2,25 @@
 
 <html>
 <head>
-    <link rel="stylesheet" href="{{ asset("static/styles/register.css") }}">
+    <link rel="stylesheet" href="{{ asset("static/styles/register.css?v1.0") }}">
     <link rel="stylesheet" href="{{ asset("static/styles/bootstrap.min.css") }}">
 
 </head>
     <body>
-        <div class="parent">
-                <h5 class="login-header" style="text-align: center"><p style="margin-right: 7px;">{{ 'security.registration.labels.registration'|trans }}</p></h5>
+        <div class=" parent">
+                <h5 class="register-header" style="text-align: center"><p style="margin-right: 7px;">{{ 'security.registration.labels.registration'|trans }}</p></h5>
             <form action="{{ path('registration') }}" method="POST">
-                    <div class="form-group">
-                        {{ form_label(form.email) }}
-                        {{ form_widget(form.email, { 'attr': {'class': 'form-control', 'placeholder': 'security.registration.placeholders.email'} }) }}
-                        {{ form_errors(form.email, {'attr': {'class':'register-error'}}) }}
-                    </div>
 
                     <div class="form-group">
                         {{ form_label(form.username) }}
                         {{ form_widget(form.username, { 'attr': {'class': 'form-control', 'placeholder': 'security.registration.placeholders.username'} }) }}
                         {{ form_errors(form.username, {'attr': {'class':'register-error'}}) }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(form.email) }}
+                        {{ form_widget(form.email, { 'attr': {'class': 'form-control', 'placeholder': 'security.registration.placeholders.email'} }) }}
+                        {{ form_errors(form.email, {'attr': {'class':'register-error'}}) }}
                     </div>
 
                     <div class="form-group">
@@ -33,27 +34,9 @@
                         {{ form_widget(form.plainPassword.second, { 'attr': {'class': 'form-control', 'placeholder': 'security.registration.placeholders.secondpass'} }) }}
                         {{ form_errors(form.plainPassword.second, {'attr': {'class':'register-error'}}) }}
                     </div>
-
-                    <div class="form-group">
-                        {{ form_label(form.firstname) }}
-                        {{ form_widget(form.firstname, { 'attr': {'class': 'form-control', 'placeholder': 'security.registration.placeholders.firstname'} }) }}
-                        {{ form_errors(form.firstname, {'attr': {'class':'register-error'}}) }}
-                    </div>
-
-                    <div class="form-group">
-                        {{ form_label(form.lastname) }}
-                        {{ form_widget(form.lastname, { 'attr': {'class': 'form-control', 'placeholder': 'security.registration.placeholders.lastname'} }) }}
-                        {{ form_errors(form.lastname, {'attr': {'class':'register-error'}}) }}
-                    </div>
-
-                    <div class="form-group">
-                        {{ form_label(form.middlename) }}
-                        {{ form_widget(form.middlename, { 'attr': {'class': 'form-control', 'placeholder': 'security.registration.placeholders.middlename'} }) }}
-                    </div>
-
                     {{ form_rest(form) }}
-                        <input type="hidden" name="isEmpty" value="">
-                        <input id="login" class="btn btn-large" type="submit" value="{{ 'security.registration.btn_submit_registration'|trans }}">
+                    <input type="hidden" name="isEmpty" value="">
+                    <button class="btn btn-large register-btn">{{ "security.registration.btn_submit_registration"|trans }}</button>
             </form>
         </div>
     </body>
