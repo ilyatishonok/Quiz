@@ -2,3 +2,5 @@ security:
   registration:
      email_error: "This email is already exists!"
      username_error: "This username is already exists!"
+  password_resetting:
+    match: "Passwords don't match!"

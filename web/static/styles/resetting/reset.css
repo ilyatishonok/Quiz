@@ -1,0 +1,45 @@
+body {
+    background-color: #534f9f !important;
+}
+
+.text {
+    color: white;
+    text-align: center;
+}
+
+.bg-color {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.accommodation {
+    margin: 0 auto ;
+}
+
+ul{
+    padding: 0px;
+    list-style: none;
+    margin-top: 10px !important;
+    margin-bottom: 0px !important;
+    text-align: left;
+    color: red;
+}
+
+.user-password {
+    border: 1px solid black;
+    border-radius: 7px;
+    box-shadow: 0 0 10px black;
+    margin-top: 100px !important;
+    padding: 50px;
+}
+
+.email-btn {
+    margin-top: 15px;
+    width: 100%;
+    background-color: #8b51f5;
+    color: white;
+    border-radius: 7px;
+}
+
+.email-btn:hover{
+    background-color: limegreen;
+}

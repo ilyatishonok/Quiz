@@ -5,18 +5,30 @@ body {
 .parent {
     color: white;
     margin: auto;
-    margin-top: 100px;
+    margin-top: 40px;
     margin-bottom: 0;
     width: 350px ;
+    border-radius: 7px;
+    box-shadow: 0 0 10px black;
     height: auto;
-    padding: 40px 40px 30px 50px;
+    padding: 40px 50px 20px 50px;
     background: rgba(0, 0, 0, 0.6);
+}
+
+.form-group{
+    margin-bottom: 2px !important;
 }
 
 .form-control{
     background-color: #ebebeb !important;
-    height: 40px !important;
-    width: 250px !important;
+}
+
+ul{
+    list-style: none;
+    margin-top: 10px !important;
+    margin-bottom: 0px !important;
+    padding: 0px;
+    color: red;
 }
 
 .child {
@@ -24,19 +36,27 @@ body {
     padding-left: 50px;
 }
 
-.error {
+.register-error {
     color: #942a25;
     font-size: 17px;
 }
 
-#login {
-    background-color: #8b51f5;
+
+.register-btn {
+    width: 100%;
+    margin-top: 20px;
+    background-color: #8b51f5 !important;
     color: #ffffff;
-    width: 250px;
     height: 45px;
 }
 
-.login-header {
+.register-btn:hover
+{
+    background-color: limegreen !important;
+}
+
+
+.register-header {
 
     font-size: 20px;
 }

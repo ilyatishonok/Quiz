@@ -57,7 +57,7 @@ class ResettingController extends Controller
     {
         $emailChoice = new EmailChoice();
 
-        $form = $this->createForm(ResetPasswordType::class, $emailChoice);
+        $form = $this->createForm(ResetPasswordType::class, $emailChoice, array("method"=>"PATCH"));
         $form->handleRequest($request);
 
         if($form->isValid() && $form->isSubmitted()){

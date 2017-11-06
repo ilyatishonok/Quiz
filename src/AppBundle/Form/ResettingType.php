@@ -24,9 +24,12 @@ class ResettingType extends AbstractType
     {
         $builder->add('plainPassword',RepeatedType::class,array(
                 'type' => PasswordType::class,
-                'first_options' => array('label' => 'Password'),
-                'second_options' => array('label' => 'Repeat Password')))
-                ->add("submit", SubmitType::class);
+                "error_bubbling"=>true,
+                'trim' => true,
+                'invalid_message' => "security.password_resetting.match",
+                'first_options' => array('label' => 'Password', "attr"=>array("class"=> "form-control", 'placeholder' => "security.resetting.placeholders.password")),
+                'second_options' => array('label' => 'Repeat Password', "attr"=>array("class"=> "form-control", 'placeholder' => "security.resetting.placeholders.repeat_password"))))
+                ->add("submit", SubmitType::class, array('attr'=>array('class' => "btn btn-large start-btn")));
     }
 
     public function configureOptions(OptionsResolver $resolver)
