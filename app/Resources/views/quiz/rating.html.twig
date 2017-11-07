@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% trans_default_domain "translations" %}
+
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset("static/styles/quiz/rating.css?v1.0") }}">
 {% endblock %}
@@ -8,34 +10,22 @@
     <div class="container">
         <div class="col-12 rating bg-color">
             <div class="container-fluid quiz-indent">
-                <h1 class="text-white text-center">Leader board</h1>
+                <h1 class="text-white text-center">{{ "leaderboard.label"|trans }}</h1>
                 <div class="col col-lg-12 quiz-creator rating-tb">
                     <table class="table table-responsive-lg quiz-table">
                         <tbody>
                         <tr>
-                            <th scope="col">Position</th>
-                            <th scope="col">User name</th>
-                            <th scope="col">Right answers</th>
-                            <th scope="col">Time</th>
+                            <th scope="col">{{ "leaderboard.position"|trans }}</th>
+                            <th scope="col">{{ "leaderboard.name"|trans }}</th>
+                            <th scope="col">{{ "leaderboard.right_answers"|trans }}</th>
+                            <th scope="col">{{ "leaderboard.time"|trans }}</th>
                         </tr>
-                            <tr>
-                                <td scope="row">1</td>
-                                <td class="quiz_td" scope="row">User name</td>
-                                <td class="quiz_td" >Right answers</td>
-                                <td class="quiz_td" >Time</td>
-                            </tr>
-                        <tr>
-                            <td scope="row">2</td>
-                            <td class="quiz_td" scope="row">User name</td>
-                            <td class="quiz_td" >Right answers</td>
-                            <td class="quiz_td" >Time</td>
-                        </tr>
-                        <tr>
-                            <td scope="row">3</td>
-                            <td class="quiz_td" scope="row">User name</td>
-                            <td class="quiz_td" >Right answers</td>
-                            <td class="quiz_td" >Time</td>
-                        </tr>
+                        {% for leader in leaders %}
+                            <td scope="row">{{ loop.index }}</td>
+                            <td class="quiz_td">{{ leader.user.username }}</td>
+                            <td class="quiz_td">{{ leader.rightQuestions }}</td>
+                            <td class="quiz_td">Time</td>
+                        {% endfor  %}
                         </tbody>
                     </table>
                 </div>
@@ -44,15 +34,16 @@
                     <table class="table table-inverse quiz-table">
                         <tbody>
                             <tr>
-                                <th>Position</th>
-                                <th>User name</th>
-                                <th>Right answers</th>
-                                <th>Time</th>
+                                <th scope="col">{{ "leaderboard.position"|trans }}</th>
+                                <th scope="col">{{ "leaderboard.name"|trans }}</th>
+                                <th scope="col">{{ "leaderboard.right_answers"|trans }}</th>
+                                <th scope="col">{{ "leaderboard.time"|trans }}</th>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
+            <a href="{{ path("homepage") }}" style="color: white; text-align: center;" class="btn btn-large btn-main-page">Go To Main Page</a>
         </div>
     </div>
 {% endblock %}

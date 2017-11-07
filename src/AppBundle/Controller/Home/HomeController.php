@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace AppBundle\Controller\Home;
 
+use AppBundle\Entity\WiredQuestion;
+use AppBundle\Exceptions\QuestionException;
 use AppBundle\Repository\CompletedQuizRepository;
+use AppBundle\Repository\QuestionRepository;
+use AppBundle\Repository\WiredQuestionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,16 +42,14 @@ class HomeController extends Controller
      */
     public function showStartedQuizesAction(Request $request)
     {
-        $quizRepository = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\Quiz");
-        $quiz = $quizRepository->findOneBy(array("id"=>10));
-        /** @var CompletedQuizRepository $completedQuizRep */
-        $completedQuizRep = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\CompletedQuiz");
-        $compleQuiz = $completedQuizRep->findOneBy(array("user"=>$this->getUser(), "quiz"=>$quiz));
-        /** @var \DateInterval $time */
-        $time = $compleQuiz->getTime();
-        //$pos = $completedQuizRep->loadUserPosition($compleQuiz->getRightQuestions(),$compleQuiz->getTime()->);
-        exit(dump($time));
-        return $this->render("base.html.twig");
+        /** @var WiredQuestionRepository $em */
+        $em = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\WiredQuestion");
+        try {
+            $em->abraKadaBra();
+        }catch (QuestionException $exception){
+            return new Response($exception->getMessage());
+        }
+       return $this->render("base.html.twig");
     }
 
     /**
@@ -55,6 +57,7 @@ class HomeController extends Controller
      */
     public function test(Request $request)
     {
-        return $this->render("quiz/rating.html.twig");
+        $em = $this->getDoctrine();
+        return $this->render("base.html.twig");
     }
 }

@@ -192,7 +192,7 @@ class User implements UserInterface
         return $this->password;
     }
 
-    public function setConfirmationToken(string $confirmationToken): UserInterface
+    public function setConfirmationToken(?string $confirmationToken): UserInterface
     {
         $this->confirmationToken = $confirmationToken;
 

@@ -17,7 +17,10 @@ class AdminController extends Controller
      */
     public function showQuizCreationAction()
     {
-        return $this->render("admin/quiz.html.twig");
+        $question = new Question();
+
+        $form = $this->createForm(QuestionType::class, $question);
+        return $this->render("admin/quiz.html.twig", array("form"=>$form->createView(   )));
     }
 
 
@@ -38,7 +41,7 @@ class AdminController extends Controller
 
         $form = $this->createForm(QuestionType::class, $question);
 
-        return $this->render("admin/question.html.twig", array("form"=>$form->createView()));
+        return $this->render("admin/new_question.html.twig", array("form"=>$form->createView()));
     }
 
     /**

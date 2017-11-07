@@ -12,6 +12,7 @@ use AppBundle\Repository\WiredQuestionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class QuizController extends Controller
 {
@@ -36,22 +37,8 @@ class QuizController extends Controller
 
         if($startedQuiz)
         {
-            /** @var WiredQuestionRepository $wiredQuestionRepository */
-            $wiredQuestionRepository = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\WiredQuestion");
-            $wiredQuestion = $wiredQuestionRepository->findOneBy(array("quiz"=>$quiz, "questionNumber"=>$startedQuiz->getLastQuestionNumber()));
-
-            $choice = new AnswerChoice();
-            $form = $this->createForm(QuestionChoiceType::class,$choice,array("question"=>$wiredQuestion->getQuestion(),"action"=>$this->generateUrl("_quiz",array('id'=>$id)),"method"=> "GET"));
-
-            $form->handleRequest($request);
-
-            if($form->isSubmitted() && $form->isValid()){
-                $quizHandler = $this->get("quiz_handler");
-                $quizHandler->proccessSubmitAnswer($this->getUser(),$startedQuiz,$wiredQuestion,$choice->getAnswer()->isCorrect());
-                return $this->render("quiz/answered_question.html.twig",array('id'=>$quiz->getId(),"question_name"=>$wiredQuestion->getQuestion()->getName(),"answers"=>$wiredQuestion->getQuestion()->getAnswers()));
-            }
-
-            return $this->render("quiz/started.html.twig",array("question_name"=>$wiredQuestion->getQuestion()->getName(),"form"=>$form->createView()));
+            $data = array("quiz"=>$quiz,"startedQuiz"=>$startedQuiz,"id"=>$id);
+            return $this->proccessUserSubmitAction($request,$data);
         }
 
         $completedQuizRepository = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\CompletedQuiz");
@@ -59,7 +46,8 @@ class QuizController extends Controller
 
         if($completedQuiz)
         {
-            return $this->render("quiz/leader_board.html.twig");
+            $completedQuizes = $completedQuizRepository->loadLeaders($quiz);
+            return $this->render("quiz/rating.html.twig", array('leaders'=>$completedQuizes));
         }
 
 
@@ -81,6 +69,32 @@ class QuizController extends Controller
 
     }
 
+
+    private function proccessUserSubmitAction(Request $request, array $data): Response
+    {
+        $quiz = $data['quiz'];
+        $startedQuiz = $data['startedQuiz'];
+        $id = $data['id'];
+
+        $wiredQuestionRepository = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\WiredQuestion");
+        $wiredQuestion = $wiredQuestionRepository->findOneBy(array("quiz"=>$quiz, "questionNumber"=>$startedQuiz->getLastQuestionNumber()));
+
+        $choice = new AnswerChoice();
+        $form = $this->createForm(QuestionChoiceType::class,$choice,array("question"=>$wiredQuestion->getQuestion(),"action"=>$this->generateUrl("_quiz",array('id'=>$id)),"method"=> "GET"));
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $quizHandler = $this->get("quiz_handler");
+            $quizHandler->proccessSubmitAnswer($this->getUser(),$startedQuiz,$wiredQuestion,$choice->getAnswer()->isCorrect());
+            return $this->render("quiz/answered_question.html.twig",array('id'=>$quiz->getId(),"question_name"=>$wiredQuestion->getQuestion()->getName(),"answers"=>$wiredQuestion->getQuestion()->getAnswers()));
+        }
+
+        $userAnswerRepository = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\UserAnswer");
+        $userAnswers = $userAnswerRepository->findBy(array("quiz"=>$quiz,"user"=>$this->getUser()));
+
+        return $this->render("quiz/started.html.twig",array("answers"=>$userAnswers,'',"question_name"=>$wiredQuestion->getQuestion()->getName(),"form"=>$form->createView()));
+    }
 
     /**
      * @Route("/start_quiz")

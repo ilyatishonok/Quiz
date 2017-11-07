@@ -1,0 +1,44 @@
+{% extends 'admin/panel.html.twig' %}
+
+{% trans_default_domain "translations" %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset("static/styles/admin/question.new.css?v1.54") }}">
+{% endblock %}
+
+{% form_theme form _self %}
+
+{% import _self as formPrototype %}
+
+{% macro printPrototype(prototypeForm) %}
+    <div class="answer-wrapper">
+        {{ form_widget(prototypeForm.name, {"attr": {"autocomplete": "off"}}) }}
+    </div>
+{% endmacro %}
+
+{% block content %}
+<div class="container content">
+    <div class="col-8 align-self-center question-handler">
+        {{ form_start(form, { 'attr' : { 'id': 'form_question' } }) }}
+        <div class="question-wrapper">
+            <h2>Add Question:</h2>
+            {{ form_widget(form.name) }}
+        </div>
+        <div class="answers">
+            <h4>Answers:</h4>
+            <div id="question_answers" data-prototype="{{formPrototype.printPrototype(form.answers.vars.prototype)|e("html_attr")}}"></div>
+
+            {{ form_end(form) }}
+
+            <button class="btn btn-large add-answer-btn">Add Answer</button>
+        </div>
+        <button class="btn btn-large add-question-btn">Create Question</button>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block javascripts %}
+    <script src="{{ asset("static/scripts/admin/question.js?v1.70") }}"></script>
+    <script src="{{ asset("static/scripts/jquery.newquestion.js?v1.80") }}"></script>
+{% endblock %}

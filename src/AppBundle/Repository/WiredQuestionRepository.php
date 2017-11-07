@@ -8,10 +8,6 @@ use AppBundle\Entity\WiredQuestion;
 
 class WiredQuestionRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function getQuestion(){
-
-    }
-
     public function loadQuestion(int $questionId): WiredQuestion
     {
         return $this->createQueryBuilder("wired")

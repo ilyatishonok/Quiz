@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Proxy\Proxy;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ManyToOne as ManyToOne;
 use Doctrine\ORM\Mapping\JoinColumn as JoinColumn;
@@ -64,6 +65,12 @@ class WiredQuestion
     public function setQuestion(Question $question): WiredQuestion
     {
         $this->question = $question;
+
+        return $this;
+    }
+
+    public function setQuestionProxy(Proxy $proxy){
+        $this->question = $proxy;
 
         return $this;
     }

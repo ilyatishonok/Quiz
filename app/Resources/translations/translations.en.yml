@@ -80,6 +80,12 @@ quiz:
     answer_label: "Answers"
     submit_question: "Submit question"
 
+leaderboard:
+  label: "Leader Board"
+  right_answers: "Right Questions"
+  name: "Username"
+  position: "Position"
+  time: "Time"
 
 errors:
   question_name: "You haven't choose question name!"

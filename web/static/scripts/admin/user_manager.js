@@ -1,5 +1,13 @@
 $(document).ready(()=>{
 
+	$(document).ajaxStart(()=>{
+		$(".loader").show();
+	});
+
+	$(document).ajaxStop(()=>{
+		$(".loader").hide();
+	});
+
 	$(".users-table").on('click', '.btn-block', (event)=>{
 		let target = event.target;
 		let id = $(target).closest(".user-row").attr("data-id");
