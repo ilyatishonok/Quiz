@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace AppBundle\Controller\Home;
 
+use AppBundle\Entity\WiredQuestion;
+use AppBundle\Exceptions\QuestionException;
 use AppBundle\Repository\CompletedQuizRepository;
+use AppBundle\Repository\QuestionRepository;
+use AppBundle\Repository\WiredQuestionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

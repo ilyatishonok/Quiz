@@ -3,8 +3,17 @@ $(document).ready(function () {
     let questionName;
     let selectedAnswer;
     let answers = {};
-
+    let error = false;
     let questionIds = [];
+
+    $(".question-creator-wrapper").questionView({
+        success: (response)=>{
+            console.log(response);
+            questionIds.push(response.id);
+            console.log(questionIds);
+            renderQuestion(response.name,response.id,response.answers);
+        }
+    });
 
     $(".questions").sortable().bind('sortupdate',function(){
         let questions = $(".question").map(function(){
@@ -39,21 +48,49 @@ $(document).ready(function () {
             })
         },
         select: (event, ui)=>{
-            console.log(ui.item.value);
             $.ajax({
                 url: "/app_dev.php/admin/api/question?questionName=" + ui.item.value,
                 success: (response)=>{
                     if(questionIds.indexOf(response.id) !== -1){
-                        $(".errors").html("This is already exist!");
+                        $(".errors").html("This question is already exist!");
                         return;
                     }
                     questionIds.push(response.id);
-                    
+                    console.log(response.answers);
                     renderQuestion(response.name,response.id,response.answers);
                 }
             })
         },
         minLength: 1
+    });
+
+    $(".add-question-button").click(()=>{
+        
+    });
+
+
+    $(".create-quiz-btn").click((event)=>{
+        let quizName = $(".quiz-name-input").val();
+        let csrfToken = $("#csrf-input").val();
+        let data = {
+            quizName:quizName,
+            questionsId: questionIds,
+            csrfToken: csrfToken,
+        }
+        let jsonData = JSON.stringify(data);
+        $.ajax({
+            url: "/app_dev.php/admin/api/create/quiz",
+            dataType: "json",
+            type: "POST",
+            data: jsonData,
+            success: (response)=>{
+                console.log(response);
+            },
+            error: (response)=>{
+                console.log(response);
+            }
+        })
+
     });
 
 

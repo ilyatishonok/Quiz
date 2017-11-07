@@ -49,6 +49,12 @@ services:
     quiz_handler:
       class: AppBundle\Service\QuizHandler\QuizHandler
       public: true
+    wired_question_manager:
+      class: AppBundle\Service\WiredQuestion\WiredQuestionManager
+      public: true
+    quiz_manager:
+      class: AppBundle\Service\Quiz\QuizManager
+      public: true
     # add more services, or override services that need manual wiring
     # AppBundle\Service\ExampleService:
     #     arguments:

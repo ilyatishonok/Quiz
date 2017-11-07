@@ -24,6 +24,9 @@
                     <a class="nav-item nav-link" href="{{ path("homepage") }}">Home</a>
                     <a class="nav-item nav-link" href="{{ path("started_quizes") }}">Stardet Quizes</a>
                     <a class="nav-item nav-link" href="#">Completed Quizes</a>
+                    {% if(is_granted("ROLE_ADMIN")) %}
+                        <a class="nav-item nav-link" href="">Admin Panel</a>
+                    {% endif %}
                 </div>
             </div>
         </nav>

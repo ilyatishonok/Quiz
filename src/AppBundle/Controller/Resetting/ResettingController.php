@@ -26,6 +26,10 @@ class ResettingController extends Controller
     {
         $token = $request->get("token");
 
+        if(!$token){
+            return $this->render("security/user_by_token_not_found.html.twig");
+        }
+
         $userRepository = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\User");
         $user = $userRepository->findOneBy(array("resettingToken"=>$token));
 
