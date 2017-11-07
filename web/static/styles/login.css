@@ -1,36 +1,41 @@
-#username {
-    background-color: #ebebeb;
-    width: 250px;
-    height: 40px;
-}
 
-#password {
-    background-color: #ebebeb;
-    width: 250px;
-    height: 40px;
-}
 
 body {
     background-color: #534f9f !important;
 }
 
-#login {
-
-    background-color: #8b51f5;
-    color:#ffffff;
-    width: 250px;
+.login-btn {
+    width: 100%;
+    background-color: #8b51f5 !important;
+    color: #ffffff;
     height: 45px;
 }
 
+.login-btn:hover
+{
+    background-color: limegreen !important;
+}
+
 .parent {
+
     color: white;
     margin: auto;
-    margin-top: 100px;
+    margin-top: 40px;
     margin-bottom: 0;
-    width: 350px;
+    width: 350px ;
+    border-radius: 7px;
+    box-shadow: 0 0 10px black;
     height: auto;
-    padding: 40px 40px 30px 50px;
+    padding: 40px 50px 20px 50px;
     background: rgba(0, 0, 0, 0.6);
+}
+
+ul{
+    list-style: none;
+    margin-top: 10px !important;
+    margin-bottom: 0px !important;
+    padding: 0px;
+    color: red;
 }
 
 .login-header{
@@ -52,7 +57,7 @@ a{
     font-size: 17px;
 }
 
-.register-block{
-    font-size: 18px;
+.login-block{
+    font-size: 17px;
     text-align: left;
 }

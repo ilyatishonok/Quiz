@@ -33,7 +33,7 @@ class HomeController extends Controller
         $pagination = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1),
-            9
+            5
         );
 
         return $this->render('home/homepage.html.twig', array('pagination' => $pagination));
