@@ -18,6 +18,10 @@
     color:white;
 }
 
+.add-question-button:hover{
+    background-color: limegreen;
+}
+
 
 .question-info{
     color: gray;
@@ -44,6 +48,12 @@
     margin-top: 10px;
     list-style: none;
     text-align: left;
+}
+
+.question-creator {
+    background-color: transparent !important;
+    border-radius: 7px;
+    box-shadow: 0 0 10px black;
 }
 
 .selected{

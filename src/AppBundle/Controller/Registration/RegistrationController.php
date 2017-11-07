@@ -7,7 +7,7 @@ namespace AppBundle\Controller\Registration;
 use AppBundle\Entity\User;
 use AppBundle\Exceptions\UserException;
 use AppBundle\Form\UserType;
-use AppBundle\Service\RegistrationHandler\RegistationHandler;
+use AppBundle\Service\RegistrationHandler\RegistrationHandler;
 use AppBundle\Service\TokenHandler\TokenGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -63,11 +63,17 @@ class RegistrationController extends Controller
         try {
             $token = $request->get("token");
 
-            /** @var RegistationHandler $registrationHandler */
+            if(!$token){
+                return new Response("Bad request data",404);
+            }
+
+            /** @var RegistrationHandler $registrationHandler */
             $registrationHandler = $this->get("registration_handler");
-
-            $user = $registrationHandler->confirmEmailByToken($token);
-
+            try {
+                $user = $registrationHandler->confirmEmailByToken($token);
+            }catch (UserException $exception){
+                return new Response("Bad request data",404);
+            }
             $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
             $this->get('security.token_storage')->setToken($token);
             $this->get('session')->set('_security_main', serialize($token));

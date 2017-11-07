@@ -1,17 +1,22 @@
 {% extends 'admin/panel.html.twig' %}
 
 {% block stylesheets %}
+<<<<<<< HEAD
     <link rel="stylesheet" href="{{ asset("static/styles/admin/user-manager.css") }}">
+=======
+    <link rel="stylesheet" href="{{ asset("static/styles/admin/user.css?v1.1") }}">
+>>>>>>> quiz-adding
 {% endblock %}
 
 {% block content %}
+    <div class="loader"></div>
     <nav class="user-header bg-color">
         <nav class="navbar navbar-light justify-content-between user-header ">
             {{ knp_pagination_filter(pagination, {'u.id': 'id', 'u.username': 'User Name', 'u.email': "Email", 'u.role': "Role", "u.isEnabled":"Status"}) }}
         </nav>
         <div class="container-fluid user-indent">
             <div class="col col-lg-12 user-creator user-header">
-                <table data-token="{{ csrf_token("intention") }}" class="table table-inverse users-table">
+                <table data-token="{{ csrf_token("intention") }}" class="table table-responsive-lg users-table">
                     <tbody>
                         <tr>
                             <th>{{ knp_pagination_sortable(pagination, 'id' , 'u.id') }}</th>
@@ -49,5 +54,5 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script src="{{ asset("static/scripts/admin/user_manager.js?v1.14") }}"></script>
+    <script src="{{ asset("static/scripts/admin/user_manager.js?v1.15") }}"></script>
 {% endblock %}

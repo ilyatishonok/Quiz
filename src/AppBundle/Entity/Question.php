@@ -10,12 +10,17 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OneToMany as OneToMany;
 use Doctrine\ORM\PersistentCollection;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Question
  *
  * @ORM\Table(name="questions")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\QuestionRepository")
+ * @UniqueEntity(
+ *     fields={"name"},
+ *     message="security.registration.email_error"
+ * )
  */
 class Question implements \Serializable
 {
@@ -35,7 +40,7 @@ class Question implements \Serializable
     private $id;
 
     /**
-     * @OneToMany(targetEntity="Answer", mappedBy="question")
+     * @OneToMany(targetEntity="Answer", mappedBy="question", cascade={"persist"})
      */
     private $answers;
 
@@ -48,7 +53,7 @@ class Question implements \Serializable
      */
     private $name;
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -56,11 +61,13 @@ class Question implements \Serializable
     public function setAnswers(Collection $answers): Question
     {
         $this->answers = $answers;
-
+        foreach ($this->answers as $answer){
+            $answer->setQuestion($this);
+        }
         return $this;
     }
 
-    public function getAnswers(): Collection
+    public function getAnswers(): ?Collection
     {
         return $this->answers;
     }
@@ -85,15 +92,15 @@ class Question implements \Serializable
         return $this;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function addAnswer(Answer $answer): Question
+    public function addAnswer(Answer $answer): ?Question
     {
+        $answer->setQuestion($this);
         $this->answers->add($answer);
-
         return $this;
     }
 }

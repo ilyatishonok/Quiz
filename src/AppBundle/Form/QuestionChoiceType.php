@@ -26,6 +26,7 @@ class QuestionChoiceType extends AbstractType
                     ->setParameter("question", $question);
             },
             'label'=>false,
+            'trim'=>true,
             'attr' => array('class' => 'form_answers'),
             'expanded'=>true))
             ->add('Submit question', SubmitType::class, array(

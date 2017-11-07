@@ -3,13 +3,16 @@
 {% trans_default_domain "translations" %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset("static/styles/admin/quiz.css?v1.20") }}">
+    <link rel="stylesheet" href="{{ asset("static/styles/admin/quiz.css?v1.22") }}">
+    <link rel="stylesheet" href="{{ asset("static/styles/admin/question_creator.css?v1.0") }}">
+    <link rel="stylesheet" href="{{ asset("static/styles/jquery-ui.min.css") }}">
 {% endblock %}
 
 {% block content %}
     <div class="container content">
         <div class="col col-lg-12 quiz-handler">
             <div class="form-group quiz-creator ">
+                <input type="hidden" id="csrf-input" value="{{ csrf_token("intention") }}">
                 <h1 class="quiz-name">Quiz adding: </h1>
                 <div class="quiz-header">
                     <input class="form-control quiz-name-input" placeholder="input quiz name">
@@ -29,7 +32,9 @@
                     <p class="question-info">If you want to add answer click to button below or add exist question.</p>
                     <button class="btn btn-large add-question-button">Create Question</button>
                 </div>
-                <div class="quiz-creator"></div>
+                <div class="question-creator-wrapper">
+                    {% include "admin/question_create_form.html.twig" %}
+                </div>
                 <button class="btn btn-large create-quiz-btn">Create quiz</button>
             </div>
         </div>
@@ -37,7 +42,9 @@
 
 
 {% block javascripts %}
-    <script src="{{ asset("static/scripts/admin/quiz.js?v1.56") }}"></script>
+    <script src="{{ asset("static/scripts/jquery.newquestion.js?v1.80") }}"></script>
+    <script src="{{ asset("static/scripts/jquery-ui.min.js") }}"></script>
+    <script src="{{ asset("static/scripts/admin/quiz.js?v1.73") }}"></script>
 {% endblock %}
 
 

@@ -27,3 +27,15 @@
 .text-color {
     color: white;
 }
+
+.select{
+    width: 10% !important;
+}
+
+.filter-input{
+    width: 80% !important;
+}
+
+.filter-form{
+    width: 100%;
+}

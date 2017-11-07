@@ -94,5 +94,15 @@ class CompletedQuiz
 
         return $this;
     }
+
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    public function getQuiz(): Quiz
+    {
+        return $this->quiz;
+    }
 }
 
