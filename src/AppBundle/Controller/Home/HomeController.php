@@ -42,22 +42,15 @@ class HomeController extends Controller
      */
     public function showStartedQuizesAction(Request $request)
     {
-        /** @var WiredQuestionRepository $em */
-        $em = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\WiredQuestion");
-        try {
-            $em->abraKadaBra();
-        }catch (QuestionException $exception){
-            return new Response($exception->getMessage());
-        }
-       return $this->render("base.html.twig");
-    }
-
-    /**
-     * @Route("/test")
-     */
-    public function test(Request $request)
-    {
-        $em = $this->getDoctrine();
+        $quizRepository = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\Quiz");
+        $quiz = $quizRepository->findOneBy(array("id"=>10));
+        /** @var CompletedQuizRepository $completedQuizRep */
+        $completedQuizRep = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\CompletedQuiz");
+        $compleQuiz = $completedQuizRep->findOneBy(array("user"=>$this->getUser(), "quiz"=>$quiz));
+        /** @var \DateInterval $time */
+        $time = $compleQuiz->getTime();
+        //$pos = $completedQuizRep->loadUserPosition($compleQuiz->getRightQuestions(),$compleQuiz->getTime()->);
+        exit(dump($time));
         return $this->render("base.html.twig");
-    }
+    }   
 }
