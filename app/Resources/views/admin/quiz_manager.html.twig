@@ -22,15 +22,15 @@
                     </tr>
                     {% for quiz in pagination %}
                         <tr>
-                            <td class="quiz_td" scope="row">{{ quiz.name }}</td>
-                            <td class="quiz_td" >{{ quiz.countOfQuestions }}</td>
-                            <td class="quiz_td" >{{ quiz.countOfPlayers }}</td>
+                            <td scope="row">{{ quiz.name }}</td>
+                            <td>{{ quiz.countOfQuestions }}</td>
+                            <td>{{ quiz.countOfPlayers }}</td>
                             {% if quiz.leader == null %}
-                                <td class="quiz_td">None</td>
+                                <td>None</td>
                             {% else %}
-                                <td class="quiz_td">{{ quiz.leader }}</td>
+                                <td>{{ quiz.leader }}</td>
                             {% endif %}
-                            <td class="quiz_td"><button type="button" class="btn btn-outline-danger button-size">Block</button></td>
+                            <td><button type="button" class="btn btn-outline-danger button-size">Block</button></td>
                         </tr>
                     {% endfor%}
                     </tbody>

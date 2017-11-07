@@ -2,7 +2,7 @@
 
 <html>
 <head>
-    <link rel="stylesheet" href="{{ asset("static/styles/login.css?v1.1") }}">
+    <link rel="stylesheet" href="{{ asset("static/styles/login.css?v1.2") }}">
     <link rel="stylesheet" href="{{ asset("static/styles/bootstrap.min.css") }}">
 
 </head>
@@ -11,24 +11,25 @@
             <h5 class="login-header" style="text-align: center"><p style="margin-right: 7px;">{{ 'security.login.login_label'|trans }}</p></h5>
         <form action="{{ path('login') }}" method="post">
             <label for="username">{{ 'security.login.username'|trans }}</label>
-            <input class="form-control" type="text" id="username" name="_username" placeholder="type your username" value="{{ lastUsername }}" />
+            <input class="form-control" type="text" name="_username" placeholder="type your username" value="{{ lastUsername }}" />
 
             <label for="password">{{ 'security.login.password'|trans }}</label>
-            <input class="form-control" type="password" id="password" placeholder="type your password" name="_password" />
+            <input class="form-control" type="password" placeholder="type your password" name="_password" />
+
             <div class="error">
                 {% if error %}
                     <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                 {% endif %}
             </div>
-            <a href="{{ path("_reset") }}">{{ 'security.login.resetting'|trans }}?</a>
-            <input type="hidden" name="_csrf_token"
-                   value="{{ csrf_token('authenticate') }}">
-            <button id="login" class="btn btn-large" type="submit">{{ 'security.login.submit'|trans }}</button>
             <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
             <input type="checkbox" class="remember-me" id="remember_me" name="_remember_me"  />
+            <input type="hidden" name="_csrf_token"
+                   value="{{ csrf_token('authenticate') }}">
+            <button class="btn btn-large login-btn" type="submit">{{ 'security.login.submit'|trans }}</button>
+            <a class="login-block" href="{{ path("_reset") }}">{{ 'security.login.resetting'|trans }}?</a>
 
         </form>
-        <div class="register-block">
+        <div class="login-block">
             <p>{{ 'security.login.register_question'|trans }} <a href="{{ path("registration") }}">{{ 'security.login.register'|trans }}</a></p>
         </div>
         </div>

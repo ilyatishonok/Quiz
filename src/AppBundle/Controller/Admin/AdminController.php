@@ -68,7 +68,7 @@ class AdminController extends Controller
         $pagination = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1),
-            10
+            7
         );
 
         return $this->render('admin/user_manager.html.twig', array('pagination' => $pagination));
@@ -87,7 +87,7 @@ class AdminController extends Controller
         $pagination = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1),
-            13
+            7
         );
 
         return $this->render("admin/quiz_manager.html.twig", array('pagination' => $pagination));

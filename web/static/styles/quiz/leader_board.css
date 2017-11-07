@@ -1,4 +1,4 @@
-.quiz-creator {
+.rating-creator {
     color: white;
     padding: 15px;
     border-radius: 7px;
@@ -20,14 +20,9 @@
     background: rgba(0, 0, 0, 0.6);
 }
 
-.quiz-indent {
+.rating-indent {
     margin-top: 10px;
     margin-bottom: 20px;
-}
-
-.rating_td {
-    padding-top: 0!important;
-    padding-bottom: 0!important;
 }
 
 .rating-tb {
