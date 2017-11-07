@@ -8,17 +8,6 @@ use AppBundle\Entity\Question;
 
 class QuestionRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function createQuestion(string $questionName) {
-        $entityManager = $this->getEntityManager();
-
-        $question = new Question();
-        $question->setName($questionName);
-
-        $entityManager->persist($question);;
-
-        return $question;
-    }
-
     public function loadQuestionsByRegular(string $regular){
         return $this->createQueryBuilder("q")
             ->where('q.name LIKE :regular')
@@ -36,6 +25,7 @@ class QuestionRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
 
     public function loadQuestionWithAnswers($id){
         return $this->createQueryBuilder("q")

@@ -5,6 +5,7 @@
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset("static/styles/quiz/startedQuiz.css?v1.23") }}">
+    <link rel="stylesheet" href="{{ asset("static/styles/quiz/answered.question.css?v1.0") }}"
 {% endblock %}
 
 {% block body %}
@@ -16,9 +17,16 @@
                 <h4 class="question-text">{{ question_name }}</h4>
             </div>
             {% for answer in answers %}
-                <div class="answer">{{ answer.name }}</div>
+                {% if user_choice.id == answer.id and user_choice.isCorrect == false %}
+                    <div class="answer incorrect">{{ answer.name }}</div>
+                {% elseif answer.isCorrect %}
+                    <div class="answer correct">{{ answer.name }}</div>
+                {% else %}
+                    <div class="answer">{{ answer.name }}</div>
+                {% endif %}
+
             {% endfor %}
-            <a href="{{ path('_quiz', {'id': id}) }}" >Next Question</a>
+            <a class="btn btn-large next-btn" href="{{ path('_quiz', {'id': id}) }}" >Next Question</a>
         </div>
 
     </div>

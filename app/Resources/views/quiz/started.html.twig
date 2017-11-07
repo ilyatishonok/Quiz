@@ -4,7 +4,7 @@
 
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset("static/styles/quiz/startedQuiz.css?v1.24") }}">
+    <link rel="stylesheet" href="{{ asset("static/styles/quiz/startedQuiz.css?v1.25") }}">
 {% endblock %}
 
 {% block body %}
@@ -21,7 +21,9 @@
             <div class="form_wrapper">
                 {{ form_start(form) }}
                 <h2>{{ "quiz.question.answer_label"|trans }}:</h2>
-                {{ form_widget(form) }}
+                {{ form_label(form.answer) }}
+                {{ form_widget(form.answer) }}
+                {{ form_rest(form) }}
                 {{ form_end(form) }}
             </div>
         </div>

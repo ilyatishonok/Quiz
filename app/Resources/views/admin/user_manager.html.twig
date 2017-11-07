@@ -1,11 +1,7 @@
 {% extends 'admin/panel.html.twig' %}
 
 {% block stylesheets %}
-<<<<<<< HEAD
     <link rel="stylesheet" href="{{ asset("static/styles/admin/user-manager.css") }}">
-=======
-    <link rel="stylesheet" href="{{ asset("static/styles/admin/user.css?v1.1") }}">
->>>>>>> quiz-adding
 {% endblock %}
 
 {% block content %}
@@ -54,5 +50,7 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script src="{{ asset("static/scripts/admin/user_manager.js?v1.15") }}"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    <script src="{{ asset("static/scripts/admin/user_manager.js?v1.19") }}"></script>
 {% endblock %}

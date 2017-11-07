@@ -34,6 +34,11 @@
     box-shadow: 0 0 10px black;
 }
 
+.submit-btn:hover{
+    background-color: limegreen;
+
+}
+
 input {
     visibility:hidden;
     display: none;
