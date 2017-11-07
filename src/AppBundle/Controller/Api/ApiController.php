@@ -64,7 +64,7 @@ class ApiController extends Controller
     }
 
     /**
-     * @Route("/admin/api/block-user")
+     * @Route("/admin/api/block-user", name="_block_user", options={"expose"=true})
      */
     public function blockUserAction(Request $request): Response
     {
@@ -94,7 +94,7 @@ class ApiController extends Controller
 
 
     /**
-     * @Route("/admin/api/unblock-user")
+     * @Route("/admin/api/unblock-user", name="_unblock_user", options={"expose"=true})
      */
     public function unBlockUserAction(Request $request): Response
     {

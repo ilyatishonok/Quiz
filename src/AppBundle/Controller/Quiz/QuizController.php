@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AppBundle\Controller\Quiz;
 
 use AppBundle\Entity\StartedQuiz;
+use AppBundle\Entity\WiredQuestion;
 use AppBundle\Form\StartQuizType;
 use AppBundle\Choices\AnswerChoice;
 use AppBundle\Form\QuestionChoiceType;
@@ -69,39 +70,38 @@ class QuizController extends Controller
 
     }
 
-
     private function proccessUserSubmitAction(Request $request, array $data): Response
     {
         $quiz = $data['quiz'];
         $startedQuiz = $data['startedQuiz'];
         $id = $data['id'];
 
-        $wiredQuestionRepository = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\WiredQuestion");
-        $wiredQuestion = $wiredQuestionRepository->findOneBy(array("quiz"=>$quiz, "questionNumber"=>$startedQuiz->getLastQuestionNumber()));
+        $wiredQuestionRepository = $this->getDoctrine()->getManager()->getRepository(WiredQuestion::class);
+        $wiredQuestion = $wiredQuestionRepository->loadByQuizAndNumber($quiz,$startedQuiz->getLastQuestionNumber());
+
+        $question = $wiredQuestion->getQuestion();
 
         $choice = new AnswerChoice();
-        $form = $this->createForm(QuestionChoiceType::class,$choice,array("question"=>$wiredQuestion->getQuestion(),"action"=>$this->generateUrl("_quiz",array('id'=>$id)),"method"=> "GET"));
+        $form = $this->createForm(QuestionChoiceType::class,$choice,array(
+            "question"=>$question,
+            "answers"=>$question->getAnswers(),
+            "action"=>$this->generateUrl("_quiz",array('id'=>$id)),
+        ));
 
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()){
+        if($form->isSubmitted() && $form->isValid())
+        {
             $quizHandler = $this->get("quiz_handler");
             $quizHandler->proccessSubmitAnswer($this->getUser(),$startedQuiz,$wiredQuestion,$choice->getAnswer()->isCorrect());
-            return $this->render("quiz/answered_question.html.twig",array('id'=>$quiz->getId(),"question_name"=>$wiredQuestion->getQuestion()->getName(),"answers"=>$wiredQuestion->getQuestion()->getAnswers()));
+            return $this->render("quiz/answered_question.html.twig",array(
+                'id'=>$id,
+                "question_name"=>$question->getName(),
+                "answers"=>$question->getAnswers(),
+                "user_choice"=>$choice->getAnswer()
+            ));
         }
 
-        $userAnswerRepository = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\UserAnswer");
-        $userAnswers = $userAnswerRepository->findBy(array("quiz"=>$quiz,"user"=>$this->getUser()));
-
-        return $this->render("quiz/started.html.twig",array("answers"=>$userAnswers,'',"question_name"=>$wiredQuestion->getQuestion()->getName(),"form"=>$form->createView()));
-    }
-
-    /**
-     * @Route("/start_quiz")
-     */
-    public function testStartQuiz(Request $request)
-    {
-        $form = $this->createForm(StartQuizType::class);
-        return $this->render("quiz/quiz_start.html.twig", array('form' => $form->createView()));
+        return $this->render("quiz/started.html.twig",array('answers'=>$question->getAnswers(),"question_name"=>"abc","form"=>$form->createView()));
     }
 }

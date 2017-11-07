@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace AppBundle\Controller\Home;
 
+use AppBundle\Entity\Question;
+use AppBundle\Entity\Quiz;
 use AppBundle\Entity\WiredQuestion;
 use AppBundle\Exceptions\QuestionException;
 use AppBundle\Repository\CompletedQuizRepository;
@@ -42,16 +44,7 @@ class HomeController extends Controller
      */
     public function showStartedQuizesAction(Request $request)
     {
-        $quizRepository = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\Quiz");
-        $quiz = $quizRepository->findOneBy(array("id"=>10));
-        /** @var CompletedQuizRepository $completedQuizRep */
-        $completedQuizRep = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\CompletedQuiz");
-        $compleQuiz = $completedQuizRep->findOneBy(array("user"=>$this->getUser(), "quiz"=>$quiz));
-        /** @var \DateInterval $time */
-        $time = $compleQuiz->getTime();
-        //$pos = $completedQuizRep->loadUserPosition($compleQuiz->getRightQuestions(),$compleQuiz->getTime()->);
-        exit(dump($time));
-        return $this->render("base.html.twig");
+
     }
 
 }

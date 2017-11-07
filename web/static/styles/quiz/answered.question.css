@@ -1,0 +1,11 @@
+.incorrect{
+    background-color: red;
+    border: red;
+    box-shadow: 0 0 10px red;
+}
+
+.correct{
+    background-color: limegreen;
+    border: 1px limegreen;
+    box-shadow: 0 0 10px limegreen;
+}

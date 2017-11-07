@@ -16,9 +16,8 @@ $(document).ready(()=>{
 			id: id,
 			token: $(".users-table").attr("data-token"),
 		}
-
 		$.ajax({
-			url: "/app_dev.php/admin/api/block-user",
+			url: Routing.generate("_block_user"),
 			type: "PATCH",
 			data: data,
 			success: (response)=>{
@@ -41,7 +40,7 @@ $(document).ready(()=>{
 		}
 
 		$.ajax({
-			url: "/app_dev.php/admin/api/unblock-user",
+			url: Routing.generate("_unblock_user"),
 			type: "PATCH",
 			data: data,
 			success: (response)=>{

@@ -16,15 +16,11 @@ class QuestionChoiceType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $question = $options['question'];
+        $answers = $options['answers'];
         $builder->add("answer", EntityType::class, array(
             'class'=> "AppBundle\Entity\Answer",
             'choice_label'=>'name',
-            'query_builder' => function (EntityRepository $er) use ($question) {
-                return $er->createQueryBuilder('a')
-                    ->where("a.question = :question")
-                    ->setParameter("question", $question);
-            },
+            'choices'=>$answers,
             'label'=>false,
             'trim'=>true,
             'attr' => array('class' => 'form_answers'),
