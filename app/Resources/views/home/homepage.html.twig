@@ -8,19 +8,19 @@
     <main>
         <div class="container-fluid">
             <div class="col-12 align-self-center question-handler">
+                <h1 class="text-white text-center indent">Quiz</h1>
                 {% for quiz in  pagination %}
                 <div class="container-fluid answer-wrapper">
-                    <a href="{{ path('_quiz', {'id': quiz.id}) }}  " class="text-white">
-                            <h5>{{ quiz.name }}</h5>
+                    <a href="{{ path('_quiz', {'id': quiz.id}) }}" class="text-white">
+                            <h5>{{ quiz.name }}</h5></a>
                         <div class="row">
-                            <div class="col">question:{{ quiz.countOfQuestions }}</div>
-                            <div class="col">players:{{ quiz.countOfPlayers }}</div>
-                            <div class="col">leader:</div>
+                            <div class="col">Question:{{ quiz.countOfQuestions }}</div>
+                            <div class="col">Players:{{ quiz.countOfPlayers }}</div>
+                            <div class="col">Leader:{{ quiz.leader }}</div>
                         </div>
-                    </a>
                     </div>
                 {% endfor %}
-                <div class="navbar" >
+                <div class="navbar text-color" >
                     {{ knp_pagination_render(pagination) }}
                 </div>
             </div>
