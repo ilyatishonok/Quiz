@@ -68,7 +68,7 @@ class Quiz
         return $this->id;
     }
 
-    public function isEnable(): bool
+    public function isEnabled(): bool
     {
         return $this->enabled;
     }
@@ -90,6 +90,13 @@ class Quiz
         return $this->leader;
     }
 
+    public function setLeader(string $leader): Quiz
+    {
+        $this->leader = $leader;
+
+        return $this;
+    }
+
     public function setCountOfQuestions($countOfQuestions): Quiz
     {
         $this->countOfQuestions = $countOfQuestions;
@@ -105,6 +112,13 @@ class Quiz
     public function addPlayer(): Quiz
     {
         $this->countOfPlayers += 1;
+
+        return $this;
+    }
+
+    public function removePlayer(): Quiz
+    {
+        $this->countOfPlayers -= 1;
 
         return $this;
     }

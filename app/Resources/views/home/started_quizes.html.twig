@@ -1,12 +1,37 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset("static/styles/index.css?v1.0") }}"
 {% endblock %}
 
 {% block body %}
-    <div>Started quiz</div>
+    <main>
+        <div class="container-fluid">
+            <div class="col-12 align-self-center quizes">
+                {% if started_quizes|length %}
+                    {% for started_quiz in started_quizes %}
+                        <div class="container-fluid quiz">
+                            <a href="{{ path('_quiz', {'id': started_quiz.quiz.id}) }}" class="text-white">
+                                <h5>{{ started_quiz.quiz.name }}</h5>
+                                <div class="row">
+                                    <div class="col">questions: {{ started_quiz.quiz.countOfQuestions }}</div>
+                                    <div class="col">players: {{ started_quiz.quiz.countOfPlayers }}</div>
+                                    <div class="col">leader: {{ started_quiz.quiz.leader }}</div>
+                                </div>
+                            </a>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <h2>There is no started quizes!</h2>
+                {% endif %}
+                <div class="navbar" >
+                    {{ knp_pagination_render(started_quizes) }}
+                </div>
+            </div>
+        </div>
+    </main>
 {% endblock %}
 
-
 {% block javascripts %}
+
 {% endblock %}

@@ -43,9 +43,6 @@ services:
     registration_handler:
       class: AppBundle\Service\RegistrationHandler\RegistrationHandler
       public: true
-    started_quiz_manager:
-      class: AppBundle\Service\Quiz\StartedQuizManager
-      public: true
     quiz_handler:
       class: AppBundle\Service\QuizHandler\QuizHandler
       public: true
@@ -55,6 +52,20 @@ services:
     quiz_manager:
       class: AppBundle\Service\Quiz\QuizManager
       public: true
+    answer_manager:
+      class: AppBundle\Service\Answer\AnswerManager
+      public: true
+
+    AppBundle\Service\StartedQuiz\StartedQuizManager: ~
+
+    AppBundle\Service\CompletedQuiz\CompletedQuizManager: ~
+
+    AppBundle\Service\UserAnswer\UserAnswerManager: ~
+
+    AppBundle\Service\CompletedQuiz\CompletedQuizManagerInterface: '@AppBundle\Service\CompletedQuiz\CompletedQuizManager'
+    AppBundle\Service\StartedQuiz\StartedQuizManagerInterface: '@AppBundle\Service\StartedQuiz\StartedQuizManager'
+    AppBundle\Service\UserAnswer\UserAnswerManagerInterface: '@AppBundle\Service\UserAnswer\UserAnswerManager'
+
     # add more services, or override services that need manual wiring
     # AppBundle\Service\ExampleService:
     #     arguments:

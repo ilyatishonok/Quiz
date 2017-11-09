@@ -1,10 +1,4 @@
 security:
-
-    resetting:
-      placeholders:
-        password: "input password"
-        repeat_password: "repeat password"
-
     login:
         login_label: 'Sign in to access your account'
         username: 'Username:'
@@ -53,6 +47,9 @@ security:
     resetting:
       email:
         success: ""
+        placeholders:
+                password: "input password"
+                repeat_password: "repeat password"
         subject: "Password recover"
         message:
                 Hello %username%!
@@ -79,6 +76,18 @@ admin:
     quiz_adding_question: "Add exist questions: "
     quiz_question_label: "Questions: "
     quiz_quiestion_info_label: "If you want to add answer click to button below or add exist question."
+  user_manager:
+    id: "id"
+    user_name: "User name"
+    email: "Email"
+    role: "Role"
+    confirmation_token: "Confirmation token"
+    status: "Status"
+    block: "Block"
+    unblock: "Unblock"
+    resetting_token: "Resetting token"
+    blocked: "Blocked"
+    active: "Active"
 
 quiz:
   question:

@@ -22,7 +22,7 @@
     background: #0e1a35;
 }
 
-.answer-wrapper{
+.quiz{
     border-radius: 7px;
     border: 1px solid black;
     box-shadow: 0 0 10px black;
@@ -34,12 +34,12 @@
     min-width: 100%;
 }
 
-.answer-wrapper:hover{
+.quiz:hover{
     background-color: #8b51f5;
     cursor: pointer;
 }
 
-.question-handler{
+.quizes{
     margin: 0 auto;
     text-align: center;
     color: white;

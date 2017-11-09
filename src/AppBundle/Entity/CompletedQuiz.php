@@ -16,6 +16,11 @@ use Doctrine\ORM\Mapping\JoinColumn as JoinColumn;
  */
 class CompletedQuiz
 {
+    public function __construct()
+    {
+        $this->time = new \DateTime();
+    }
+
     /**
      * @var int
      *

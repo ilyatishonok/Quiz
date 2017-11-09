@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace AppBundle\Controller\Admin;
 
 use AppBundle\Entity\Question;
+use AppBundle\Entity\User;
 use AppBundle\Form\QuestionType;
+use AppBundle\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -56,25 +58,20 @@ class AdminController extends Controller
      */
     public function showUserManagerAction(Request $request)
     {
-        $search = $request->get("search");
+        /** @var UserRepository $userRepository */
+        $userRepository = $this->getDoctrine()->getManager()->getRepository(User::class);
 
-        $entityManager = $this->getDoctrine()->getManager();
-
-        if($search) {
-            $query = $entityManager->createQuery("SELECT u FROM AppBundle\Entity\User u WHERE u.username LIKE :username OR u.email LIKE :username");
-            $query->setParameter("username",$search."%");
-        } else {
-            $query  = $entityManager->createQuery("SELECT u FROM AppBundle\Entity\User u ");
-        }
+        $query = $userRepository->createLoaderQuery();
 
         $paginator  = $this->get('knp_paginator');
+
         $pagination = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1),
             6
         );
 
-        return $this->render('admin/user_manager.html.twig', array('pagination' => $pagination));
+        return $this->render('admin/user_manager.html.twig', array('current_user'=>$this->getUser(),'pagination' => $pagination));
     }
 
 

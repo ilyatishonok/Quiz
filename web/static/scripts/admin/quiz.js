@@ -8,11 +8,32 @@ $(document).ready(function () {
 
     $(".question-creator-wrapper").questionView({
         success: (response)=>{
-            console.log(response);
             questionIds.push(response.id);
-            console.log(questionIds);
-            renderQuestion(response.name,response.id,response.answers);
+            renderQuestion(response.questionName,response.id,response.answers);
+            $(".add-question-button").show();
+            $(".question-creator-wrapper").fadeOut();
+            clearForm();
         }
+    });
+
+    $(".quiz-name-input").keydown((event)=>{
+        console.log("I work!");
+        let quizName = $(".quiz-name-inpup").val();
+        let data = {
+            quizName: quizName,
+        }
+        $.ajax({
+            url: "/app_dev.php/admin/api/check-quiz",
+            data: data,
+            success:(response)=>{
+                if(!response.status)
+                {
+                    $(".quiz-errors").html("This quiz name is already exist!");
+                } else {
+                    $(".quiz-errors").html();
+                }
+            }
+        });
     });
 
     $(".questions").sortable().bind('sortupdate',function(){
@@ -65,7 +86,8 @@ $(document).ready(function () {
     });
 
     $(".add-question-button").click(()=>{
-        
+        $(".question-creator-wrapper").fadeIn();
+        $(".add-question-button").hide();
     });
 
 
@@ -93,6 +115,13 @@ $(document).ready(function () {
 
     });
 
+    function clearForm()
+    {
+        $("#question_answers").html("");
+        $(".question-error").html("");
+        $(".answers-errors").html("");
+        $(".question-name").val("");
+    }
 
     function renderQuestion(questionName, questionId ,answers){
         let html = "<li data-id=\'" + questionId + "\' class='question' draggable='true'><div class='question-header'>"
