@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace AppBundle\Controller\Api;
 
 use AppBundle\Entity\Question;
+use AppBundle\Entity\Quiz;
 use AppBundle\Exceptions\AnswerException;
 use AppBundle\Exceptions\QuestionException;
 use AppBundle\Form\QuestionType;
 use AppBundle\Repository\QuestionRepository;
+use AppBundle\Service\Answer\AnswerManagerInterface;
 use AppBundle\Service\Quiz\QuizManagerInterface;
 use AppBundle\Service\WiredQuestion\WiredQuestionManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -49,11 +51,9 @@ class ApiController extends Controller
             return new Response("Empty question array count!", 400);
         }
 
-        /** @var QuizManagerInterface $quizManager */
         $quizManager = $this->get("quiz_manager");
         $quiz = $quizManager->createQuiz($arrayContent['quizName'],count($arrayContent['questionsId']));
 
-        /** @var WiredQuestionManagerInterface $wiredQuestionManager */
         $wiredQuestionManager = $this->get("wired_question_manager");
 
         $wiredQuestionManager->createWiredQuestions($arrayContent['questionsId'],$quiz);
@@ -148,14 +148,14 @@ class ApiController extends Controller
     }
 
     /**
-     * @Route("/admin/api/create/question");
+     * @Route("/admin/api/create/question", name="_create_question", options={"expose"=true});
      */
     public function createQuestionAction(Request $request): Response
     {
         $selected = $request->get("selected");
 
         if(!$selected){
-            return new JsonResponse("Bad request data!", 400);
+            return new JsonResponse(array("message"=>"Bad request data!"), 400);
         }
 
         $entityManager = $this->getDoctrine()->getManager();
@@ -163,35 +163,29 @@ class ApiController extends Controller
         $question = new Question();
         $form = $this->createForm(QuestionType::class, $question);
 
-
         $form->handleRequest($request);
 
         if($form->isValid()){
             $answers = $question->getAnswers();
-            $names = array();
-            $isExist = false;
-            foreach ($answers as $answer){
-                $answerName = $answer->getName();
-                if(!$answerName){
-                    return new JsonResponse("Bad request data!",400);
-                }
-                if($answerName === $selected){
-                    $answer->setIsCorrect(true);
-                    $isExist = true;
-                }
-                $names[$answer->getName()] = $answer->isCorrect();
-            }
-            if($isExist)
-            {
+
+            $answerManager = $this->get('answer_manager');
+            try{
+                $answerManager->correctAnswers($answers,$selected);
+
                 $entityManager->persist($question);
                 $entityManager->flush();
-                return new JsonResponse(array("id"=>$question->getId(),"name"=>$question->getName(), "answers"=>$names));
-            }
 
-            return new JsonResponse("Bad suka request!",400);
+                return new JsonResponse(array(
+                    "questionName"=>$question->getName(),
+                    "answers"=>$answerManager->getNames($answers),
+                    "id"=>$question->getId()
+                ));
+            } catch (AnswerException $exception){
+                return new JsonResponse(array("message"=>$exception->getMessage(),"answer"=>true),400);
+            }
         }
 
-        return new JsonResponse(array("data"=>$this->getErrorMessages($form)));
+        return new JsonResponse(array("message"=>$this->getErrorMessages($form), "question"=>true),400);
     }
 
     protected function getErrorMessages(\Symfony\Component\Form\Form $form)

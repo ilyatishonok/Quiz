@@ -14,23 +14,31 @@
                 <table data-token="{{ csrf_token("intention") }}" class="table table-inverse quiz-table">
                     <tbody>
                     <tr>
-                        <th>{{ knp_pagination_sortable(pagination, 'Quiz name' , 'quiz.name') }}</th>
-                        <th>{{ knp_pagination_sortable(pagination, 'Question' , 'quiz.countOfQuestions') }}</th>
-                        <th>{{ knp_pagination_sortable(pagination, 'Players' , 'quiz.countOfPlayers') }}</th>
-                        <th>{{ knp_pagination_sortable(pagination, 'Leader' , 'quiz.leader') }}</th>
+                        <th>{{ knp_pagination_sortable(pagination, 'id', 'quiz.id') }}</th>
+                        <th>{{ knp_pagination_sortable(pagination, 'Quiz name', 'quiz.name') }}</th>
+                        <th>{{ knp_pagination_sortable(pagination, 'Questions', 'quiz.countOfQuestions') }}</th>
+                        <th>{{ knp_pagination_sortable(pagination, 'Players', 'quiz.countOfPlayers') }}</th>
+                        <th>{{ knp_pagination_sortable(pagination, 'Leader', 'quiz.leader') }}</th>
+                        <th>{{ knp_pagination_sortable(pagination, 'Status', 'quiz.enabled') }}</th>
                         <td></td>
                     </tr>
                     {% for quiz in pagination %}
                         <tr>
-                            <td scope="row">{{ quiz.name }}</td>
+                            <td scope="row">{{ quiz.id }}</td>
+                            <td>{{ quiz.name }}</td>
                             <td>{{ quiz.countOfQuestions }}</td>
                             <td>{{ quiz.countOfPlayers }}</td>
-                            {% if quiz.leader == null %}
-                                <td>None</td>
-                            {% else %}
+                            {% if quiz.leader %}
                                 <td>{{ quiz.leader }}</td>
+                            {% else %}
+                                <td>None</td>
                             {% endif %}
-                            <td><button type="button" class="btn btn-outline-danger button-size">Block</button></td>
+                            {% if quiz.enabled %}
+                                <td>Active</td>
+                            {% else  %}
+                                <td>Blocked</td>
+                            {% endif %}
+                            <td><button type="button" class="btn btn-outline-danger button-size btn-block">Block</button></td>
                         </tr>
                     {% endfor%}
                     </tbody>

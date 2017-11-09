@@ -1,26 +1,39 @@
 {% extends 'admin/panel.html.twig' %}
 
+{% trans_default_domain "translations" %}
+
+{% block title %}
+    Quiz user-manager
+{% endblock %}
+
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset("static/styles/admin/user-manager.css") }}">
+    <link rel="stylesheet" href="{{ asset("static/styles/admin/user-manager.css?v1.1") }}">
 {% endblock %}
 
 {% block content %}
     <div class="loader"></div>
     <nav class="user-header bg-color">
         <nav class="navbar navbar-light justify-content-between user-header ">
-            {{ knp_pagination_filter(pagination, {'u.id': 'id', 'u.username': 'User Name', 'u.email': "Email", 'u.role': "Role", "u.isEnabled":"Status"}) }}
+            {{ knp_pagination_filter(pagination, {'u.id': 'admin.user_manager.id'|trans,
+                'u.username': 'admin.user_manager.user_name'|trans,
+                'u.email': 'admin.user_manager.email'|trans,
+                'u.role': 'admin.user_manager.role'|trans,
+                "u.confirmationToken": 'admin.user_manager.confirmation_token'|trans,
+                "u.resettingToken": 'admin.user_manager.resetting_token'|trans,
+                "u.isEnabled":'admin.user_manager.status'|trans}) }}
         </nav>
         <div class="container-fluid user-indent">
             <div class="col col-lg-12 user-creator user-header">
                 <table data-token="{{ csrf_token("intention") }}" class="table table-responsive-lg users-table">
                     <tbody>
                         <tr>
-                            <th>{{ knp_pagination_sortable(pagination, 'id' , 'u.id') }}</th>
-                            <th>{{ knp_pagination_sortable(pagination, 'User Name' , 'u.username') }}</th>
-                            <th>{{ knp_pagination_sortable(pagination, 'Email' , 'u.email') }}</th>
-                            <th>{{ knp_pagination_sortable(pagination, 'Role' , 'u.role') }}</th>
-                            <th>{{ knp_pagination_sortable(pagination, 'Confirmation Token', 'u.confirmationToken') }}</th>
-                            <th>{{ knp_pagination_sortable(pagination, 'Status' , 'u.isEnabled') }}</th>
+                            <th>{{ knp_pagination_sortable(pagination, 'admin.user_manager.id'|trans , 'u.id') }}</th>
+                            <th>{{ knp_pagination_sortable(pagination, 'admin.user_manager.user_name'|trans , 'u.username') }}</th>
+                            <th>{{ knp_pagination_sortable(pagination, 'admin.user_manager.email'|trans , 'u.email') }}</th>
+                            <th>{{ knp_pagination_sortable(pagination, 'admin.user_manager.role'|trans , 'u.role') }}</th>
+                            <th>{{ knp_pagination_sortable(pagination, 'admin.user_manager.confirmation_token'|trans, 'u.confirmationToken') }}</th>
+                            <th>{{ knp_pagination_sortable(pagination, 'admin.user_manager.resetting_token'|trans, 'u.resettingToken') }}</th>
+                            <th>{{ knp_pagination_sortable(pagination, 'admin.user_manager.status'|trans , 'u.isEnabled') }}</th>
                             <th></th>
                         </tr>
                         {% for user in pagination %}
@@ -30,12 +43,21 @@
                                 <td class="email">{{ user.email }}</td>
                                 <td class="role"> {{ user.role }} </td>
                                 <td class="confirm-token">{{ user.confirmationToken }}</td>
+                                <td class="reset-token">{{ user.resettingToken }}</td>
                                 {% if user.enabled == true %}
-                                    <td class="status">Active</td>
-                                    <td><button type="button" class="btn btn-outline-danger button-size btn-block">Block</button></td>
+                                    <td class="status">{{ "admin.user_manager.active"|trans }}</td>
+                                    {% if current_user.id != user.id %}
+                                        <td><button type="button" class="btn btn-outline-danger button-size btn-block">{{ "admin.user_manager.block"|trans }}</button></td>
+                                    {% else %}
+                                        <td></td>
+                                    {% endif %}
                                 {% else %}
-                                    <td class="status">Blocked</td>
-                                    <td><button type="button" class="btn btn-outline-success button-size btn-unblock">Unblock</button></td>
+                                    <td class="status">{{ "admin.user_manager.blocked"|trans }}</td>
+                                    {% if current_user.id != user.id %}
+                                        <td><button type="button" class="btn btn-outline-success button-size btn-unblock">{{ "admin.user_manager.unblock"|trans }}</button></td>
+                                    {% else %}
+                                        <td></td>
+                                    {% endif %}
                                 {% endif %}
                             </tr>
                         {% endfor%}

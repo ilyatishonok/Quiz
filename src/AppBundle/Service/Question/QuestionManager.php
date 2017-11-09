@@ -16,32 +16,9 @@ use Symfony\Component\Config\Tests\Util\Validator;
 class QuestionManager implements QuestionManagerInterface
 {
     private $entityManager;
-    private $validator;
-
     public function __construct(EntityManagerInterface $manager)
     {
         $this->entityManager = $manager;
-    }
-
-
-    private function checkAnswers(array $answers): bool
-    {
-        $correctAnswer = false;
-
-        foreach ($answers as $name=>$isCorrect){
-            if ($name === "")
-            {
-                return false;
-            }
-            if ($isCorrect) {
-                $correctAnswer = true;
-            }
-        }
-
-        if(!$correctAnswer){
-            return false;
-        }
-        return true;
     }
 
     public function createQuestion(string $questionName, array $answers): Question

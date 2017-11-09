@@ -1,6 +1,21 @@
 $(document).ready(function() {
 
-  $(".question-handler").questionView();
+  $(document).ajaxStart(()=>{
+    $(".loader").show();
+  });
+
+  $(document).ajaxStop(()=>{
+    $(".loader").hide();
+  });
+
+  $(".question-handler").questionView({
+    success:()=>{
+      $(".question-handler").html(
+        "<div class='h3'>The question was successfully created!</div>"+
+        "<a href=''>Back</a>"
+        );
+    }
+  });
 
 
   /*$(".question-handler").questionView({
