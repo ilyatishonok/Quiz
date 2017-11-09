@@ -54,7 +54,7 @@ class StartedQuiz
      *
      * @ORM\Column(name="last_question_number", type="integer")
      */
-    private $lastQuestionNumber;
+    private $lastQuestionNumber = 0;
 
     /**
      * @var integer

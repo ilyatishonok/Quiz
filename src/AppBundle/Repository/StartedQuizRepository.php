@@ -7,13 +7,15 @@ namespace AppBundle\Repository;
 use AppBundle\Entity\Quiz;
 use AppBundle\Entity\StartedQuiz;
 use AppBundle\Entity\User;
+use AppBundle\Entity\UserInterface;
 use AppBundle\Entity\WiredQuestion;
 use Doctrine\DBAL\Types\DateTimeImmutableType;
+use Doctrine\ORM\Query;
 use Symfony\Component\Validator\Constraints\DateTime;
 
 class StartedQuizRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function createStartedQuiz(User $user, Quiz $quiz){
+    public function createStartedQuiz(UserInterface $user, Quiz $quiz){
         $wiredQuestionRepository = $this->getEntityManager()->getRepository("AppBundle\Entity\WiredQuestion");
 
         /** @var WiredQuestion $firstQuestion */
@@ -30,8 +32,13 @@ class StartedQuizRepository extends \Doctrine\ORM\EntityRepository
         return $startedQuiz;
     }
 
-
-    public function findByQuizAndUserIds(integer $quizId, integer $userId){
-        $this->createQueryBuilder("q");
+    public function createLoaderQuery(UserInterface $user): Query
+    {
+        return $this->createQueryBuilder("s")
+            ->select("s","q")
+            ->leftJoin("s.quiz","q")
+            ->where("s.user = :user")
+            ->setParameter("user", $user)
+            ->getQuery();
     }
 }

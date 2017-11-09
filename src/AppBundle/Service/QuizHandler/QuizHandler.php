@@ -4,83 +4,98 @@ declare(strict_types=1);
 
 namespace AppBundle\Service\QuizHandler;
 
-use AppBundle\Entity\Answer;
 use AppBundle\Entity\CompletedQuiz;
 use AppBundle\Entity\Quiz;
 use AppBundle\Entity\StartedQuiz;
-use AppBundle\Entity\UserAnswer;
+use AppBundle\Entity\User;
 use AppBundle\Entity\UserInterface;
 use AppBundle\Entity\WiredQuestion;
+use AppBundle\Repository\CompletedQuizRepository;
+use AppBundle\Service\CompletedQuiz\CompletedQuizManagerInterface;
+use AppBundle\Service\DateIntervalHandler\DateIntervalHandler;
+use AppBundle\Service\StartedQuiz\StartedQuizManagerInterface;
+use AppBundle\Service\UserAnswer\UserAnswerManagerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
-class QuizHandler
+class QuizHandler implements QuizHandlerInterface
 {
     private $entityManager;
+    private $startedQuizManager;
+    private $userAnswerManager;
+    private $completedQuizManager;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager,
+                                StartedQuizManagerInterface $startedQuizManager,
+                                UserAnswerManagerInterface $userAnswerManager,
+                                CompletedQuizManagerInterface $completedQuizManager
+    )
     {
         $this->entityManager = $entityManager;
+        $this->startedQuizManager = $startedQuizManager;
+        $this->userAnswerManager = $userAnswerManager;
+        $this->completedQuizManager = $completedQuizManager;
     }
 
-    public function updateQuizState(StartedQuiz $startedQuiz, int $questionNumber, bool $isCorrect): StartedQuiz
+    public function handleQuiz()
     {
-        $startedQuiz->setLastQuestionNumber($questionNumber+1);
 
-        if($isCorrect){
-            $startedQuiz->addRightAnswer();
+    }
+
+
+    protected function synchronizeLeader(Quiz $quiz, CompletedQuiz $completedQuiz): void
+    {
+        $leader = $quiz->getLeader();
+
+        if(!$leader)
+        {
+            $quiz->setLeader($completedQuiz->getUser()->getUsername());
+            $this->entityManager->persist($quiz);
+            return;
         }
 
-        $this->entityManager->persist($startedQuiz);
+        /** @var CompletedQuizRepository $completedQuizRepository */
+        $completedQuizRepository = $this->entityManager->getRepository(CompletedQuiz::class);
 
-        return $startedQuiz;
+        $completedQuizLeader = $completedQuizRepository->loadLeader($quiz);
+
+        $leaderDateIntervalHandler = new DateIntervalHandler($completedQuizLeader->getTime());
+        $newDateIntervalHandler = new DateIntervalHandler($completedQuiz->getTime());
+
+        if($completedQuiz->getRightQuestions() > $completedQuizLeader->getRightQuestions())
+        {
+            $quiz->setLeader($completedQuiz->getUser()->getUsername());
+        } else if($completedQuiz->getRightQuestions() === $completedQuiz->getRightQuestions())
+        {
+            if($leaderDateIntervalHandler->getSeconds() > $newDateIntervalHandler->getSeconds()){
+                $quiz->setLeader($completedQuiz->getUser()->getUsername());
+            }
+        }
+
     }
 
-    public function removeStartedQuiz(StartedQuiz $quiz)
+    public function proccessSubmitAnswer(UserInterface $user, StartedQuiz $startedQuiz, WiredQuestion $question, bool $isCorrect): void
     {
-        $this->entityManager->remove($quiz);
-    }
+        $userAnswer = $this->userAnswerManager->createUserAnswer($user,$startedQuiz->getQuiz(),$question->getQuestionNumber(),$isCorrect);
 
-    public function closeQuiz(UserInterface $user, StartedQuiz $quiz){
-        $completedQuiz = new CompletedQuiz();
-        $completedQuiz->setQuiz($quiz->getQuiz());
-        $completedQuiz->setRightQuestions($quiz->getRightAnswers());
-        $completedQuiz->setUser($user);
+        $this->entityManager->persist($userAnswer);
 
-        $startTime = $quiz->getStartTime();
-        $time = $startTime->diff(new \DateTime());
-        $completedQuiz->setTime($time);
+        if(!($startedQuiz->getQuiz()->getCountOfQuestions()-1 == $question->getQuestionNumber())){
+           $this->startedQuizManager->updateStartedQuiz($startedQuiz,$question->getQuestionNumber(),$isCorrect);
 
-        $this->entityManager->persist($completedQuiz);
-
-        return $completedQuiz;
-    }
-
-    public function proccessSubmitAnswer(UserInterface $user, StartedQuiz $quiz, WiredQuestion $question, bool $isCorrect):void
-    {
-        $this->createUserAnswer($user,$quiz->getQuiz(),$question->getQuestionNumber(),$isCorrect);
-
-        if(!($quiz->getQuiz()->getCountOfQuestions()-1 == $question->getQuestionNumber())){
-           $this->updateQuizState($quiz,$question->getQuestionNumber(),$isCorrect);
            $this->entityManager->flush();
            return;
         }
 
-        $this->entityManager->remove($quiz);
-        $this->closeQuiz($user,$quiz);
+        $completedQuiz = $this->completedQuizManager->createCompletedQuiz($user,$startedQuiz,$startedQuiz->getRightAnswers()+(int)$isCorrect);
+
+        $this->synchronizeLeader($startedQuiz->getQuiz(),$completedQuiz);
+
+        $startedQuiz->getQuiz()->removePlayer();
+
+        $this->entityManager->persist($completedQuiz);
+        $this->entityManager->remove($startedQuiz);
         $this->entityManager->flush();
     }
 
-    public function createUserAnswer(UserInterface $user, Quiz $quiz, int $questionNumber, bool $isCorrect): UserAnswer
-    {
-        $userAnswer = new UserAnswer();
-        $userAnswer->setUser($user);
-        $userAnswer->setQuiz($quiz);
-        $userAnswer->setQuestionNumber($questionNumber);
-        $userAnswer->setCorrect($isCorrect);
-
-        $this->entityManager->persist($userAnswer);
-
-        return $userAnswer;
-    }
 
 }

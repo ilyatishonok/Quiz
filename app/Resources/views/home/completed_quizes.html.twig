@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset("static/styles/index.css?v1.0") }}"
+{% endblock %}
+
+{% block body %}
+    <main>
+        <div class="container-fluid">
+            <div class="col-12 align-self-center quizes">
+                {% for completed_quiz in completed_quizes %}
+                    <div class="container-fluid quiz">
+                        <a href="{{ path('_quiz', {'id': completed_quiz.quiz.id}) }}  " class="text-white">
+                            <h5>{{ completed_quiz.quiz.name }}</h5>
+                            <div class="row">
+                                <div class="col">questions: {{ completed_quiz.quiz.countOfQuestions }}</div>
+                                <div class="col">players: {{ completed_quiz.quiz.countOfPlayers }}</div>
+                                <div class="col">leader: {{ completed_quiz.quiz.leader }}</div>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+                <div class="navbar" >
+                    {{ knp_pagination_render(completed_quizes) }}
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
+{% block javascripts %}
+
+{% endblock %}

@@ -3,7 +3,7 @@
 {% trans_default_domain "translations" %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset("static/styles/quiz/leader_board.css?v1.0") }}">
+    <link rel="stylesheet" href="{{ asset("static/styles/quiz/leader_board.css?v1.1") }}">
 {% endblock %}
 
 {% block body %}
@@ -11,8 +11,8 @@
         <div class="col-12 rating bg-color">
             <div class="container-fluid quiz-indent">
                 <h1 class="text-white text-center">{{ "leaderboard.label"|trans }}</h1>
-                <div class="col col-lg-12 quiz-creator rating-tb">
-                    <table class="table table-responsive-lg quiz-table">
+                <div class="col col-lg-12 leader-board">
+                    <table class="table table-responsive-lg leader-board-table">
                         <tbody>
                         <tr>
                             <th scope="col">{{ "leaderboard.position"|trans }}</th>
@@ -21,17 +21,19 @@
                             <th scope="col">{{ "leaderboard.time"|trans }}</th>
                         </tr>
                         {% for leader in leaders %}
-                            <td scope="row">{{ loop.index }}</td>
-                            <td class="quiz_td">{{ leader.user.username }}</td>
-                            <td class="quiz_td">{{ leader.rightQuestions }}</td>
-                            <td class="quiz_td">Time</td>
+                            <tr>
+                                <td scope="row">{{ loop.index }}</td>
+                                <td class="quiz_td">{{ leader.user.username }}</td>
+                                <td class="quiz_td">{{ leader.rightQuestions }}</td>
+                                <td class="quiz_td">{{ leader.time|date("%Y years:%M month:%D days:%H hours:%I minutes:%s seconds") }}</td>
+                            </tr>
                         {% endfor  %}
                         </tbody>
                     </table>
                 </div>
-                <h4 class="text-white text-center">Your position</h4>
-                <div class="col col-lg-12 quiz-creator rating-tb">
-                    <table class="table table-inverse quiz-table">
+                <h3 class="text-white text-center">Your position</h3>
+                <div class="col col-lg-12 user-position">
+                    <table class="table table-inverse user-position-table">
                         <tbody>
                             <tr>
                                 <th scope="col">{{ "leaderboard.position"|trans }}</th>
