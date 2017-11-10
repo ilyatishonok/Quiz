@@ -1,13 +1,12 @@
 <form class="filter-form" method="get" action="{{ action }}" enctype="application/x-www-form-urlencoded">
 
-    <select class="pull-left form-control select" name="{{ filterFieldName }}">
+    <select style="float: left" class="form-control select" name="{{ filterFieldName }}">
         {% for field, label in fields %}
             <option value="{{ field }}"{% if selectedField == field %} selected="selected"{% endif %}>{{ label }}</option>
         {% endfor %}
     </select>
 
-    <input class="pull-right filter-input form-control" type="text" value="{{ selectedValue }}" name="{{ filterValueName }}" />
+    <input style="float: left; width: 60%; margin-right: 20px; margin-left: 10px" class="filter-input form-control" type="text" value="{{ selectedValue }}" name="{{ filterValueName }}" />
 
-    <button class="btn btn-success">{{ options.button }}</button>
-
+    <button style="float: left; width: 10%" class="btn btn-success">{{ options.button }}</button>
 </form>

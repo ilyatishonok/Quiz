@@ -52,7 +52,7 @@ class User implements UserInterface
      *
      * @ORM\Column(name="enabled", type="boolean")
      */
-    private $isEnabled = false;
+    private $enabled = false;
 
     /**
      * @var string
@@ -143,8 +143,13 @@ class User implements UserInterface
 
     public function setEnabled(bool $enabled): UserInterface
     {
-        $this->isEnabled = $enabled;
+        $this->enabled = $enabled;
         return $this;
+    }
+
+    public function getEnabled(): bool
+    {
+        return $this->enabled;
     }
 
     public function setEmail(string $email): UserInterface
@@ -180,7 +185,7 @@ class User implements UserInterface
 
     public function isEnabled(): ?bool
     {
-        return $this->isEnabled;
+        return $this->enabled;
     }
 
     public function isCredentialsNonExpired(): ?bool
