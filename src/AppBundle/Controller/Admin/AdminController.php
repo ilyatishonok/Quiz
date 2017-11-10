@@ -8,6 +8,8 @@ use AppBundle\Entity\Question;
 use AppBundle\Entity\User;
 use AppBundle\Form\QuestionType;
 use AppBundle\Repository\UserRepository;
+use AppBundle\Service\Grid\GridLoader;
+use AppBundle\Service\Grid\GridLoaderInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -58,20 +60,26 @@ class AdminController extends Controller
      */
     public function showUserManagerAction(Request $request)
     {
-        /** @var UserRepository $userRepository */
-        $userRepository = $this->getDoctrine()->getManager()->getRepository(User::class);
+        /** @var GridLoader $gridLoader */
+        $gridLoader = $this->get("grid_loader");
 
-        $query = $userRepository->createLoaderQuery();
 
-        $paginator  = $this->get('knp_paginator');
+        $userGrid = $this->getParameter("user_grid");
 
-        $pagination = $paginator->paginate(
-            $query,
-            $request->query->getInt('page', 1),
-            6
+        $table = $gridLoader->loadGrid(
+            array(
+                 "className"=>User::class,
+                 "limit"=>5,
+                 "entityName"=>"user",
+                 "request"=>$request,
+                 "translationDomain"=>$userGrid['translation_domain'],
+                 "tableFields"=>$userGrid['table_fields'],
+                 "sortableFields"=>$userGrid['sortable_fields'],
+                 "filterableFields"=>$userGrid['filterable_fields'],
+            )
         );
 
-        return $this->render('admin/user_manager.html.twig', array('current_user'=>$this->getUser(),'pagination' => $pagination));
+        return $this->render('admin/user_manager.html.twig', array("table"=>$table));
     }
 
 

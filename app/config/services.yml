@@ -4,7 +4,18 @@ parameters:
     mailer_params:
       email_confirm_template: "mailer/mail_confirm.html.twig"
       resetting_confirm_template: "mailer/mail_resetting.html.twig"
-
+    user_grid:
+      translation_domain: "translations"
+      table_fields:
+        id: "admin.user_manager.id"
+        username: "admin.user_manager.user_name"
+        email: "admin.user_manager.email"
+        role: "admin.user_manager.role"
+        confirmationToken: "admin.user_manager.confirmation_token"
+        enabled: "admin.user_manager.status"
+        resettingToken: "admin.user_manager.resetting_token"
+      sortable_fields: ["id","username","email","role","confirmationToken","enabled", "resettingToken"]
+      filterable_fields: ["id","username","email","role","confirmationToken","enabled","resettingToken"]
 
 services:
     # default configuration for services in *this* file
@@ -32,7 +43,6 @@ services:
         public: true
         tags: ['controller.service_arguments']
 
-
     twig_mailer:
       class: AppBundle\Service\Mailer\TwigMailer
       arguments: ["@mailer","@router","@twig", "%mailer_user%","%mailer_params%"]
@@ -54,6 +64,9 @@ services:
       public: true
     answer_manager:
       class: AppBundle\Service\Answer\AnswerManager
+      public: true
+    grid_loader:
+      class: AppBundle\Service\Grid\GridLoader
       public: true
 
     AppBundle\Service\StartedQuiz\StartedQuizManager: ~

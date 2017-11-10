@@ -8,6 +8,7 @@
     border: 1px solid black;
     border-radius: 7px;
     box-shadow: 0 0 10px black;
+    margin-bottom: 10px;
 }
 
 .button-size {
@@ -35,10 +36,6 @@
 
 .select{
     width: 10% !important;
-}
-
-.filter-input{
-    width: 80% !important;
 }
 
 .filter-form{

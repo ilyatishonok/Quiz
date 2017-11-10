@@ -1,0 +1,32 @@
+{% trans_default_domain "translations" %}
+
+
+<nav class="navbar navbar-light justify-content-between {{ entityName }}-header ">
+    {{ knp_pagination_filter(pagination, filterableFields) }}
+</nav>
+<input type="hidden" id="csrf-token" value="{{ csrf_token("intention") }}">
+<table data-token="{{ csrf_token("intention") }}" class="table table-responsive-lg users-table">
+    <tbody>
+        <tr>
+            {% for key, translation in tableFields %}
+                {% if key in sortableFields %}
+                    <th>{{ knp_pagination_sortable(pagination, translation|trans , "entity."~key) }}</th>
+                {% else %}
+                    <th>{{ key }}</th>
+                {% endif %}
+            {% endfor %}
+        </tr>
+
+        </tr>
+            {% for entity in pagination %}
+                <tr class="{{ entityName }}-row" data-id="{{ entity.id }}">
+                {% for tableField, translation in tableFields %}
+                    <td class="{{ entityName }}-{{tableField}}">{{ attribute(entity, "get"~tableField) }}</td>
+                {% endfor %}
+            {% endfor%}
+        </tr>
+    </tbody>
+</table>
+<div class="navbar text-color" >
+    {{ knp_pagination_render(pagination) }}
+</div>

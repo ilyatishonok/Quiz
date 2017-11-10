@@ -45,12 +45,12 @@
     color: red;
 }
 
-.add-question-btn{
+.create-question-btn{
     background: #8b51f5;
     color: white;
 }
 
-.add-question-btn:hover{
+.cre-question-btn:hover{
     background-color: limegreen;
 }
 
