@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset("static/styles/admin/user-manager.css?v1.21") }}">
+    <link rel="stylesheet" href="{{ asset("static/styles/admin/user-manager.css?v1.24") }}">
 {% endblock %}
 
 {% block content %}
@@ -22,7 +22,8 @@
 {% endblock %}
 
 {% block javascripts %}
+    <script src="{{ asset("static/scripts/bootstrap.bundle.min.js") }}"></script>
     <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
-    <script src="{{ asset("static/scripts/admin/user_manager.js?v1.19") }}"></script>
+    <script src="{{ asset("static/scripts/admin/user_manager.js?v1.28") }}"></script>
 {% endblock %}

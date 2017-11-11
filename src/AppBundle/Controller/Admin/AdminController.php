@@ -69,13 +69,14 @@ class AdminController extends Controller
         $table = $gridLoader->loadGrid(
             array(
                  "className"=>User::class,
-                 "limit"=>5,
+                 "limit"=>10,
                  "entityName"=>"user",
                  "request"=>$request,
                  "translationDomain"=>$userGrid['translation_domain'],
                  "tableFields"=>$userGrid['table_fields'],
                  "sortableFields"=>$userGrid['sortable_fields'],
                  "filterableFields"=>$userGrid['filterable_fields'],
+                 "buttonField"=>$userGrid['button_field'],
             )
         );
 

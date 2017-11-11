@@ -16,6 +16,15 @@ parameters:
         resettingToken: "admin.user_manager.resetting_token"
       sortable_fields: ["id","username","email","role","confirmationToken","enabled", "resettingToken"]
       filterable_fields: ["id","username","email","role","confirmationToken","enabled","resettingToken"]
+      button_field:
+        condition: true
+        field: "enabled"
+        true_condition:
+          class_name: "btn btn-outline-danger button-size btn-block"
+          label: "admin.user_manager.block"
+        false_condition:
+          class_name: "btn btn-outline-success button-size btn-unblock"
+          label: "admin.user_manager.unblock"
 
 services:
     # default configuration for services in *this* file
@@ -42,6 +51,11 @@ services:
         resource: '../../src/AppBundle/Controller'
         public: true
         tags: ['controller.service_arguments']
+
+    app.tokens.action_listener:
+        class: AppBundle\EventListener\RedirectUserListener
+        tags:
+          - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
     twig_mailer:
       class: AppBundle\Service\Mailer\TwigMailer

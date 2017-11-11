@@ -16,13 +16,26 @@
     padding-bottom: 0 !important;
 }
 
+.selected{
+    display: block !important;
+}
+
 .bg-color {
     background: rgba(0, 0, 0, 0.6);
+}
+
+.extra-block{
+    width: 100%;
+    display: none;
 }
 
 .btn-unblock{
     display: block;
     width: 100%;
+}
+
+.user-row{
+    cursor: pointer;
 }
 
 .user-indent {

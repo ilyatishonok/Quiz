@@ -20,6 +20,7 @@ class GridLoader implements GridLoaderInterface
     protected $entityName;
     protected $translationDomain;
     protected $entityManager;
+    protected $buttonField;
 
 
     public function __construct(PaginatorInterface $pagination, EntityManagerInterface $entityManager, TranslatorInterface $translator)
@@ -64,6 +65,7 @@ class GridLoader implements GridLoaderInterface
             "filterableFields" => $this->filterableFields,
             "translation_domain" => $this->translationDomain,
             "entityName"=>$this->entityName,
+            "buttonField"=>$this->buttonField
         );
     }
 
@@ -76,6 +78,7 @@ class GridLoader implements GridLoaderInterface
         $this->sortableFields = $data['sortableFields'];
         $this->filterableFields = $this->proccessFilterableFields($data['filterableFields'], $data['tableFields'],$data['translationDomain']);
         $this->translationDomain = $data['translationDomain'];
+        $this->buttonField = $data['buttonField'];
 
         $this->pagination = $this->paginator->paginate(
             $query,
