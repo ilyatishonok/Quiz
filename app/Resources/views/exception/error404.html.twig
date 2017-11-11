@@ -1,0 +1,15 @@
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset("static/styles/exception/error404.css") }}">
+    <link rel="stylesheet" href="{{ asset("static/styles/bootstrap.min.css") }}">
+{% endblock %}
+
+{% block body %}
+    <div class="parent text-white">
+        <h1 class="text-center">404 Page not found</h1>
+
+        <h3 class="text-center">
+            The requested page couldn't be located. Checkout for any URL
+            misspelling or <a href="{{ path('homepage') }}">return to the homepage</a>.
+        </h3>
+    </div>
+{% endblock %}
