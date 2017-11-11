@@ -1,5 +1,7 @@
 $(document).ready(()=>{
 
+	appendButtons();
+
 	$(document).ajaxStart(()=>{
 		$(".loader").show();
 	});
@@ -58,5 +60,23 @@ $(document).ready(()=>{
 		let searchQuery = $(".search-input").val();
 		window.href = "?search="+searchQuery;	
 	});
+
+	function appendButtons()
+	{
+		let dropDowns = $(".dropdown-menu");
+		let dropDownsArray = dropDowns.toArray();
+
+		dropDownsArray.forEach((item,index,array)=>{
+			let enabled = $(item).parent().siblings(".user-enabled").html();
+			if(enabled)
+			{
+				$(item).append("<a class='btn btn-outline-danger button-size btn-block'>Block</a>")
+			}
+			else
+			{
+				$(item).append("<a class='btn btn-outline-danger button-size btn-block'>Unblock</a>")
+			}
+		});
+	}
 
 });

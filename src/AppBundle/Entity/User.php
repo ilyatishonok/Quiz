@@ -147,9 +147,16 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getEnabled(): bool
+    public function getEnabled(): string
     {
-        return $this->enabled;
+        if($this->enabled)
+        {
+            return "true";
+        }
+        else
+        {
+            return "false";
+        }
     }
 
     public function setEmail(string $email): UserInterface

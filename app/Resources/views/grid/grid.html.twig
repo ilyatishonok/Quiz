@@ -15,6 +15,7 @@
                     <th>{{ key }}</th>
                 {% endif %}
             {% endfor %}
+                <th></th>
         </tr>
 
         </tr>
@@ -23,7 +24,22 @@
                 {% for tableField, translation in tableFields %}
                     <td class="{{ entityName }}-{{tableField}}">{{ attribute(entity, "get"~tableField) }}</td>
                 {% endfor %}
+                    {% if buttonField %}
+                        <td>
+                            {% if buttonField.condition %}
+
+                                {% if attribute(entity, "get"~buttonField.field) %}
+                                    <button class="{{ buttonField.true_condition.class_name }}">{{ buttonField.true_condition.label|trans}}</button>
+                                {% else %}
+                                    <button class="{{ buttonField.false_condition.class_name}}">{{ buttonField.false_condition.label|trans }}</button>
+                                {% endif %}
+                            {% else %}
+                                <button class="{{ buttonField.class_name }}">{{ buttonField.label|trans }}</button>
+                            {% endif %}
+                        </td>
+                    {% endif %}
             {% endfor%}
+
         </tr>
     </tbody>
 </table>

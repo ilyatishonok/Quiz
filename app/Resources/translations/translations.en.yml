@@ -82,7 +82,7 @@ admin:
     email: "Email"
     role: "Role"
     confirmation_token: "Confirmation token"
-    status: "Status"
+    status: "enabled"
     block: "Block"
     unblock: "Unblock"
     resetting_token: "Resetting token"
