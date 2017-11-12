@@ -73,6 +73,22 @@ class Quiz
         return $this->enabled;
     }
 
+    public function setEnabled(bool $enabled): Quiz
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    public function getEnabled(): string
+    {
+        if ($this->enabled) {
+            return "true";
+        } else {
+            return "false";
+        }
+    }
+
     public function setName($name): Quiz
     {
         $this->name = $name;

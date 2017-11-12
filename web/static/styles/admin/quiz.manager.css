@@ -8,6 +8,7 @@
     border: 1px solid black;
     border-radius: 7px;
     box-shadow: 0 0 10px black;
+    margin-bottom: 10px;
 }
 
 .button-size {
@@ -15,8 +16,28 @@
     padding-bottom: 0 !important;
 }
 
+.btn-block{
+    width: 100%;
+    display: block;
+}
+
+.success, .error{
+    position: fixed !important;
+    width: 80%;
+    z-index: 10000;
+    display: none;
+}
+
 .bg-color {
     background: rgba(0, 0, 0, 0.6);
+}
+
+.selected{
+    display: block !important;
+}
+
+.select{
+    width: 10% !important;
 }
 
 .quiz-indent {
@@ -26,4 +47,8 @@
 
 .text-color {
     color: white;
+}
+
+.filter-form{
+    width: 100%;
 }

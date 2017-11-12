@@ -72,6 +72,10 @@ class ApiController extends Controller
         $token = $request->get("token");
         $id = $request->get("id");
 
+        if (!$request->isXmlHttpRequest()) {
+            return new Response("Bad request data!", 400);
+        }
+
         if (!$this->isCsrfTokenValid('intention',$token)) {
             return new Response("Invalid CSRF Token!",400);
         }
@@ -93,6 +97,36 @@ class ApiController extends Controller
         return new Response("User was blocked", 200);
     }
 
+
+    /**
+     * @Route("/admin/api/block-quiz", name="_block_quiz", options={"expose"=true})
+     */
+    public function blockQuizAction(Request $request)
+    {
+        $id = $request->get("id");
+        $token = $request->get("token");
+
+        if (!$request->isXmlHttpRequest()) {
+            return new Response("Bad request data!", 400);
+        }
+
+        if (!$this->isCsrfTokenValid('intention',$token)) {
+            return new Response("Invalid CSRF Token!",400);
+        }
+
+        $quizRepository = $this->getDoctrine()->getManager()->getRepository(Quiz::class);
+        $quiz = $quizRepository->findOneBy(array("id" => $id));
+
+        if (!$quiz) {
+            return new Response("Bad request data", 400);
+        }
+
+        $quiz->setEnabled(false);
+        $this->getDoctrine()->getManager()->flush();
+
+        return new Response("Quiz was blocked",200);
+    }
+
     /**
      * @Route("/admin/api/unblock-user", name="_unblock_user", options={"expose"=true})
      */
@@ -100,6 +134,10 @@ class ApiController extends Controller
     {
         $token = $request->get("token");
         $id = $request->get("id");
+
+        if (!$request->isXmlHttpRequest()) {
+            return new Response("Bad request data!", 400);
+        }
 
         if (!$this->isCsrfTokenValid("intention", $token)) {
             return new Response("Invalid CSRF Token", 400);

@@ -33,7 +33,7 @@
                                     <div class="col">{{ "completed_quizzes_page.right_questions"|trans }}{{ completed_quiz.rightQuestions }}/{{ completed_quiz.quiz.countOfQuestions }}</div>
                                     <div class="col">
                                         {{ "homepage.status"|trans }}
-                                        {% if completed_quiz.quiz.enabled %}
+                                        {% if completed_quiz.quiz.enable %}
                                             {{ "homepage.status_activated"|trans }}
                                         {% else %}
                                             {{ "homepage.status_deactivated"|trans }}

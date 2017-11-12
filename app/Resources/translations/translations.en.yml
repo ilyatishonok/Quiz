@@ -87,6 +87,14 @@ admin:
     resetting_token: "Resetting token"
     blocked: "Blocked"
     active: "Active"
+  quiz_manager:
+    id: "id"
+    name: "Name"
+    questions_count: "Questions"
+    players: "Players"
+    leader: "Leader"
+    block: "Block"
+    enabled: "Enabled"
 
 quiz:
   deactivated:

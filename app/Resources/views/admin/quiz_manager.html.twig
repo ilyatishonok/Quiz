@@ -1,52 +1,37 @@
 {% extends 'admin/panel.html.twig' %}
 
-{% block stylesheets%}
-    <link rel="stylesheet" href="{{ asset("static/styles/admin/quiz-manager.css") }}">
+{% trans_default_domain "translations" %}
+
+{% block title %}
+    Quiz user-manager
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset("static/styles/admin/quiz.manager.css?v1.30") }}">
 {% endblock %}
 
 {% block content %}
+    <div class="loader"></div>
     <nav class="quiz-header bg-color">
-        <nav class="navbar navbar-light justify-content-between quiz-header">
-            {{ knp_pagination_filter(pagination, {'quiz.name': 'Quiz name', 'quiz.countOfQuestions': 'Question', 'quiz.countOfPlayers': "Players", 'quiz.leader': "Leader"}) }}
-        </nav>
+        <div class="alert alert-danger error">
+            <strong>{{ "message.error"|trans }}!</strong><div class="error-content"></div>
+        </div>
+        <div class="alert alert-success success">
+            <strong>{{ "message.success"|trans }}</strong> {{ "message.success_action"|trans }}!
+        </div>
         <div class="container-fluid quiz-indent">
             <div class="col col-lg-12 quiz-creator quiz-header">
-                <table data-token="{{ csrf_token("intention") }}" class="table table-inverse quiz-table">
-                    <tbody>
-                    <tr>
-                        <th>{{ knp_pagination_sortable(pagination, 'id', 'quiz.id') }}</th>
-                        <th>{{ knp_pagination_sortable(pagination, 'Quiz name', 'quiz.name') }}</th>
-                        <th>{{ knp_pagination_sortable(pagination, 'Questions', 'quiz.countOfQuestions') }}</th>
-                        <th>{{ knp_pagination_sortable(pagination, 'Players', 'quiz.countOfPlayers') }}</th>
-                        <th>{{ knp_pagination_sortable(pagination, 'Leader', 'quiz.leader') }}</th>
-                        <th>{{ knp_pagination_sortable(pagination, 'Status', 'quiz.enabled') }}</th>
-                        <td></td>
-                    </tr>
-                    {% for quiz in pagination %}
-                        <tr>
-                            <td scope="row">{{ quiz.id }}</td>
-                            <td>{{ quiz.name }}</td>
-                            <td>{{ quiz.countOfQuestions }}</td>
-                            <td>{{ quiz.countOfPlayers }}</td>
-                            {% if quiz.leader %}
-                                <td>{{ quiz.leader }}</td>
-                            {% else %}
-                                <td>None</td>
-                            {% endif %}
-                            {% if quiz.enabled %}
-                                <td>Active</td>
-                            {% else  %}
-                                <td>Blocked</td>
-                            {% endif %}
-                            <td><button type="button" class="btn btn-outline-danger button-size btn-block">Block</button></td>
-                        </tr>
-                    {% endfor%}
-                    </tbody>
-                </table>
-            </div>
-            <div class="navbar text-color" >
-                {{ knp_pagination_render(pagination) }}
+                {{ grid_loader_render(table) }}
             </div>
         </div>
     </nav>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('bundles/bazingajstranslation/js/translator.min.js') }}"></script>
+    <script src="{{ url('bazinga_jstranslation_js', { 'domain': 'translations' }) }}"></script>
+    <script src="{{ asset("static/scripts/bootstrap.bundle.min.js") }}"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    <script src="{{ asset("static/scripts/admin/quiz.manager.js?v1.0") }}"></script>
 {% endblock %}
