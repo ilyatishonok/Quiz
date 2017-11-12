@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace AppBundle\Repository;
 
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 
-class QuizRepository extends \Doctrine\ORM\EntityRepository
+class QuizRepository extends EntityRepository
 {
-    public function createQueryByName(string $name): Query
+    public function createLoaderQueryByName(string $name): Query
     {
         return $this->createQueryBuilder("quiz")
             ->where("quiz.name LIKE :name")
@@ -16,7 +17,7 @@ class QuizRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery();
     }
 
-    public function createQuery(): Query
+    public function createLoaderQuery(): Query
     {
         return $this->createQueryBuilder("quiz")
             ->getQuery();

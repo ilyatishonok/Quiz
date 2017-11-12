@@ -112,6 +112,12 @@ homepage:
   leader_none: "Leader: None"
   not_found: "Sorry, no results were found."
 
+
+started_quizzes_page:
+  start_time: "Start time: "
+  right_answers: "Right answers: "
+  last_question_number: "Questions: "
+
 errors:
   question_name: "You haven't choose question name!"
   select_answer: "You haven't select any answer!"
