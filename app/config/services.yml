@@ -19,6 +19,7 @@ parameters:
       button_field:
         condition: true
         field: "enabled"
+        equals: "true"
         true_condition:
           class_name: "btn btn-outline-danger button-size btn-block"
           label: "admin.user_manager.block"

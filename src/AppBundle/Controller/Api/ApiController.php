@@ -6,6 +6,7 @@ namespace AppBundle\Controller\Api;
 
 use AppBundle\Entity\Question;
 use AppBundle\Entity\Quiz;
+use AppBundle\Entity\User;
 use AppBundle\Exceptions\AnswerException;
 use AppBundle\Exceptions\QuestionException;
 use AppBundle\Form\QuestionType;
@@ -71,18 +72,18 @@ class ApiController extends Controller
         $token = $request->get("token");
         $id = $request->get("id");
 
-        if(!$this->isCsrfTokenValid('intention',$token)) {
+        if (!$this->isCsrfTokenValid('intention',$token)) {
             return new Response("Invalid CSRF Token!",400);
         }
 
-        $userRepository = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\User");
+        $userRepository = $this->getDoctrine()->getManager()->getRepository(User::class);
         $user = $userRepository->findOneBy(array("id" => $id));
 
         if (!$user) {
             return new Response("Bad request data",400);
         }
 
-        if($user->getId() === $this->getUser()->getId()){
+        if ($user->getId() === $this->getUser()->getId()) {
             return new Response("You can't block yourself!",400);
         }
 
@@ -92,7 +93,6 @@ class ApiController extends Controller
         return new Response("User was blocked", 200);
     }
 
-
     /**
      * @Route("/admin/api/unblock-user", name="_unblock_user", options={"expose"=true})
      */
@@ -101,14 +101,14 @@ class ApiController extends Controller
         $token = $request->get("token");
         $id = $request->get("id");
 
-        if(!$this->isCsrfTokenValid("intention", $token)){
+        if (!$this->isCsrfTokenValid("intention", $token)) {
             return new Response("Invalid CSRF Token", 400);
         }
 
-        $userRepository = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\User");
+        $userRepository = $this->getDoctrine()->getManager()->getRepository(User::class);
         $user = $userRepository->findOneBy(array("id" => $id));
 
-        if(!$user){
+        if (!$user) {
             return new Response("Bad request data!",400);
         }
 
@@ -116,7 +116,6 @@ class ApiController extends Controller
         $this->getDoctrine()->getManager()->flush();
         return new Response("User was unblocked!", 200);
     }
-
 
     /**
      * @Route("/admin/api/question");

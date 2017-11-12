@@ -10,7 +10,6 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-
 class RedirectUserListener
 {
     private $tokenStorage;
@@ -24,15 +23,14 @@ class RedirectUserListener
 
     public function onKernelRequest(GetResponseEvent $event)
     {
-        if($event->isMasterRequest())
-        {
+        if ($event->isMasterRequest()) {
             $currentRoute = $event->getRequest()->attributes->get("_route");
-            if($this->isDebugRoute($currentRoute))
-            {
+
+            if ($this->isUntrackedRoute($currentRoute)) {
                 return;
             }
-            if(!$this->isUserLogged())
-            {
+
+            if(!$this->isUserLogged()) {
                 return;
             }
 
@@ -49,11 +47,11 @@ class RedirectUserListener
         return $user instanceof UserInterface;
     }
 
-    private function isDebugRoute(string $currentRoute)
+    private function isUntrackedRoute(string $currentRoute)
     {
         return in_array(
             $currentRoute,
-            ['_wdt','_profiler']
+            ['_wdt','_profiler', 'fos_js_routing_js', 'bazinga_jstranslation_js']
         );
     }
 

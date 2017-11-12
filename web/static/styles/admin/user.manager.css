@@ -24,18 +24,17 @@
     background: rgba(0, 0, 0, 0.6);
 }
 
-.extra-block{
-    width: 100%;
+.success, .error{
+    position: fixed !important;
+    width: 80%;
+    z-index: 10000;
     display: none;
 }
 
 .btn-unblock{
+    vertical-align: inherit !important;
     display: block;
     width: 100%;
-}
-
-.user-row{
-    cursor: pointer;
 }
 
 .user-indent {

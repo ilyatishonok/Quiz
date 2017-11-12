@@ -134,3 +134,8 @@ errors:
   question_name: "You haven't choose question name!"
   select_answer: "You haven't select any answer!"
   answer_duplicate: "This answer is already exist!"
+
+message:
+  error: "Error"
+  success: "Success"
+  success_action: "Success action"

@@ -7,12 +7,18 @@
 {% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset("static/styles/admin/user-manager.css?v1.24") }}">
+    <link rel="stylesheet" href="{{ asset("static/styles/admin/user.manager.css?v1.28") }}">
 {% endblock %}
 
 {% block content %}
     <div class="loader"></div>
     <nav class="user-header bg-color">
+        <div class="alert alert-danger error">
+            <strong>{{ "message.error"|trans }}!</strong><div class="error-content"></div>
+        </div>
+        <div class="alert alert-success success">
+            <strong>{{ "message.success"|trans }}</strong> {{ "message.success_action"|trans }}!
+        </div>
         <div class="container-fluid user-indent">
             <div class="col col-lg-12 user-creator user-header">
                 {{ grid_loader_render(table) }}
@@ -22,8 +28,10 @@
 {% endblock %}
 
 {% block javascripts %}
+    <script src="{{ asset('bundles/bazingajstranslation/js/translator.min.js') }}"></script>
+    <script src="{{ url('bazinga_jstranslation_js', { 'domain': 'translations' }) }}"></script>
     <script src="{{ asset("static/scripts/bootstrap.bundle.min.js") }}"></script>
     <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
-    <script src="{{ asset("static/scripts/admin/user_manager.js?v1.28") }}"></script>
+    <script src="{{ asset("static/scripts/admin/user.manager.js?v1.33") }}"></script>
 {% endblock %}
