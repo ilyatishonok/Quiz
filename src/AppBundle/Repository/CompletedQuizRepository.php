@@ -7,11 +7,11 @@ namespace AppBundle\Repository;
 use AppBundle\Entity\CompletedQuiz;
 use AppBundle\Entity\Quiz;
 use AppBundle\Entity\UserInterface;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Query;
 
 class CompletedQuizRepository extends \Doctrine\ORM\EntityRepository
 {
+    //Todo refactore this class!
     public function loadUserPosition($rightQuestions, $time)
     {
         return $this->createQueryBuilder("u")
@@ -26,27 +26,42 @@ class CompletedQuizRepository extends \Doctrine\ORM\EntityRepository
 
     public function loadLeader(Quiz $quiz): CompletedQuiz
     {
-        return $this->createQueryBuilder("c")
-            ->select("c")
-            ->leftJoin("c.user","u")
-            ->where("c.quiz = :quiz")
+        return $this->createQueryBuilder("cq")
+            ->select("cq")
+            ->leftJoin("cq.user","u")
+            ->where("cq.quiz = :quiz")
             ->andWhere("u.username = :username")
-            ->orderBy("c.rightQuestions", "DESC")
-            ->addOrderBy("c.time", "ASC")
+            ->orderBy("cq.rightQuestions", "DESC")
+            ->addOrderBy("cq.time", "ASC")
             ->setParameters(array("quiz"=>$quiz,"username"=>$quiz->getLeader()))
             ->getQuery()
             ->getOneOrNullResult();
     }
 
-    public function createLoaderQuery(UserInterface $user): Query
+    public function createLoaderQueryByUser(UserInterface $user): Query
     {
-        return $this->createQueryBuilder("c")
-            ->select("c","q")
-            ->leftJoin("c.quiz", "q")
-            ->where("c.user = :user")
+        return $this->createQueryBuilder("cq")
+            ->select("cq","q")
+            ->leftJoin("cq.quiz", "q")
+            ->where("cq.user = :user")
             ->setParameter("user", $user)
             ->getQuery();
     }
+
+    public function createLoaderQueryByUserAndName(UserInterface $user, string $name): Query
+    {
+        return $this->createQueryBuilder("cq")
+            ->select("cq", "q")
+            ->leftJoin("cq.quiz", "q")
+            ->where("cq.user = :user")
+            ->andWhere("q.name LIKE :name")
+            ->setParameters(array(
+                "user" => $user,
+                "name" => $name."%",
+            ))
+            ->getQuery();
+    }
+
 
     public function loadLeaders(Quiz $quiz)
     {

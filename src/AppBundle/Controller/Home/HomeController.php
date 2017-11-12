@@ -7,6 +7,7 @@ namespace AppBundle\Controller\Home;
 use AppBundle\Entity\CompletedQuiz;
 use AppBundle\Entity\Quiz;
 use AppBundle\Entity\StartedQuiz;
+use AppBundle\Repository\CompletedQuizRepository;
 use AppBundle\Repository\QuizRepository;
 use AppBundle\Repository\StartedQuizRepository;
 use Knp\Component\Pager\PaginatorInterface;
@@ -93,22 +94,36 @@ class HomeController extends Controller
     }
 
     /**
-     * @Route("/completed-quizes", name="completed_quizes")
+     * @Route("/completed-quizzes", name="_completed_quizzes")
      */
-    public function showCompletedQuizesAction(Request $request): Response
+    public function showCompletedQuizzesAction(Request $request): Response
     {
-
+        /** @var CompletedQuizRepository $completedQuizRepository */
         $completedQuizRepository = $this->getDoctrine()->getManager()->getRepository(CompletedQuiz::class);
 
-        $query = $completedQuizRepository->createLoaderQuery($this->getUser());
+        $form = $this->createForm(SearchType::class, null , array(
+            "method" => "GET",
+            "action" => $this->generateUrl("_completed_quizzes"),
+            "required" => false,
+            "empty_data" => "",
+        ));
 
-        $completedQuizes = $this->paginator->paginate(
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $searchQuery = $form->getData();
+            $query = $completedQuizRepository->createLoaderQueryByUserAndName($this->getUser(),$searchQuery);
+        } else {
+            $query = $completedQuizRepository->createLoaderQueryByUser($this->getUser());
+
+        }
+
+        $completedQuizzes = $this->paginator->paginate(
             $query,
             $request->query->getInt('page',1),
-            2
+            6
         );
 
-        return $this->render("home/completed_quizes.html.twig", array("completed_quizes"=>$completedQuizes));
+        return $this->render("home/completed_quizzes.html.twig", array("completed_quizzes" => $completedQuizzes, "form" => $form->createView()));
     }
-
 }
