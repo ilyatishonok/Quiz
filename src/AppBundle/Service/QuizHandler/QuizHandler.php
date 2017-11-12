@@ -58,15 +58,12 @@ class QuizHandler implements QuizHandlerInterface
 
         $completedQuizLeader = $completedQuizRepository->loadLeader($quiz);
 
-        $leaderDateIntervalHandler = new DateIntervalHandler($completedQuizLeader->getTime());
-        $newDateIntervalHandler = new DateIntervalHandler($completedQuiz->getTime());
-
         if($completedQuiz->getRightQuestions() > $completedQuizLeader->getRightQuestions())
         {
             $quiz->setLeader($completedQuiz->getUser()->getUsername());
         } else if($completedQuiz->getRightQuestions() === $completedQuiz->getRightQuestions())
         {
-            if($leaderDateIntervalHandler->getSeconds() > $newDateIntervalHandler->getSeconds()){
+            if($completedQuiz->getStartTime()){
                 $quiz->setLeader($completedQuiz->getUser()->getUsername());
             }
         }

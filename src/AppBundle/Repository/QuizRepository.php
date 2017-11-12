@@ -1,12 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AppBundle\Repository;
 
-use AppBundle\Entity\Question;
-use AppBundle\Entity\Quiz;
-use AppBundle\Entity\WiredQuestion;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query;
 
-class QuizRepository extends \Doctrine\ORM\EntityRepository
+class QuizRepository extends EntityRepository
 {
+    public function createLoaderQueryByName(string $name): Query
+    {
+        return $this->createQueryBuilder("quiz")
+            ->where("quiz.name LIKE :name")
+            ->setParameter("name",$name."%")
+            ->getQuery();
+    }
+
+    public function createLoaderQuery(): Query
+    {
+        return $this->createQueryBuilder("quiz")
+            ->getQuery();
+    }
+
 
 }

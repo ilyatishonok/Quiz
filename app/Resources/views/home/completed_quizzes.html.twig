@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% trans_default_domain "translations" %}
+
+{% block title %}
+    Homepage
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset("static/styles/homepage/homepage.css?v1.21") }}"
+{% endblock %}
+
+{% block body %}
+    <main>
+        <div class="container quizzes">
+            <div class="col-12 align-self-center quizzes-content">
+                {{ form_start(form) }}
+                {{ form_widget(form, {"attr": {"class": "form-control", "placeholder": "homepage.search_placeholder"|trans}}) }}
+                {{ form_end(form) }}
+                {% if completed_quizzes|length %}
+                {% for completed_quiz in completed_quizzes %}
+                {% if completed_quiz.quiz.enabled %}
+                <div class="container-fluid quiz active">
+                    <a href="{{ path('_quiz', {'id': completed_quiz.quiz.id}) }}"  class="text-white">
+                        {% else %}
+                        <div class="container-fluid quiz not-active">
+                            <a class="text-white not-active">
+                                {% endif %}
+                                <h5>{{ completed_quiz.quiz.name }}</h5>
+                                <div class="row">
+                                    <div class="col">{{ "completed_quizzes_page.start_time"|trans }}{{ completed_quiz.startTime|date("Y:m:d H:i:s") }}</div>
+                                    <div class="col">{{ "completed_quizzes_page.end_time"|trans }}{{ completed_quiz.endTime|date("Y:m:d H:i:s") }}</div>
+                                    <div class="col">{{ "completed_quizzes_page.right_questions"|trans }}{{ completed_quiz.rightQuestions }}/{{ completed_quiz.quiz.countOfQuestions }}</div>
+                                    <div class="col">
+                                        {{ "homepage.status"|trans }}
+                                        {% if completed_quiz.quiz.enabled %}
+                                            {{ "homepage.status_activated"|trans }}
+                                        {% else %}
+                                            {{ "homepage.status_deactivated"|trans }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                            <h3 class="not-found">{{ "homepage.not_found"|trans }}</h3>
+                        {% endif %}
+                        <div class="navbar text-color">
+                            {{ knp_pagination_render(completed_quizzes) }}
+                        </div>
+                </div>
+            </div>
+    </main>
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}

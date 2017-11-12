@@ -6,16 +6,16 @@ namespace AppBundle\Repository;
 
 use AppBundle\Entity\Quiz;
 use AppBundle\Entity\StartedQuiz;
-use AppBundle\Entity\User;
 use AppBundle\Entity\UserInterface;
 use AppBundle\Entity\WiredQuestion;
-use Doctrine\DBAL\Types\DateTimeImmutableType;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
-use Symfony\Component\Validator\Constraints\DateTime;
 
-class StartedQuizRepository extends \Doctrine\ORM\EntityRepository
+class StartedQuizRepository extends EntityRepository
 {
-    public function createStartedQuiz(UserInterface $user, Quiz $quiz){
+    //Todo Remove this method to StartedQuizManager
+    public function createStartedQuiz(UserInterface $user, Quiz $quiz)
+    {
         $wiredQuestionRepository = $this->getEntityManager()->getRepository("AppBundle\Entity\WiredQuestion");
 
         /** @var WiredQuestion $firstQuestion */
@@ -32,12 +32,26 @@ class StartedQuizRepository extends \Doctrine\ORM\EntityRepository
         return $startedQuiz;
     }
 
-    public function createLoaderQuery(UserInterface $user): Query
+    public function createLoaderQueryByUserAndName(UserInterface $user, string $name): Query
     {
-        return $this->createQueryBuilder("s")
-            ->select("s","q")
-            ->leftJoin("s.quiz","q")
-            ->where("s.user = :user")
+        return $this->createQueryBuilder("sq")
+            ->select("sq","q")
+            ->leftJoin("sq.quiz", "q")
+            ->where("sq.user = :user")
+            ->andWhere("q.name LIKE :name")
+            ->setParameters(array(
+                "user"=>$user,
+                "name"=>$name."%",
+            ))
+            ->getQuery();
+    }
+
+    public function createLoaderQueryByUser(UserInterface $user): Query
+    {
+        return $this->createQueryBuilder("sq")
+            ->select("sq","q")
+            ->leftJoin("sq.quiz","q")
+            ->where("sq.user = :user")
             ->setParameter("user", $user)
             ->getQuery();
     }

@@ -1,33 +1,62 @@
 {% extends 'base.html.twig' %}
 
+{% trans_default_domain "translations" %}
+
+{% block title %}
+    Homepage
+{% endblock %}
+
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset("static/styles/index.css?v1.0") }}"
+    <link rel="stylesheet" href="{{ asset("static/styles/homepage/homepage.css?v1.21") }}"
 {% endblock %}
 
 {% block body %}
     <main>
-        <div class="container-fluid">
-            <div class="col-12 align-self-center quizes">
-                {% for quiz in  pagination %}
-                <div class="container-fluid quiz">
-                    <a href="{{ path('_quiz', {'id': quiz.id}) }}  " class="text-white">
-                            <h5>{{ quiz.name }}</h5>
-                        <div class="row">
-                            <div class="col">questions: {{ quiz.countOfQuestions }}</div>
-                            <div class="col">players: {{ quiz.countOfPlayers }}</div>
-                            <div class="col">leader: {{ quiz.leader }}</div>
-                        </div>
-                    </a>
-                </div>
-                {% endfor %}
-                <div class="navbar text-color" >
-                    {{ knp_pagination_render(pagination) }}
-                </div>
+        <div class="container quizzes">
+            <div class="col-12 align-self-center quizzes-content">
+                {{ form_start(form) }}
+                {{ form_widget(form, {"attr": {"class": "form-control", "placeholder": "homepage.search_placeholder"|trans}}) }}
+                {{ form_end(form) }}
+                {% if quizzes|length %}
+                    {% for quiz in quizzes %}
+                        {% if quiz.enabled %}
+                            <div class="container-fluid quiz active">
+                            <a href="{{ path('_quiz', {'id': quiz.id}) }}"  class="text-white">
+                        {% else %}
+                            <div class="container-fluid quiz not-active">
+                                <a class="text-white not-active">
+                        {% endif %}
+                                    <h5>{{ quiz.name }}</h5>
+                                    <div class="row">
+                                        <div class="col">{{ "homepage.questions"|trans }}{{ quiz.countOfQuestions }}</div>
+                                        <div class="col">{{ "homepage.players"|trans }}{{ quiz.countOfPlayers }}</div>
+                                        {% if quiz.leader %}
+                                            <div class="col">{{ "homepage.leader"|trans }}{{ quiz.leader }}</div>
+                                        {% else %}
+                                            <div class="col">{{ "homepage.leader_none"|trans }}</div>
+                                        {% endif %}
+                                        <div class="col">
+                                            {{ "homepage.status"|trans }}
+                                            {% if quiz.enabled %}
+                                                {{ "homepage.status_activated"|trans }}
+                                            {% else %}
+                                                {{ "homepage.status_deactivated"|trans }}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                    {% endfor %}
+                {% else %}
+                    <h3 class="not-found">{{ "homepage.not_found"|trans }}</h3>
+                {% endif %}
+            <div class="navbar text-color">
+                {{ knp_pagination_render(quizzes) }}
             </div>
-        </div>
+            </div>
+         </div>
     </main>
 {% endblock %}
 
 {% block javascripts %}
-
 {% endblock %}

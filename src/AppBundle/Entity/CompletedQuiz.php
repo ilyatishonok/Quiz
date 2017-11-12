@@ -18,7 +18,7 @@ class CompletedQuiz
 {
     public function __construct()
     {
-        $this->time = new \DateTime();
+        $this->endTime = new \DateTime();
     }
 
     /**
@@ -31,11 +31,18 @@ class CompletedQuiz
     private $id;
 
     /**
-     * @var \DateInterval
+     * @var \DateTime
      *
-     * @ORM\Column(name="time", type="dateinterval")
+     * @ORM\Column(name="start_time", type="datetime")
      */
-    private $time;
+    private $startTime;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="end_time", type="datetime")
+     */
+    private $endTime;
 
     /**
      * @var int
@@ -62,16 +69,21 @@ class CompletedQuiz
         return $this->id;
     }
 
-    public function setTime(\DateInterval $time): CompletedQuiz
+    public function setStartTime(\DateTime $time): CompletedQuiz
     {
-        $this->time = $time;
+        $this->startTime = $time;
 
         return $this;
     }
 
-    public function getTime(): \DateInterval
+    public function getStartTime(): \DateTime
     {
-        return $this->time;
+        return $this->startTime;
+    }
+
+    public function getEndTime(): \DateTime
+    {
+        return $this->endTime;
     }
 
     public function setRightQuestions(int $rightQuestions): CompletedQuiz
