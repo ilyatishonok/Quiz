@@ -51,6 +51,12 @@ class CompletedQuiz
      */
     private $rightQuestions;
 
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="seconds", type="float")
+     */
+    private $seconds;
 
     /**
      * @ManyToOne(targetEntity="User")
@@ -74,6 +80,18 @@ class CompletedQuiz
         $this->startTime = $time;
 
         return $this;
+    }
+
+    public function setSeconds(float $seconds): CompletedQuiz
+    {
+        $this->seconds = $seconds;
+
+        return $this;
+    }
+
+    public function getSeconds(): float
+    {
+        return $this->seconds;
     }
 
     public function getStartTime(): \DateTime

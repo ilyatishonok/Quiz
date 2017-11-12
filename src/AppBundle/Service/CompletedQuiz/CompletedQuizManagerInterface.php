@@ -10,5 +10,5 @@ use AppBundle\Entity\UserInterface;
 
 interface CompletedQuizManagerInterface
 {
-    public function createCompletedQuiz(UserInterface $user, StartedQuiz $startedQuiz, int $rightQuestions): CompletedQuiz;
+    public function createCompletedQuiz(UserInterface $user, StartedQuiz $startedQuiz, int $rightQuestions, bool $isFlush = false): CompletedQuiz;
 }

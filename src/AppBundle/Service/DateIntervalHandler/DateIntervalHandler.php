@@ -29,7 +29,6 @@ class DateIntervalHandler
         $this->seconds += $this->dateInterval->h*static::HOUR_SECONDS;
         $this->seconds += $this->dateInterval->i*static::MINUTE_SECONDS;
         $this->seconds += $this->dateInterval->f;
-
     }
 
     public function getSeconds()

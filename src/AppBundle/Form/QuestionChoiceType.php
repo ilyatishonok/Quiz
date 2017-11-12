@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace AppBundle\Form;
 
 use AppBundle\Choices\AnswerChoice;
-use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -17,16 +16,18 @@ class QuestionChoiceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $answers = $options['answers'];
+
         $builder->add("answer", EntityType::class, array(
-            'class'=> "AppBundle\Entity\Answer",
-            'choice_label'=>'name',
-            'choices'=>$answers,
-            'label'=>false,
-            'trim'=>true,
+            'class' => "AppBundle\Entity\Answer",
+            'choice_label' => 'name',
+            'choices' => $answers,
+            'label' => false,
+            'trim' => true,
             'attr' => array('class' => 'form_answers'),
-            'expanded'=>true))
+            'expanded' => true))
             ->add('Submit question', SubmitType::class, array(
-                'attr' => array('class' => "btn btn-large submit-btn")
+                'attr' => array('class' => "btn btn-large submit-btn"),
+                "label" => "quiz.question.submit_question",
             ));
     }
 

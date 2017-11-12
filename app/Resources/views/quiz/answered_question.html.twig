@@ -2,35 +2,38 @@
 
 {% trans_default_domain "translations" %}
 
+{% block title %}
+    Answered Question
+{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset("static/styles/quiz/startedQuiz.css?v1.23") }}">
-    <link rel="stylesheet" href="{{ asset("static/styles/quiz/answered.question.css?v1.0") }}"
+    <link rel="stylesheet" href="{{ asset("static/styles/quiz/quiz.started.css?v1.23") }}">
+    <link rel="stylesheet" href="{{ asset("static/styles/quiz/quiz.answered.question.css?v1.2") }}"
 {% endblock %}
 
 {% block body %}
-
-    <div class="container content">
-        <div  class="col-8 align-self-center question">
-            <div class="question-header">
-                <h2>{{ "quiz.question.question_label"|trans }}:</h2>
-                <h4 class="question-text">{{ question_name }}</h4>
+    <main>
+        <div class="container content">
+            <div class="col-8 align-self-center question">
+                <div class="question-header">
+                    <h3>{{ "quiz.question.question_label"|trans }}:</h3>
+                    <h5 class="question-text">{{ question_name }}</h5>
+                </div>
+                <div class="answers">
+                    {% for answer in answers %}
+                        {% if user_choice.id == answer.id and user_choice.isCorrect == false %}
+                            <div class="answer incorrect">{{ answer.name }}</div>
+                        {% elseif answer.isCorrect %}
+                            <div class="answer correct">{{ answer.name }}</div>
+                        {% else %}
+                            <div class="answer">{{ answer.name }}</div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <a class="btn btn-large next-btn" href="{{ path('_quiz_passing', {'id': id}) }}">{{ "quiz.question.next_question"|trans }}</a>
             </div>
-            {% for answer in answers %}
-                {% if user_choice.id == answer.id and user_choice.isCorrect == false %}
-                    <div class="answer incorrect">{{ answer.name }}</div>
-                {% elseif answer.isCorrect %}
-                    <div class="answer correct">{{ answer.name }}</div>
-                {% else %}
-                    <div class="answer">{{ answer.name }}</div>
-                {% endif %}
-
-            {% endfor %}
-            <a class="btn btn-large next-btn" href="{{ path('_quiz', {'id': id}) }}" >Next Question</a>
         </div>
-
-    </div>
-
+    </main>
 {% endblock %}
 
 {% block javascripts %}
