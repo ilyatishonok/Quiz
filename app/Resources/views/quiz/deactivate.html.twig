@@ -1,18 +1,27 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    Deactivated Quiz
+{% endblock %}
 
 {% trans_default_domain "translations" %}
 
-
-
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset("static/styles/quiz/quiz.deactivated.css?v1.1") }}">
+{% endblock %}
 
 {% block body %}
-
-    <div class="container">
-        <div class="header">
-
+    <main>
+        <div class="container">
+            <div class="col-12 content">
+                <div class="text-center text-gray">
+                    <h1>{{ "quiz.deactivated.text"|trans }}</h1>
+                </div>
+                <div class="link-wrapper text-center">
+                    <a href="{{ path("_homepage") }}" class="text-center btn btn-large main-page-btn" >{{ "quiz.deactivated.btn"|trans }}</a>
+                </div>
+            </div>
         </div>
-        <a href="{{ path("homepage") }}" class="btn btn-large main-page-btn" >Go to main page</a>
-    </div>
+    </main>
 
 {% endblock %}

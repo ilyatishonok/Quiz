@@ -1,0 +1,39 @@
+.incorrect{
+    background-color: red;
+    border: red;
+    box-shadow: 0 0 10px red;
+}
+
+.correct{
+    background-color: limegreen;
+    border: 1px limegreen;
+    box-shadow: 0 0 10px limegreen;
+}
+
+.answers{
+    margin-top: 15px;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 7px;
+    box-shadow: 0 0 10px black;
+}
+
+.next-btn{
+    margin-top: 10px;
+    background-color: #8b51f5;
+    color: white;
+}
+
+.next-btn:hover{
+    color: white !important;
+    background-color: limegreen;
+}
+
+.answer{
+    text-align: left;
+    border:1px solid black;
+    box-shadow: 0px 0px 37px 0px rgba(91,66,130,1);
+    margin-top: 10px;
+    padding: 5px;
+    border-radius: 7px;
+}

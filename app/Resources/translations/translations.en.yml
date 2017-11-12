@@ -89,10 +89,14 @@ admin:
     active: "Active"
 
 quiz:
+  deactivated:
+    text: "This quiz was deactivated."
+    btn: "Go to main page"
   question:
     question_label: "Question"
     answer_label: "Answers"
     submit_question: "Submit question"
+    next_question: "Next Question"
 
 leaderboard:
   label: "Leader Board"
@@ -100,6 +104,7 @@ leaderboard:
   name: "Username"
   position: "Position"
   time: "Time"
+  position_header: "Your position: "
 
 homepage:
   search_placeholder: "input quiz name"
@@ -111,6 +116,9 @@ homepage:
   leader: "Leader: "
   leader_none: "Leader: None"
   not_found: "Sorry, no results were found."
+
+start_quiz:
+  btn: "Start quiz"
 
 completed_quizzes_page:
   start_time: "Start time: "

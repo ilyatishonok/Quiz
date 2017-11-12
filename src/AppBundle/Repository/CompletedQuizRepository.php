@@ -7,33 +7,29 @@ namespace AppBundle\Repository;
 use AppBundle\Entity\CompletedQuiz;
 use AppBundle\Entity\Quiz;
 use AppBundle\Entity\UserInterface;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 
-class CompletedQuizRepository extends \Doctrine\ORM\EntityRepository
+class CompletedQuizRepository extends EntityRepository
 {
-    //Todo refactore this class!
-    public function loadUserPosition($rightQuestions, $time)
+    public function loadUserPosition(int $rightQuestions, float $seconds): string
     {
         return $this->createQueryBuilder("u")
             ->select("COUNT(u.id)")
-            ->where("u.rightQuestions > :right")
-            ->andWhere("u.time > :time")
-            ->orderBy("u.time", "ASC")
-            ->setParameters(array('right'=>$rightQuestions, "time"=>$time))
+            ->andWhere("u.rightQuestions > :right OR (u.rightQuestions = :right AND u.seconds < :seconds)")
+            ->setParameters(array('right' => $rightQuestions, "seconds" => $seconds))
             ->getQuery()
             ->getSingleScalarResult();
     }
 
-    public function loadLeader(Quiz $quiz): CompletedQuiz
+    public function loadLeader(Quiz $quiz): ?CompletedQuiz
     {
         return $this->createQueryBuilder("cq")
-            ->select("cq")
+            ->select("cq", "u")
             ->leftJoin("cq.user","u")
             ->where("cq.quiz = :quiz")
             ->andWhere("u.username = :username")
-            ->orderBy("cq.rightQuestions", "DESC")
-            ->addOrderBy("cq.time", "ASC")
-            ->setParameters(array("quiz"=>$quiz,"username"=>$quiz->getLeader()))
+            ->setParameters(array("quiz" => $quiz,"username" => $quiz->getLeader()))
             ->getQuery()
             ->getOneOrNullResult();
     }
@@ -63,13 +59,14 @@ class CompletedQuizRepository extends \Doctrine\ORM\EntityRepository
     }
 
 
-    public function loadLeaders(Quiz $quiz)
+    public function loadLeaders(Quiz $quiz): array
     {
         return $this->createQueryBuilder("cq")
+            ->select("cq", "u")
             ->where("cq.quiz = :quiz")
             ->leftJoin('cq.user',"u")
             ->orderBy("cq.rightQuestions","DESC")
-            ->addOrderBy("cq.time", "ASC")
+            ->addOrderBy("cq.seconds", "ASC")
             ->setParameter("quiz", $quiz)
             ->setMaxResults(3)
             ->getQuery()

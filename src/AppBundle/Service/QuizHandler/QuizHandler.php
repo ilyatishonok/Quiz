@@ -7,7 +7,6 @@ namespace AppBundle\Service\QuizHandler;
 use AppBundle\Entity\CompletedQuiz;
 use AppBundle\Entity\Quiz;
 use AppBundle\Entity\StartedQuiz;
-use AppBundle\Entity\User;
 use AppBundle\Entity\UserInterface;
 use AppBundle\Entity\WiredQuestion;
 use AppBundle\Repository\CompletedQuizRepository;
@@ -24,29 +23,23 @@ class QuizHandler implements QuizHandlerInterface
     private $userAnswerManager;
     private $completedQuizManager;
 
-    public function __construct(EntityManagerInterface $entityManager,
-                                StartedQuizManagerInterface $startedQuizManager,
-                                UserAnswerManagerInterface $userAnswerManager,
-                                CompletedQuizManagerInterface $completedQuizManager
-    )
-    {
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        StartedQuizManagerInterface $startedQuizManager,
+        UserAnswerManagerInterface $userAnswerManager,
+        CompletedQuizManagerInterface $completedQuizManager
+    ) {
         $this->entityManager = $entityManager;
         $this->startedQuizManager = $startedQuizManager;
         $this->userAnswerManager = $userAnswerManager;
         $this->completedQuizManager = $completedQuizManager;
     }
 
-    public function handleQuiz()
-    {
-
-    }
-
-
     protected function synchronizeLeader(Quiz $quiz, CompletedQuiz $completedQuiz): void
     {
         $leader = $quiz->getLeader();
 
-        if(!$leader)
+        if (!$leader)
         {
             $quiz->setLeader($completedQuiz->getUser()->getUsername());
             $this->entityManager->persist($quiz);
@@ -58,25 +51,26 @@ class QuizHandler implements QuizHandlerInterface
 
         $completedQuizLeader = $completedQuizRepository->loadLeader($quiz);
 
-        if($completedQuiz->getRightQuestions() > $completedQuizLeader->getRightQuestions())
+        $completedQuizDateIntervalHandler = new DateIntervalHandler($completedQuiz->getEndTime()->diff($completedQuiz->getStartTime()));
+        $completedQuizLeaderDateIntervalHandler = new DateIntervalHandler($completedQuizLeader->getEndTime()->diff($completedQuizLeader->getStartTime()));
+
+        if ($completedQuiz->getRightQuestions() > $completedQuizLeader->getRightQuestions())
         {
             $quiz->setLeader($completedQuiz->getUser()->getUsername());
-        } else if($completedQuiz->getRightQuestions() === $completedQuiz->getRightQuestions())
-        {
-            if($completedQuiz->getStartTime()){
+        } else if ($completedQuiz->getRightQuestions() === $completedQuiz->getRightQuestions()) {
+            if ($completedQuizDateIntervalHandler->getSeconds() < $completedQuizLeaderDateIntervalHandler->getSeconds()) {
                 $quiz->setLeader($completedQuiz->getUser()->getUsername());
             }
         }
-
     }
 
-    public function proccessSubmitAnswer(UserInterface $user, StartedQuiz $startedQuiz, WiredQuestion $question, bool $isCorrect): void
+    public function handleProcessQuiz(UserInterface $user, StartedQuiz $startedQuiz, WiredQuestion $question, bool $isCorrect): void
     {
         $userAnswer = $this->userAnswerManager->createUserAnswer($user,$startedQuiz->getQuiz(),$question->getQuestionNumber(),$isCorrect);
 
         $this->entityManager->persist($userAnswer);
 
-        if(!($startedQuiz->getQuiz()->getCountOfQuestions()-1 == $question->getQuestionNumber())){
+        if (!($startedQuiz->getQuiz()->getCountOfQuestions()-1 == $question->getQuestionNumber())) {
            $this->startedQuizManager->updateStartedQuiz($startedQuiz,$question->getQuestionNumber(),$isCorrect);
 
            $this->entityManager->flush();
@@ -93,6 +87,4 @@ class QuizHandler implements QuizHandlerInterface
         $this->entityManager->remove($startedQuiz);
         $this->entityManager->flush();
     }
-
-
 }

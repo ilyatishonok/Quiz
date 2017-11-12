@@ -15,7 +15,7 @@
         <div class="container quizzes">
             <div class="col-12 align-self-center quizzes-content">
                 {{ form_start(form) }}
-                {{ form_widget(form, {"attr": {"class": "form-control", "placeholder": "homepage.search_placeholder"|trans}}) }}
+                {{ form_widget(form, {"attr": {"class": "form-control", "placeholder": "homepage.search_placeholder"}}) }}
                 {{ form_end(form) }}
                 {% if started_quizzes|length %}
                 {% for started_quiz in started_quizzes %}

@@ -10,5 +10,5 @@ use AppBundle\Entity\UserInterface;
 
 interface UserAnswerManagerInterface
 {
-    public function createUserAnswer(UserInterface $user, Quiz $quiz, int $questionNumber, bool $isCorrect): UserAnswer;
+    public function createUserAnswer(UserInterface $user, Quiz $quiz, int $questionNumber, bool $isCorrect, bool $isFlush = false): UserAnswer;
 }

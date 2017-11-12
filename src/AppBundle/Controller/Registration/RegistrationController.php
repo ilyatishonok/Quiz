@@ -45,7 +45,7 @@ class RegistrationController extends Controller
             $em->flush();
 
 
-            return $this->redirectToRoute("homepage");
+            return $this->redirectToRoute("_homepage");
         }
 
         return $this->render(

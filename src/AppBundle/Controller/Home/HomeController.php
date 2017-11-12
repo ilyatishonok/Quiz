@@ -37,6 +37,7 @@ class HomeController extends Controller
 
         $form = $this->createForm(SearchType::class,null, array(
             "method" => "GET",
+            "translation_domain" => "translations",
             "action" => $this->generateUrl("_homepage"),
             "required" => false,
             "empty_data" => "",
@@ -70,6 +71,7 @@ class HomeController extends Controller
 
         $form = $this->createForm(SearchType::class, null, array(
             "method" => "GET",
+            "translation_domain" => "translations",
             "action" => $this->generateUrl("_started_quizzes"),
             "required" => false,
             "empty_data" => "",
@@ -103,6 +105,7 @@ class HomeController extends Controller
 
         $form = $this->createForm(SearchType::class, null , array(
             "method" => "GET",
+            "translation_domain" => "translations",
             "action" => $this->generateUrl("_completed_quizzes"),
             "required" => false,
             "empty_data" => "",

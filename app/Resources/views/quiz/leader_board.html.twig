@@ -1,64 +1,50 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    Leader Board
+{% endblock %}
 
 {% trans_default_domain "translations" %}
 
-
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset("static/styles/quiz/leader_board.css") }}">
+    <link rel="stylesheet" href="{{ asset("static/styles/quiz/quiz.leaderboard.css?v1.2") }}">
 {% endblock %}
 
 {% block body %}
-    <div class="container">
-        <div class="col-12 rating bg-color">
-            <div class="container-fluid rating-indent">
-                <h1 class="text-white text-center">Leader board</h1>
-                <div class="col col-lg-12 rating-creator rating-tb">
-                    <table class="table table-responsive-lg">
-                        <tbody>
-                        <tr>
-                            <th scope="col">Position</th>
-                            <th scope="col">User name</th>
-                            <th scope="col">Right answers</th>
-                            <th scope="col">Time</th>
-                        </tr>
-                        <tr>
-                            <td scope="row">1</td>
-                            <td>User name</td>
-                            <td>Right answers</td>
-                            <td>Time</td>
-                        </tr>
-                        <tr>
-                            <td scope="row">2</td>
-                            <td>User name</td>
-                            <td>Right answers</td>
-                            <td>Time</td>
-                        </tr>
-                        <tr>
-                            <td scope="row">3</td>
-                            <td>User name</td>
-                            <td>Right answers</td>
-                            <td>Time</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <h4 class="text-white text-center">Your position</h4>
-                    <table class="table table-inverse quiz-table">
-                        <tbody>
-                        <tr>
-                            <th>Position</th>
-                            <th>User name</th>
-                            <th>Right answers</th>
-                            <th>Time</th>
-                        </tr>
-                        </tbody>
-                    </table>
+    <main>
+        <div class="container">
+            <div class="col-12 rating bg-color">
+                <div class="container-fluid quiz-indent">
+                    <h1 class="text-white text-center">{{ "leaderboard.label"|trans }}</h1>
+                    <div class="col col-lg-12 leader-board">
+                        <table class="table table-responsive-lg leader-board-table">
+                            <tbody>
+                                <tr>
+                                    <th scope="col">{{ "leaderboard.position"|trans }}</th>
+                                    <th scope="col">{{ "leaderboard.name"|trans }}</th>
+                                    <th scope="col">{{ "leaderboard.right_answers"|trans }}</th>
+                                    <th scope="col">{{ "leaderboard.time"|trans }}</th>
+                                </tr>
+                                {% for leader in leaders %}
+                                <tr>
+                                    <td scope="row">{{ loop.index }}</td>
+                                    <td class="quiz_td">{{ leader.user.username }}</td>
+                                    <td class="quiz_td">{{ leader.rightQuestions }}</td>
+                                    <td class="quiz_td">{{ leader.startTime|date("Y:m:d H:i:s")}}-{{ leader.endTime|date("Y:m:d H:i:s") }}</td>
+                                </tr>
+                                {% endfor  %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3 class="text-white text-center position-header">{{ "leaderboard.position_header"|trans }}</h3>
+                    <div class="col col-lg-12 user-position">
+                        <h3>{{ position+1 }}</h3>
+                    </div>
+                </div>
+                <div class="text-white text-center">
+                    <a href="{{ path("_homepage") }}" class="btn btn-large main-page-link">Go To Main Page</a>
                 </div>
             </div>
         </div>
-    </div>
-{% endblock %}
-
-{% block javascripts %}
-
+    </main>
 {% endblock %}

@@ -20,7 +20,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ResettingType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('plainPassword',RepeatedType::class,array(
                 'type' => PasswordType::class,
@@ -32,7 +32,7 @@ class ResettingType extends AbstractType
                 ->add("submit", SubmitType::class, array('attr'=>array('class' => "btn btn-large start-btn")));
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(array(
             'data_class' => User::class,

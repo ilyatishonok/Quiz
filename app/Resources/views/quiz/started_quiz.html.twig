@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% trans_default_domain "translations" %}
+
+{% block title %}
+    Quiz passing
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset("static/styles/quiz/quiz.started.css?v1.26") }}">
+{% endblock %}
+
+{% block body %}
+    <main>
+        <div class="container content">
+            <div  class="col-8 align-self-center question">
+                <div class="user-answers">
+                </div>
+                <div class="question-header">
+                    <h2>{{ "quiz.question.question_label"|trans }}:</h2>
+                    <p class="question-number">{{ questionNumber+1 }}/{{ questions }}</p>
+                    <h4 class="question-text">{{ question_name }}</h4>
+                </div>
+                <div class="form_wrapper">
+                    {{ form_start(form) }}
+                    <h2>{{ "quiz.question.answer_label"|trans }}:</h2>
+                    {{ form_label(form.answer) }}
+                    {{ form_widget(form.answer) }}
+                    {{ form_rest(form) }}
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}

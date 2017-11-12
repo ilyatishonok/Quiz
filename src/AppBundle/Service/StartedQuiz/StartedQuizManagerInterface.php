@@ -10,7 +10,7 @@ use AppBundle\Entity\UserInterface;
 
 interface StartedQuizManagerInterface
 {
-    public function createStartedQuiz(UserInterface $user, Quiz $quiz): StartedQuiz;
+    public function createStartedQuiz(UserInterface $user, Quiz $quiz, bool $isFlush = false): StartedQuiz;
 
-    public function updateStartedQuiz(StartedQuiz $quiz, int $questionNumber, bool $isCorrect): StartedQuiz;
+    public function updateStartedQuiz(StartedQuiz $quiz, int $questionNumber, bool $isCorrect, bool $isFlush = false): StartedQuiz;
 }
