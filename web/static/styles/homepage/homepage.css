@@ -1,0 +1,55 @@
+.quiz{
+    border-radius: 7px;
+    border: 1px solid black;
+    box-shadow: 0 0 10px black;
+    margin-top: 20px;
+    margin-left: 12px;
+    margin-right: 12px;
+    padding: 0px !important;
+    min-width: 100%;
+}
+
+.active:hover{
+    background-color: #8b51f5;
+    cursor: pointer;
+}
+
+.not-active:hover{
+    cursor: default !important;
+}
+
+.not-active a{
+    pointer-events: none !important;
+}
+
+.not-active{
+    background-color: darkred !important;
+}
+
+.quizzes-content{
+    min-height: 450px;
+}
+
+a{
+    text-decoration: none !important;
+}
+
+.text-white{
+    font-family: Copperplate,Copperplate Gothic Light,fantasy;
+}
+
+.quizzes{
+    text-align: center;
+    color: white;
+    padding: 20px;
+    margin-top: 100px;
+    background: rgba(0, 0, 0, 0.6);
+    box-shadow: 0 0 10px black;
+    border: 1px solid black;
+    border-radius: 7px
+}
+
+.not-found{
+    color: gray;
+    padding: 100px;
+}

@@ -16,9 +16,7 @@ class CompletedQuizManager implements CompletedQuizManagerInterface
         $completedQuiz->setQuiz($startedQuiz->getQuiz());
         $completedQuiz->setUser($user);
         $completedQuiz->setRightQuestions($rightQuestions);
-
-        $endTime = new \DateTime();
-        $completedQuiz->setTime($endTime->diff($startedQuiz->getStartTime()));
+        $completedQuiz->setStartTime($startedQuiz->getStartTime());
         return $completedQuiz;
     }
 }

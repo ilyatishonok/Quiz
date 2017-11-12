@@ -61,7 +61,6 @@ security:
                 Regards,
                 the Team
 
-
 admin:
   question:
     question_placeholder: "input question"
@@ -101,6 +100,17 @@ leaderboard:
   name: "Username"
   position: "Position"
   time: "Time"
+
+homepage:
+  search_placeholder: "input quiz name"
+  questions: "Questions: "
+  status: "Status: "
+  status_activated: "Active"
+  status_deactivated: "Deactivated"
+  players: "Players: "
+  leader: "Leader: "
+  leader_none: "Leader: None"
+  not_found: "Sorry, no results were found."
 
 errors:
   question_name: "You haven't choose question name!"

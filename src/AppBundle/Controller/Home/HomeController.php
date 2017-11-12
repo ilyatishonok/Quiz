@@ -13,11 +13,13 @@ use AppBundle\Entity\WiredQuestion;
 use AppBundle\Exceptions\QuestionException;
 use AppBundle\Repository\CompletedQuizRepository;
 use AppBundle\Repository\QuestionRepository;
+use AppBundle\Repository\QuizRepository;
 use AppBundle\Repository\StartedQuizRepository;
 use AppBundle\Repository\WiredQuestionRepository;
 use AppBundle\Service\Grid\GridLoader;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -33,21 +35,36 @@ class HomeController extends Controller
     }
 
     /**
-     * @Route("/", name="homepage")
+     * @Route("/", name="_homepage")
      */
-    public function showHomePageAction(Request $request)
+    public function showHomePageAction(Request $request): Response
     {
-        $em = $this->get('doctrine.orm.entity_manager');
-        $dql = "SELECT q FROM AppBundle\Entity\Quiz q";
-        $query = $em->createQuery($dql);
+        /** @var QuizRepository $quizRepository */
+        $quizRepository = $this->getDoctrine()->getManager()->getRepository(Quiz::class);
 
-        $quizes = $this->paginator->paginate(
+        $form = $this->createForm(SearchType::class,null, array(
+            "method"=>"GET",
+            "action"=>$this->generateUrl("_homepage"),
+            "required"=>false,
+            "empty_data"=>"",
+        ));
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $searchQuery = $form->getData();
+            $query = $quizRepository->createQueryByName($searchQuery);
+        } else {
+            $query = $quizRepository->createQuery();
+        }
+
+        $quizzes = $this->paginator->paginate(
             $query,
             $request->query->getInt('page', 1),
-            5
+            6
         );
 
-        return $this->render('home/homepage.html.twig', array('pagination' => $quizes));
+        return $this->render('home/homepage.html.twig', array('quizzes' => $quizzes, "form"=>$form->createView()));
     }
 
     /**
@@ -63,7 +80,7 @@ class HomeController extends Controller
         $startedQuizes = $this->paginator->paginate(
             $query,
             $request->query->getInt('page',1),
-            5
+            12
         );
 
         return $this->render("home/started_quizes.html.twig", array("started_quizes"=>$startedQuizes));
@@ -74,16 +91,9 @@ class HomeController extends Controller
      */
     public function showStartedsQuizesAction(Request $request): Response
     {
-        /** @var StartedQuizRepository $startedQuizeRepository */
-        $startedQuizRepository = $this->getDoctrine()->getManager()->getRepository(CompletedQuiz::class);
+        $quizesRepository = $this->getDoctrine()->getManager()->getRepository(Quiz::class);
 
-        $query = $startedQuizRepository->createLoaderQuery($this->getUser());
-        /** @var GridLoader $gridLoader */
-        $gridLoader = $this->get("grid_loader");
-
-        $gridLoader->setLimit(1);
-        $gridLoader->setClass(User::class);
-        $gridLoader->setRequest($request);
+        return $this->render("base.html.twig");
     }
 
     /**
