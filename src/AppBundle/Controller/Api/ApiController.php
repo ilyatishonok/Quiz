@@ -8,12 +8,8 @@ use AppBundle\Entity\Question;
 use AppBundle\Entity\Quiz;
 use AppBundle\Entity\User;
 use AppBundle\Exceptions\AnswerException;
-use AppBundle\Exceptions\QuestionException;
 use AppBundle\Form\QuestionType;
 use AppBundle\Repository\QuestionRepository;
-use AppBundle\Service\Answer\AnswerManagerInterface;
-use AppBundle\Service\Quiz\QuizManagerInterface;
-use AppBundle\Service\WiredQuestion\WiredQuestionManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -24,36 +20,44 @@ class ApiController extends Controller
 {
 
     /**
-     * @Route("/admin/api/create/quiz")
+     * @Route("/admin/api/create/quiz", name="_create_quiz", options={"expose"=true})
      */
     public function createQuizAction(Request $request) : Response
     {
         $content = $request->getContent();
-        if(empty($content)){
+        if (empty($content)) {
             return new Response("Bad request data!", 400);
         }
 
         $arrayContent = json_decode($content,true);
 
-
-        if(!$this->isCsrfTokenValid("intention",$arrayContent['csrfToken'])){
+        if (!$this->isCsrfTokenValid("intention",$arrayContent['csrfToken'])) {
             return new Response("Invalid CSRF token!", 400);
         }
 
-        if(!$arrayContent['quizName']){
-            return new JsonResponse(array("token"=>$arrayContent['csrfToken']), 400);
+        if (!$arrayContent['quizName']) {
+            return new Response("Empty quiz name!", 400);
         }
 
-        if(!$arrayContent['questionsId']){
+        if (!$arrayContent['questionsId']) {
             return new Response("Empty questions array!", 400);
         }
 
-        if(!count($arrayContent['questionsId'])){
+        if (!count($arrayContent['questionsId'])) {
             return new Response("Empty question array count!", 400);
+        }
+
+        $quizRepository = $this->getDoctrine()->getManager()->getRepository(Quiz::class);
+        $quiz = $quizRepository->findOneBy(array("name" => $arrayContent['quizName']));
+
+        if ($quiz ){
+            return new JsonResponse("quiz.quiz_exist",400);
         }
 
         $quizManager = $this->get("quiz_manager");
         $quiz = $quizManager->createQuiz($arrayContent['quizName'],count($arrayContent['questionsId']));
+
+
 
         $wiredQuestionManager = $this->get("wired_question_manager");
 
@@ -61,7 +65,7 @@ class ApiController extends Controller
 
         $this->getDoctrine()->getManager()->flush();
 
-        return new JsonResponse(array("message"=>"Success"));
+        return new Response("Success", 200);
     }
 
     /**
@@ -96,7 +100,6 @@ class ApiController extends Controller
 
         return new Response("User was blocked", 200);
     }
-
 
     /**
      * @Route("/admin/api/block-quiz", name="_block_quiz", options={"expose"=true})
@@ -185,14 +188,14 @@ class ApiController extends Controller
     }
 
     /**
-     * @Route("/admin/api/create/question", name="_create_question", options={"expose"=true});
+     * @Route("/admin/api/create/question", name="_create_question", options={"expose"=true})
      */
     public function createQuestionAction(Request $request): Response
     {
         $selected = $request->get("selected");
 
-        if(!$selected){
-            return new JsonResponse(array("message"=>"Bad request data!"), 400);
+        if (!$selected) {
+            return new JsonResponse(array("message" => "Bad request data!"), 400);
         }
 
         $entityManager = $this->getDoctrine()->getManager();
@@ -206,23 +209,23 @@ class ApiController extends Controller
             $answers = $question->getAnswers();
 
             $answerManager = $this->get('answer_manager');
-            try{
-                $answerManager->correctAnswers($answers,$selected);
+            try {
+                $answerManager->setCorrectAnswer($answers,$selected);
 
                 $entityManager->persist($question);
                 $entityManager->flush();
 
                 return new JsonResponse(array(
                     "questionName"=>$question->getName(),
-                    "answers"=>$answerManager->getNames($answers),
+                    "answers"=>$answerManager->getAnswersNames($answers),
                     "id"=>$question->getId()
                 ));
-            } catch (AnswerException $exception){
-                return new JsonResponse(array("message"=>$exception->getMessage(),"answer"=>true),400);
+            } catch (AnswerException $exception) {
+                return new JsonResponse(array("message" => $exception->getMessage(), "answer" => true),400);
             }
         }
 
-        return new JsonResponse(array("message"=>$this->getErrorMessages($form), "question"=>true),400);
+        return new JsonResponse(array("message" => $this->getErrorMessages($form), "question" => true),400);
     }
 
     protected function getErrorMessages(\Symfony\Component\Form\Form $form)

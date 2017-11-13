@@ -8,7 +8,7 @@ use AppBundle\Entity\UserInterface;
 interface MailerInterface
 {
 
-    public function sendConfirmationEmailMessage(UserInterface $user);
+    public function sendConfirmationEmailMessage(UserInterface $user): void;
 
-    public function sendResettingEmailMessage(UserInterface $user);
+    public function sendResettingEmailMessage(UserInterface $user): void;
 }

@@ -19,10 +19,10 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\QuestionRepository")
  * @UniqueEntity(
  *     fields={"name"},
- *     message="security.registration.email_error"
+ *     message="errors.question_error"
  * )
  */
-class Question implements \Serializable
+class Question
 {
 
     public function __construct()
@@ -72,18 +72,6 @@ class Question implements \Serializable
         return $this->answers;
     }
 
-    public function serialize()
-    {
-        return serialize(array(
-            $this->id,
-            $this->name,
-            $this->answers,
-        ));
-    }
-
-    public function unserialize($serialized)
-    {
-    }
 
     public function setName(string $name): Question
     {

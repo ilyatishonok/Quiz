@@ -12,7 +12,7 @@ use function Sodium\add;
 /**
  * Quiz
  *
- * @ORM\Table(name="quizes")
+ * @ORM\Table(name="quizzes")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\QuizRepository")
  */
 class Quiz

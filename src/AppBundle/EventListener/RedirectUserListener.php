@@ -21,7 +21,7 @@ class RedirectUserListener
         $this->router = $router;
     }
 
-    public function onKernelRequest(GetResponseEvent $event)
+    public function onKernelRequest(GetResponseEvent $event): void
     {
         if ($event->isMasterRequest()) {
             $currentRoute = $event->getRequest()->attributes->get("_route");
@@ -35,19 +35,19 @@ class RedirectUserListener
             }
 
             if ($this->isAuthenticatedUserOnAnonymousPage($currentRoute)) {
-                $response = new RedirectResponse($this->router->generate('homepage'));
+                $response = new RedirectResponse($this->router->generate('_homepage'));
                 $event->setResponse($response);
             }
         }
     }
 
-    private function isUserLogged()
+    private function isUserLogged(): bool
     {
         $user = $this->tokenStorage->getToken()->getUser();
         return $user instanceof UserInterface;
     }
 
-    private function isUntrackedRoute(string $currentRoute)
+    private function isUntrackedRoute(string $currentRoute): bool
     {
         return in_array(
             $currentRoute,
@@ -55,7 +55,7 @@ class RedirectUserListener
         );
     }
 
-    private function isAuthenticatedUserOnAnonymousPage($currentRoute)
+    private function isAuthenticatedUserOnAnonymousPage($currentRoute): bool
     {
         return in_array(
             $currentRoute,

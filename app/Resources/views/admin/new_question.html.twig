@@ -3,7 +3,7 @@
 {% trans_default_domain "translations" %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset("static/styles/admin/question.new.css?v1.63") }}">
+    <link rel="stylesheet" href="{{ asset("static/styles/admin/question.new.css?v1.68") }}">
 {% endblock %}
 
 {% block content %}
@@ -13,8 +13,12 @@
     </div>
 {% endblock %}
 
-
 {% block javascripts %}
-    <script src="{{ asset("static/scripts/admin/question.js?v1.73") }}"></script>
-    <script src="{{ asset("static/scripts/jquery.newquestion.js?v1.92") }}"></script>
+    <script src="{{ asset('bundles/bazingajstranslation/js/translator.min.js') }}"></script>
+    <script src="{{ url('bazinga_jstranslation_js', { 'domain': 'translations' }) }}"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    <script src="{{ asset("static/scripts/admin/question.js?v1.74") }}"></script>
+    <script src="{{ asset("static/scripts/jquery-ui.min.js") }}"></script>
+    <script src="{{ asset("static/scripts/admin/jquery.question.creator.js?v1.0") }}"></script>
 {% endblock %}

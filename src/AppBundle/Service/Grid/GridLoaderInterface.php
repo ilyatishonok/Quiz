@@ -1,13 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Ilixi
- * Date: 09.11.2017
- * Time: 18:32
- */
+
+declare(strict_types=1);
 
 namespace AppBundle\Service\Grid;
-
 
 interface GridLoaderInterface
 {

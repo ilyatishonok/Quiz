@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Collection;
 
 interface AnswerManagerInterface
 {
-    public function correctAnswers(Collection $answers, string $selectedAnswerName): void;
+    public function setCorrectAnswer(Collection $answers, string $selectedAnswerName): void;
 
-    public function getNames(Collection $answers): array;
+    public function getAnswersNames(Collection $answers): array;
 }

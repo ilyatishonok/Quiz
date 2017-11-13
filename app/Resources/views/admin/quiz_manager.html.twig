@@ -11,20 +11,22 @@
 {% endblock %}
 
 {% block content %}
-    <div class="loader"></div>
-    <nav class="quiz-header bg-color">
-        <div class="alert alert-danger error">
-            <strong>{{ "message.error"|trans }}!</strong><div class="error-content"></div>
-        </div>
-        <div class="alert alert-success success">
-            <strong>{{ "message.success"|trans }}</strong> {{ "message.success_action"|trans }}!
-        </div>
-        <div class="container-fluid quiz-indent">
-            <div class="col col-lg-12 quiz-creator quiz-header">
-                {{ grid_loader_render(table) }}
+    <main>
+        <div class="loader"></div>
+        <nav class="quiz-header bg-color">
+            <div class="alert alert-danger error">
+                <strong>{{ "message.error"|trans }}!</strong><div class="error-content"></div>
             </div>
-        </div>
-    </nav>
+            <div class="alert alert-success success">
+                <strong>{{ "message.success"|trans }}</strong> {{ "message.success_action"|trans }}!
+            </div>
+            <div class="container-fluid quiz-indent">
+                <div class="col col-lg-12 quiz-creator quiz-header">
+                    {{ grid_loader_render(table) }}
+                </div>
+            </div>
+        </nav>
+    </main>
 {% endblock %}
 
 {% block javascripts %}
