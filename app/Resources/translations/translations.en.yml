@@ -77,6 +77,8 @@ admin:
     quiz_adding_question: "Add exist questions: "
     quiz_question_label: "Questions: "
     quiz_quiestion_info_label: "If you want to add answer click to button below or add exist question."
+    quiz_create_question: "Create question"
+    quiz_create_quiz: "Create quiz"
   user_manager:
     id: "id"
     user_name: "User name"
