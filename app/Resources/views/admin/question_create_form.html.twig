@@ -1,5 +1,7 @@
 {% import _self as formPrototype %}
 
+{% trans_default_domain "translations" %}
+
 {% macro createPrototype(prototypeForm) %}
     <div class="answer-wrapper">
         {{ form_widget(prototypeForm.name, {"attr": {"autocomplete": "off"}}) }}
@@ -12,18 +14,18 @@
 
 <div class="col-8 align-self-center question-creator">
     <div class="alert alert-danger error">
-        <Strong>Error!</Strong><div class="error-text"></div>
+        <Strong>{{ "question.error"|trans }}</Strong><div class="error-text"></div>
     </div>
     {{ form_start(form, { 'attr' : { 'id': 'form_question' } }) }}
     <div class="question-wrapper">
-        <h2>Add Question:</h2>
+        <h2>{{ "admin.question.question_header"|trans }}</h2>
         {{ form_widget(form.name) }}
     </div>
     <div class="answers">
-        <h4>Answers:</h4>
+        <h4>{{ "admin.question.answer_label"|trans }}</h4>
         <div id="question_answers" data-prototype="{{formPrototype.createPrototype(form.answers.vars.prototype)|e("html_attr")}}"></div>
         {{ form_end(form) }}
-        <button class="btn btn-large add-answer-btn">Add Answer</button>
+        <button class="btn btn-large add-answer-btn">{{ "admin.question.answer_adding"|trans }}</button>
     </div>
-    <button class="btn btn-large create-question-btn">Create Question</button>
+    <button class="btn btn-large create-question-btn">{{ "admin.question.question_create"|trans }}</button>
 </div>

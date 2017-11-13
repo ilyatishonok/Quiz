@@ -13,6 +13,21 @@
     text-align: center;
 }
 
+.success-wrapper{
+    min-height: 200px;
+    border-radius: 7px;
+    box-shadow: 0 0 10px black;
+    border: 1px solid black;
+    margin-top: 100px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+}
+
+.success-created{
+    margin-top: 50px;
+}
+
 .question-creator-wrapper{
     display: none;
 }
@@ -44,6 +59,10 @@
 
 .question-answers{
     padding: 0;
+}
+
+.alert-error{
+    display: none;
 }
 
 .quiz-errors, .questions-errors{
