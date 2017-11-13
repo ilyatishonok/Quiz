@@ -16,27 +16,34 @@
         <div class="col col-lg-12 quiz-handler">
             <div class="form-group quiz-creator ">
                 <input type="hidden" id="csrf-input" value="{{ csrf_token("intention") }}">
-                <h1 class="quiz-name">Quiz adding: </h1>
+                <h1 class="quiz-name">{{ 'admin.quiz.quiz_label'|trans }} </h1>
                 <div class="quiz-header">
                     <input class="form-control quiz-name-input" placeholder="input quiz name">
                     <div class="quiz-errors"></div>
                 </div>
                 <div class="question-wrapper">
                     <div class="question-handler form-group">
-                        <h3>Add exist questions: </h3>
+                        <h3>{{ 'admin.quiz.quiz_adding_question'|trans }}</h3>
                         <input class="form-control question-search" placeholder="type question">
                         </div>
                     </div>
-                    <h2 class="question-label">Questions: </h2>
+                    <h2 class="question-label">{{ 'admin.quiz.quiz_question_label'|trans }}</h2>
                     <ui class="questions">
 
                     </ui>
+                    <p class="question-info">{{ 'admin.quiz.quiz_quiestion_info_label'|trans }}</p>
+                    <div class="question-creator-wrapper">
+                        {% include "admin/question_create_form.html.twig" %}
+                    </div>
+
+                    <button class="btn btn-large add-question-button">{{ 'admin.quiz.quiz_create_question'|trans }}</button>
                     <div class="question-creator-wrapper">
                         {% include "admin/question_create_form.html.twig" %}
                     </div>
                     <div class="questions-errors"></div>
                     <button class="btn btn-large add-question-button">Create Question</button>
-                <button class="btn btn-large create-quiz-btn">Create quiz</button>
+                </div>
+                <button class="btn btn-large create-quiz-btn">{{ 'admin.quiz.quiz_create_quiz'|trans }}Create quiz</button>
             </div>
         </div>
 {% endblock %}
