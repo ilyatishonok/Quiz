@@ -27,8 +27,8 @@ class ResettingType extends AbstractType
                 "error_bubbling"=>true,
                 'trim' => true,
                 'invalid_message' => "security.password_resetting.match",
-                'first_options' => array('label' => 'Password', "attr"=>array("class"=> "form-control", 'placeholder' => "security.resetting.placeholders.password")),
-                'second_options' => array('label' => 'Repeat Password', "attr"=>array("class"=> "form-control", 'placeholder' => "security.resetting.placeholders.repeat_password"))))
+                'first_options' => array('label' => 'Password', "attr"=>array("class"=> "form-control", 'placeholder' => "security.resetting.email.placeholders.password")),
+                'second_options' => array('label' => 'Repeat Password', "attr"=>array("class"=> "form-control", 'placeholder' => "security.resetting.email.placeholders.repeat_password"))))
                 ->add("submit", SubmitType::class, array('attr'=>array('class' => "btn btn-large start-btn")));
     }
 

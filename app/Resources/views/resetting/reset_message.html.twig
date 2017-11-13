@@ -1,0 +1,13 @@
+{% trans_default_domain "translations" %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset("static/styles/resetting/reset_message.css?1.3") }}">
+    <link rel="stylesheet" href="{{ asset("static/styles/bootstrap.min.css") }}">
+{% endblock %}
+
+
+    <div class="parent">
+        <h3 class="text-center">
+            {{ 'security.resetting.email.reset_message'|trans }}
+        </h3>
+    </div>
