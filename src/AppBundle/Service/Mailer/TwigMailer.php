@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace AppBundle\Service\Mailer;
 
 use AppBundle\Entity\UserInterface;
-use AppBundle\Service\Mailer\MailerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class TwigMailer implements MailerInterface
@@ -25,7 +24,7 @@ class TwigMailer implements MailerInterface
         $this->options = $options;
     }
 
-    public function sendConfirmationEmailMessage(UserInterface $user)
+    public function sendConfirmationEmailMessage(UserInterface $user): void
     {
         $url = $this->router->generate('email_confirm', array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL);
 
@@ -38,7 +37,7 @@ class TwigMailer implements MailerInterface
     }
 
 
-    public function sendResettingEmailMessage(UserInterface $user)
+    public function sendResettingEmailMessage(UserInterface $user): void
     {
         $url = $this->router->generate('_resetting', array('token' => $user->getResettingToken()), UrlGeneratorInterface::ABSOLUTE_URL);
 
@@ -50,7 +49,7 @@ class TwigMailer implements MailerInterface
         $this->sendMessage($this->options['resetting_confirm_template'], $context, $this->serverName, (string) $user->getEmail());
     }
 
-    protected function sendMessage($templateName, $context, $fromEmail, $toEmail)
+    protected function sendMessage($templateName, $context, $fromEmail, $toEmail): void
     {
         $template = $this->twig->load($templateName);
         $subject = $template->renderBlock('subject', $context);

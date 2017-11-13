@@ -19,12 +19,34 @@ parameters:
       button_field:
         condition: true
         field: "enabled"
+        equals: "true"
         true_condition:
           class_name: "btn btn-outline-danger button-size btn-block"
           label: "admin.user_manager.block"
         false_condition:
           class_name: "btn btn-outline-success button-size btn-unblock"
           label: "admin.user_manager.unblock"
+
+    quiz_grid:
+      translation_domain: "translations"
+      table_fields:
+        id: "admin.quiz_manager.id"
+        name: "admin.quiz_manager.name"
+        countOfQuestions: "admin.quiz_manager.questions_count"
+        countOfPlayers: "admin.quiz_manager.players"
+        leader: "admin.quiz_manager.leader"
+        enabled: "admin.quiz_manager.enabled"
+      sortable_fields: ["id","name","countOfQuestions","countOfPlayers","leader","enabled"]
+      filterable_fields: ["id","name","countOfQuestions","countOfPlayers","leader","enabled"]
+      button_field:
+        condition: true
+        field: "enabled"
+        class_name: "btn btn-outline-danger button-size btn-block"
+        equals: "true"
+        true_condition:
+          class_name: "btn btn-outline-danger button-size btn-block"
+          label: "admin.user_manager.block"
+        false_condition: false
 
 services:
     # default configuration for services in *this* file

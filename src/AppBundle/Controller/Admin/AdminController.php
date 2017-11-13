@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AppBundle\Controller\Admin;
 
 use AppBundle\Entity\Question;
+use AppBundle\Entity\Quiz;
 use AppBundle\Entity\User;
 use AppBundle\Form\QuestionType;
 use AppBundle\Repository\UserRepository;
@@ -89,17 +90,26 @@ class AdminController extends Controller
      */
     public function showQuizManagerPanelAction(Request $request)
     {
-        $em = $this->get('doctrine.orm.entity_manager');
-        $dql = "SELECT quiz FROM AppBundle\Entity\Quiz quiz ";
-        $query = $em->createQuery($dql);
-        $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $query,
-            $request->query->getInt('page', 1),
-            6
+        $gridLoader = $this->get("grid_loader");
+
+
+        $quizGrid = $this->getParameter("quiz_grid");
+
+        $table = $gridLoader->loadGrid(
+            array(
+                "className"=>Quiz::class,
+                "limit"=>10,
+                "entityName"=>"quiz",
+                "request"=>$request,
+                "translationDomain"=>$quizGrid['translation_domain'],
+                "tableFields"=>$quizGrid['table_fields'],
+                "sortableFields"=>$quizGrid['sortable_fields'],
+                "filterableFields"=>$quizGrid['filterable_fields'],
+                "buttonField"=>$quizGrid['button_field'],
+            )
         );
 
-        return $this->render("admin/quiz_manager.html.twig", array('pagination' => $pagination));
+        return $this->render('admin/quiz_manager.html.twig', array("table"=>$table));
     }
 
 }

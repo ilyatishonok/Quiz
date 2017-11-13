@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping\ManyToOne as ManyToOne;
 /**
  * StartedQuiz
  *
- * @ORM\Table(name="started_quizes")
+ * @ORM\Table(name="started_quizzes")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\StartedQuizRepository")
  */
 class StartedQuiz

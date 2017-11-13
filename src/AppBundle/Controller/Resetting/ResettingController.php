@@ -12,7 +12,6 @@ use AppBundle\Service\TokenHandler\TokenGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\FormError;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -22,16 +21,12 @@ class ResettingController extends Controller
     /**
      * @Route("/resetting", name="_resetting")
      */
-    public function resettingPasswordAction(Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    public function resettingPasswordAction(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $token = $request->get("token");
 
-        if(!$token){
-            return $this->render("security/user_by_token_not_found.html.twig");
-        }
-
-        $userRepository = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\User");
-        $user = $userRepository->findOneBy(array("resettingToken"=>$token));
+        $userRepository = $this->getDoctrine()->getManager()->getRepository(User::class);
+        $user = $userRepository->findOneBy(array("resettingToken" => $token));
 
         if(!$user){
             return $this->render("security/user_by_token_not_found.html.twig");
@@ -40,7 +35,7 @@ class ResettingController extends Controller
         $form = $this->createForm(ResettingType::class,$user);
         $form->handleRequest($request);
 
-        if($form->isValid() && $form->isSubmitted()){
+        if ($form->isValid() && $form->isSubmitted()) {
             $password = $passwordEncoder->encodePassword($user,$user->getPlainPassword());
             $user->setPassword($password);
             $user->setResettingToken(null);
@@ -48,29 +43,28 @@ class ResettingController extends Controller
             $this->getDoctrine()->getManager()->persist($user);
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->render("resetting/resetting.html.twig", array("form"=>$form->createView()));
+            return new Response("I work!");
         }
 
-        return $this->render("resetting/resetting.html.twig", array("form"=>$form->createView()));
+        return $this->render("resetting/resetting.html.twig", array("form" => $form->createView()));
     }
 
     /**
      * @Route("/reset", name="_reset")
      */
-    public function resetAction(Request $request)
+    public function resetAction(Request $request): Response
     {
         $emailChoice = new EmailChoice();
 
         $form = $this->createForm(ResetPasswordType::class, $emailChoice, array("method"=>"PATCH"));
         $form->handleRequest($request);
 
-        if($form->isValid() && $form->isSubmitted()){
+        if ($form->isValid() && $form->isSubmitted()) {
 
             $userRepository = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\User");
             $user = $userRepository->findOneBy(array("email"=>$emailChoice->getEmail()));
 
-            //TODO USERNOTFOUND
-            if(!$user){
+            if (!$user) {
                 $form->addError(new FormError("User with this email doesn't exist!"));
                 return $this->render("resetting/reset.html.twig",array("form"=>$form->createView()));
             }
@@ -92,5 +86,4 @@ class ResettingController extends Controller
 
         return $this->render('resetting/reset.html.twig', array('form' => $form->createView()));
     }
-
 }

@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping\JoinColumn as JoinColumn;
 /**
  * UserAnswer
  *
- * @ORM\Table(name="user_answer")
+ * @ORM\Table(name="user_answers")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserAnswerRepository")
  */
 class UserAnswer

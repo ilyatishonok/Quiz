@@ -28,7 +28,7 @@ class RegistrationController extends Controller
 
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $password = $passwordEncoder->encodePassword($user,$user->getPlainPassword());
             $user->setPassword($password);
 
@@ -63,7 +63,7 @@ class RegistrationController extends Controller
         try {
             $token = $request->get("token");
 
-            if(!$token){
+            if (!$token) {
                 return new Response("Bad request data",404);
             }
 
@@ -71,14 +71,16 @@ class RegistrationController extends Controller
             $registrationHandler = $this->get("registration_handler");
             try {
                 $user = $registrationHandler->confirmEmailByToken($token);
-            }catch (UserException $exception){
+            } catch (UserException $exception) {
                 return new Response("Bad request data",404);
             }
+
             $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
             $this->get('security.token_storage')->setToken($token);
             $this->get('session')->set('_security_main', serialize($token));
 
             return $this->render("registration/email_confirmed.html.twig", array("error"=>null));
+
         } catch (UserException $exception) {
             return $this->render("registration/email_confirmed.html.twig", array("error"=>$exception->getMessage()));
         }

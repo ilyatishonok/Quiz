@@ -12,7 +12,7 @@ use function Sodium\add;
 /**
  * Quiz
  *
- * @ORM\Table(name="quizes")
+ * @ORM\Table(name="quizzes")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\QuizRepository")
  */
 class Quiz
@@ -71,6 +71,22 @@ class Quiz
     public function isEnabled(): bool
     {
         return $this->enabled;
+    }
+
+    public function setEnabled(bool $enabled): Quiz
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    public function getEnabled(): string
+    {
+        if ($this->enabled) {
+            return "true";
+        } else {
+            return "false";
+        }
     }
 
     public function setName($name): Quiz

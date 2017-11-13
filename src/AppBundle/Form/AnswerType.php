@@ -12,18 +12,19 @@ use Symfony\Component\Validator\Constraints\Length;
 
 class AnswerType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add("name", TextType::class, array(
-            "label"=>false,
-            'required'=>true,
+            "label" => false,
+            'required' => true,
             'by_reference' => false,
             'constraints' => array(
                 new Length(array('min' => 1)),
             ),
             'attr'=>array("class"=>"answer form-control")));
     }
-    public function configureOptions(OptionsResolver $resolver)
+
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(array(
             'data_class' => Answer::class,

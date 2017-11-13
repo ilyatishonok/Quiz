@@ -5,7 +5,7 @@
     {{ knp_pagination_filter(pagination, filterableFields) }}
 </nav>
 <input type="hidden" id="csrf-token" value="{{ csrf_token("intention") }}">
-<table data-token="{{ csrf_token("intention") }}" class="table table-responsive-lg users-table">
+<table class="table table-responsive-lg">
     <tbody>
         <tr>
             {% for key, translation in tableFields %}
@@ -27,11 +27,14 @@
                     {% if buttonField %}
                         <td>
                             {% if buttonField.condition %}
-
-                                {% if attribute(entity, "get"~buttonField.field) %}
-                                    <button class="{{ buttonField.true_condition.class_name }}">{{ buttonField.true_condition.label|trans}}</button>
+                                {% if attribute(entity, "get"~buttonField.field) == buttonField.equals %}
+                                    {% if buttonField.true_condition %}
+                                        <button class="{{ buttonField.true_condition.class_name }}">{{ buttonField.true_condition.label|trans}}</button>
+                                    {% endif %}
                                 {% else %}
-                                    <button class="{{ buttonField.false_condition.class_name}}">{{ buttonField.false_condition.label|trans }}</button>
+                                    {% if buttonField.false_condition %}
+                                        <button class="{{ buttonField.false_condition.class_name}}">{{ buttonField.false_condition.label|trans }}</button>
+                                    {% endif %}
                                 {% endif %}
                             {% else %}
                                 <button class="{{ buttonField.class_name }}">{{ buttonField.label|trans }}</button>

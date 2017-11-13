@@ -84,7 +84,6 @@
               data: data,
               success: (response)=>{
                 selectedAnswer = null;
-                console.log(selectedAnswer);
                 options.success(response);
               },
               error: (response)=>{    

@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping\JoinColumn as JoinColumn;
 /**
  * WiredQuestion
  *
- * @ORM\Table(name="wired_question")
+ * @ORM\Table(name="wired_questions")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\WiredQuestionRepository")
  */
 class WiredQuestion

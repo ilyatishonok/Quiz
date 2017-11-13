@@ -1,24 +1,27 @@
 {% import _self as formPrototype %}
 
-{% macro printPrototype(prototypeForm) %}
+{% macro createPrototype(prototypeForm) %}
     <div class="answer-wrapper">
         {{ form_widget(prototypeForm.name, {"attr": {"autocomplete": "off"}}) }}
-    </div>
-    <div class="answer-error">
+        <div class="answer-tools">
+            <i class="fa fa-trash-o delete" data-class="non-wrapped" aria-hidden="true"></i>
+            <i class="fa fa-pencil-square-o edit" data-class="non-wrapped" aria-hidden="true"></i>
+        </div>
     </div>
 {% endmacro %}
 
 <div class="col-8 align-self-center question-creator">
+    <div class="alert alert-danger error">
+        <Strong>Error!</Strong><div class="error-text"></div>
+    </div>
     {{ form_start(form, { 'attr' : { 'id': 'form_question' } }) }}
     <div class="question-wrapper">
         <h2>Add Question:</h2>
         {{ form_widget(form.name) }}
-        <div class="question-error"></div>
     </div>
     <div class="answers">
         <h4>Answers:</h4>
-        <div id="question_answers" data-prototype="{{formPrototype.printPrototype(form.answers.vars.prototype)|e("html_attr")}}"></div>
-        <div class="answers-errors"></div>
+        <div id="question_answers" data-prototype="{{formPrototype.createPrototype(form.answers.vars.prototype)|e("html_attr")}}"></div>
         {{ form_end(form) }}
         <button class="btn btn-large add-answer-btn">Add Answer</button>
     </div>

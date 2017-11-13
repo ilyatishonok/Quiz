@@ -3,13 +3,16 @@
 {% trans_default_domain "translations" %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset("static/styles/admin/quiz.css?v1.23") }}">
+    <link rel="stylesheet" href="{{ asset("static/styles/admin/quiz.css?v1.51") }}">
     <link rel="stylesheet" href="{{ asset("static/styles/admin/question.new.css?v1.1") }}">
     <link rel="stylesheet" href="{{ asset("static/styles/jquery-ui.min.css") }}">
 {% endblock %}
 
 {% block content %}
     <div class="container content">
+        <div class="alert alert-danger alert-error">
+            <strong>Error:</strong><div class="quiz-error-text"></div>
+        </div>
         <div class="col col-lg-12 quiz-handler">
             <div class="form-group quiz-creator ">
                 <input type="hidden" id="csrf-input" value="{{ csrf_token("intention") }}">
@@ -22,18 +25,25 @@
                     <div class="question-handler form-group">
                         <h3>{{ 'admin.quiz.quiz_adding_question'|trans }}</h3>
                         <input class="form-control question-search" placeholder="type question">
-                        <div class="errors">
                         </div>
                     </div>
                     <h2 class="question-label">{{ 'admin.quiz.quiz_question_label'|trans }}</h2>
                     <ui class="questions">
 
                     </ui>
+<<<<<<< HEAD
                     <p class="question-info">{{ 'admin.quiz.quiz_quiestion_info_label'|trans }}</p>
                     <div class="question-creator-wrapper">
                         {% include "admin/question_create_form.html.twig" %}
                     </div>
                     <button class="btn btn-large add-question-button">{{ 'admin.quiz.quiz_create_question'|trans }}</button>
+=======
+                    <div class="question-creator-wrapper">
+                        {% include "admin/question_create_form.html.twig" %}
+                    </div>
+                    <div class="questions-errors">
+                    <button class="btn btn-large add-question-button">Create Question</button>
+>>>>>>> master
                 </div>
                 <button class="btn btn-large create-quiz-btn">{{ 'admin.quiz.quiz_create_quiz'|trans }}Create quiz</button>
             </div>
@@ -42,9 +52,13 @@
 
 
 {% block javascripts %}
-    <script src="{{ asset("static/scripts/jquery.newquestion.js?v1.81") }}"></script>
+    <script src="{{ asset('bundles/bazingajstranslation/js/translator.min.js') }}"></script>
+    <script src="{{ url('bazinga_jstranslation_js', { 'domain': 'translations' }) }}"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    <script src="{{ asset("static/scripts/admin/jquery.question.creator.js?v1.85") }}"></script>
     <script src="{{ asset("static/scripts/jquery-ui.min.js") }}"></script>
-    <script src="{{ asset("static/scripts/admin/quiz.js?v1.77") }}"></script>
+    <script src="{{ asset("static/scripts/admin/quiz.js?v1.85") }}"></script>
 {% endblock %}
 
 
