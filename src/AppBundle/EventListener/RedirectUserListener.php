@@ -10,7 +10,6 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-
 class RedirectUserListener
 {
     private $tokenStorage;
@@ -22,17 +21,16 @@ class RedirectUserListener
         $this->router = $router;
     }
 
-    public function onKernelRequest(GetResponseEvent $event)
+    public function onKernelRequest(GetResponseEvent $event): void
     {
-        if($event->isMasterRequest())
-        {
+        if ($event->isMasterRequest()) {
             $currentRoute = $event->getRequest()->attributes->get("_route");
-            if($this->isDebugRoute($currentRoute))
-            {
+
+            if ($this->isUntrackedRoute($currentRoute)) {
                 return;
             }
-            if(!$this->isUserLogged())
-            {
+
+            if(!$this->isUserLogged()) {
                 return;
             }
 
@@ -43,21 +41,21 @@ class RedirectUserListener
         }
     }
 
-    private function isUserLogged()
+    private function isUserLogged(): bool
     {
         $user = $this->tokenStorage->getToken()->getUser();
         return $user instanceof UserInterface;
     }
 
-    private function isDebugRoute(string $currentRoute)
+    private function isUntrackedRoute(string $currentRoute): bool
     {
         return in_array(
             $currentRoute,
-            ['_wdt','_profiler']
+            ['_wdt','_profiler', 'fos_js_routing_js', 'bazinga_jstranslation_js']
         );
     }
 
-    private function isAuthenticatedUserOnAnonymousPage($currentRoute)
+    private function isAuthenticatedUserOnAnonymousPage($currentRoute): bool
     {
         return in_array(
             $currentRoute,

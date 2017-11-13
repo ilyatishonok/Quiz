@@ -11,16 +11,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class StartQuizType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add("submit", SubmitType::class, array(
-                'attr'=>array('class' => "btn btn-large start-btn"),
-                'label'=>"start_quiz.btn",
+                'attr' => array('class' => "btn btn-large start-btn"),
+                'label' => "start_quiz.btn",
             ));
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(array(
             'translation_domain' => 'translations',

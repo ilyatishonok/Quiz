@@ -20,7 +20,7 @@ class WiredQuestionRepository extends \Doctrine\ORM\EntityRepository
             ->getOneOrNullResult();
     }
 
-    public function loadByQuizAndNumber(Quiz $quiz, int $position)
+    public function loadByQuizAndNumber(Quiz $quiz, int $position): ?WiredQuestion
     {
         return $this->createQueryBuilder("wired")
             ->select("wired", "question", "answers")

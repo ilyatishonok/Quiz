@@ -26,6 +26,16 @@
     background-color: limegreen;
 }
 
+.create-quiz-btn{
+    margin-top: 10px;
+    width: 140px;
+    background-color: #8b51f5;
+    color: white;
+}
+
+.create-quiz-btn:hover{
+    background-color: limegreen;
+}
 
 .question-info{
     color: gray;
@@ -34,6 +44,10 @@
 
 .question-answers{
     padding: 0;
+}
+
+.quiz-errors, .questions-errors{
+    color: red;
 }
 
 .question-header{
@@ -71,6 +85,7 @@
     list-style: none;
     border: 1px solid black;
     border-radius: 7px;
+    position: relative;
     box-shadow: 0 0 10px black;
 }
 
@@ -87,6 +102,13 @@
     list-style: none;
     cursor: pointer;
     margin: 10px;
+}
+
+.delete-question{
+    position: absolute;
+    top: 4px;
+    font-size: 20px !important;
+    right: 6px;
 }
 
 .quiz-header{

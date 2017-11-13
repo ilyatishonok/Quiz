@@ -89,8 +89,17 @@ admin:
     resetting_token: "Resetting token"
     blocked: "Blocked"
     active: "Active"
+  quiz_manager:
+    id: "id"
+    name: "Name"
+    questions_count: "Questions"
+    players: "Players"
+    leader: "Leader"
+    block: "Block"
+    enabled: "Enabled"
 
 quiz:
+  quiz_exist: "Quiz with this name is already exist!"
   deactivated:
     text: "This quiz was deactivated."
     btn: "Go to main page"
@@ -133,6 +142,23 @@ started_quizzes_page:
   last_question_number: "Questions: "
 
 errors:
-  question_name: "You haven't choose question name!"
-  select_answer: "You haven't select any answer!"
-  answer_duplicate: "This answer is already exist!"
+  oops: "Oops"
+  adding_answer: "You are already adding answer!"
+  none_selected: "You haven't select any answer!"
+  empty_values: "You have empty values!"
+
+error404:
+  head: "404 Not Found"
+  body: "Sorry, an error has occured, Requested page not found!"
+  btn: "Take Me Home"
+
+error403:
+  head: "403 Access Denied"
+  body: "Sorry, you have not access to this page."
+  btn: "Take Me Home"
+
+
+message:
+  error: "Error"
+  success: "Success"
+  success_action: "Success action"

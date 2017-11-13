@@ -8,9 +8,9 @@ $(document).ready(function() {
     $(".loader").hide();
   });
 
-  $(".question-handler").questionView({
+  $(".question-creator").questionView({
     success:()=>{
-      $(".question-handler").html(
+      $(".question-creator").html(
         "<div class='h3'>The question was successfully created!</div>"+
         "<a href=''>Back</a>"
         );

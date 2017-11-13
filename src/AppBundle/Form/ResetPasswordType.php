@@ -1,7 +1,8 @@
 <?php
 
-namespace AppBundle\Form;
+declare(strict_types=1);
 
+namespace AppBundle\Form;
 
 use AppBundle\Choices\EmailChoice;
 use Symfony\Component\Form\AbstractType;
@@ -13,14 +14,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ResetPasswordType extends AbstractType
 {
 
-   public function buildForm(FormBuilderInterface $builder, array $options)
+   public function buildForm(FormBuilderInterface $builder, array $options): void
    {
-       $builder->add("email", EmailType::class, array('attr'=>array("class"=> "form-control", 'placeholder' => "Input Email")) )
-                ->add("submit", SubmitType::class, array('attr'=>array('class' => "btn btn-large email-btn")))
+       $builder->add("email", EmailType::class, array('attr' => array("class" => "form-control", 'placeholder' => "Input Email")) )
+                ->add("submit", SubmitType::class, array('attr' => array('class' => "btn btn-large email-btn")))
                 ->setMethod("PATCH");
    }
 
-   public function configureOptions(OptionsResolver $resolver)
+   public function configureOptions(OptionsResolver $resolver): void
    {
        $resolver->setDefaults(array(
            'data_class' => EmailChoice::class,

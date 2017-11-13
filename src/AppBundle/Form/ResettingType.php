@@ -1,16 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: BOLT
- * Date: 04.11.2017
- * Time: 18:14
- */
+
+declare(strict_types=1);
 
 namespace AppBundle\Form;
 
-
 use AppBundle\Entity\User;
-use function Sodium\add;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -22,9 +16,9 @@ class ResettingType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('plainPassword',RepeatedType::class,array(
+        $builder->add('plainPassword',RepeatedType::class, array(
                 'type' => PasswordType::class,
-                "error_bubbling"=>true,
+                "error_bubbling" => true,
                 'trim' => true,
                 'invalid_message' => "security.password_resetting.match",
                 'first_options' => array('label' => 'Password', "attr"=>array("class"=> "form-control", 'placeholder' => "security.resetting.email.placeholders.password")),

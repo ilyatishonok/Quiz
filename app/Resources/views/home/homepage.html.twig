@@ -19,7 +19,7 @@
                 {{ form_end(form) }}
                 {% if quizzes|length %}
                     {% for quiz in quizzes %}
-                        {% if quiz.enabled %}
+                        {% if quiz.isEnabled %}
                             <div class="container-fluid quiz active">
                             <a href="{{ path('_quiz', {'id': quiz.id}) }}"  class="text-white">
                         {% else %}
@@ -37,7 +37,7 @@
                                         {% endif %}
                                         <div class="col">
                                             {{ "homepage.status"|trans }}
-                                            {% if quiz.enabled %}
+                                            {% if quiz.isEnabled %}
                                                 {{ "homepage.status_activated"|trans }}
                                             {% else %}
                                                 {{ "homepage.status_deactivated"|trans }}

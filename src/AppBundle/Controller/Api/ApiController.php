@@ -6,13 +6,10 @@ namespace AppBundle\Controller\Api;
 
 use AppBundle\Entity\Question;
 use AppBundle\Entity\Quiz;
+use AppBundle\Entity\User;
 use AppBundle\Exceptions\AnswerException;
-use AppBundle\Exceptions\QuestionException;
 use AppBundle\Form\QuestionType;
 use AppBundle\Repository\QuestionRepository;
-use AppBundle\Service\Answer\AnswerManagerInterface;
-use AppBundle\Service\Quiz\QuizManagerInterface;
-use AppBundle\Service\WiredQuestion\WiredQuestionManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -23,36 +20,44 @@ class ApiController extends Controller
 {
 
     /**
-     * @Route("/admin/api/create/quiz")
+     * @Route("/admin/api/create/quiz", name="_create_quiz", options={"expose"=true})
      */
     public function createQuizAction(Request $request) : Response
     {
         $content = $request->getContent();
-        if(empty($content)){
+        if (empty($content)) {
             return new Response("Bad request data!", 400);
         }
 
         $arrayContent = json_decode($content,true);
 
-
-        if(!$this->isCsrfTokenValid("intention",$arrayContent['csrfToken'])){
+        if (!$this->isCsrfTokenValid("intention",$arrayContent['csrfToken'])) {
             return new Response("Invalid CSRF token!", 400);
         }
 
-        if(!$arrayContent['quizName']){
-            return new JsonResponse(array("token"=>$arrayContent['csrfToken']), 400);
+        if (!$arrayContent['quizName']) {
+            return new Response("Empty quiz name!", 400);
         }
 
-        if(!$arrayContent['questionsId']){
+        if (!$arrayContent['questionsId']) {
             return new Response("Empty questions array!", 400);
         }
 
-        if(!count($arrayContent['questionsId'])){
+        if (!count($arrayContent['questionsId'])) {
             return new Response("Empty question array count!", 400);
+        }
+
+        $quizRepository = $this->getDoctrine()->getManager()->getRepository(Quiz::class);
+        $quiz = $quizRepository->findOneBy(array("name" => $arrayContent['quizName']));
+
+        if ($quiz ){
+            return new JsonResponse("quiz.quiz_exist",400);
         }
 
         $quizManager = $this->get("quiz_manager");
         $quiz = $quizManager->createQuiz($arrayContent['quizName'],count($arrayContent['questionsId']));
+
+
 
         $wiredQuestionManager = $this->get("wired_question_manager");
 
@@ -60,7 +65,7 @@ class ApiController extends Controller
 
         $this->getDoctrine()->getManager()->flush();
 
-        return new JsonResponse(array("message"=>"Success"));
+        return new Response("Success", 200);
     }
 
     /**
@@ -71,18 +76,22 @@ class ApiController extends Controller
         $token = $request->get("token");
         $id = $request->get("id");
 
-        if(!$this->isCsrfTokenValid('intention',$token)) {
+        if (!$request->isXmlHttpRequest()) {
+            return new Response("Bad request data!", 400);
+        }
+
+        if (!$this->isCsrfTokenValid('intention',$token)) {
             return new Response("Invalid CSRF Token!",400);
         }
 
-        $userRepository = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\User");
+        $userRepository = $this->getDoctrine()->getManager()->getRepository(User::class);
         $user = $userRepository->findOneBy(array("id" => $id));
 
         if (!$user) {
             return new Response("Bad request data",400);
         }
 
-        if($user->getId() === $this->getUser()->getId()){
+        if ($user->getId() === $this->getUser()->getId()) {
             return new Response("You can't block yourself!",400);
         }
 
@@ -92,6 +101,34 @@ class ApiController extends Controller
         return new Response("User was blocked", 200);
     }
 
+    /**
+     * @Route("/admin/api/block-quiz", name="_block_quiz", options={"expose"=true})
+     */
+    public function blockQuizAction(Request $request)
+    {
+        $id = $request->get("id");
+        $token = $request->get("token");
+
+        if (!$request->isXmlHttpRequest()) {
+            return new Response("Bad request data!", 400);
+        }
+
+        if (!$this->isCsrfTokenValid('intention',$token)) {
+            return new Response("Invalid CSRF Token!",400);
+        }
+
+        $quizRepository = $this->getDoctrine()->getManager()->getRepository(Quiz::class);
+        $quiz = $quizRepository->findOneBy(array("id" => $id));
+
+        if (!$quiz) {
+            return new Response("Bad request data", 400);
+        }
+
+        $quiz->setEnabled(false);
+        $this->getDoctrine()->getManager()->flush();
+
+        return new Response("Quiz was blocked",200);
+    }
 
     /**
      * @Route("/admin/api/unblock-user", name="_unblock_user", options={"expose"=true})
@@ -101,14 +138,18 @@ class ApiController extends Controller
         $token = $request->get("token");
         $id = $request->get("id");
 
-        if(!$this->isCsrfTokenValid("intention", $token)){
+        if (!$request->isXmlHttpRequest()) {
+            return new Response("Bad request data!", 400);
+        }
+
+        if (!$this->isCsrfTokenValid("intention", $token)) {
             return new Response("Invalid CSRF Token", 400);
         }
 
-        $userRepository = $this->getDoctrine()->getManager()->getRepository("AppBundle\Entity\User");
+        $userRepository = $this->getDoctrine()->getManager()->getRepository(User::class);
         $user = $userRepository->findOneBy(array("id" => $id));
 
-        if(!$user){
+        if (!$user) {
             return new Response("Bad request data!",400);
         }
 
@@ -116,7 +157,6 @@ class ApiController extends Controller
         $this->getDoctrine()->getManager()->flush();
         return new Response("User was unblocked!", 200);
     }
-
 
     /**
      * @Route("/admin/api/question");
@@ -148,14 +188,14 @@ class ApiController extends Controller
     }
 
     /**
-     * @Route("/admin/api/create/question", name="_create_question", options={"expose"=true});
+     * @Route("/admin/api/create/question", name="_create_question", options={"expose"=true})
      */
     public function createQuestionAction(Request $request): Response
     {
         $selected = $request->get("selected");
 
-        if(!$selected){
-            return new JsonResponse(array("message"=>"Bad request data!"), 400);
+        if (!$selected) {
+            return new JsonResponse(array("message" => "Bad request data!"), 400);
         }
 
         $entityManager = $this->getDoctrine()->getManager();
@@ -169,23 +209,23 @@ class ApiController extends Controller
             $answers = $question->getAnswers();
 
             $answerManager = $this->get('answer_manager');
-            try{
-                $answerManager->correctAnswers($answers,$selected);
+            try {
+                $answerManager->setCorrectAnswer($answers,$selected);
 
                 $entityManager->persist($question);
                 $entityManager->flush();
 
                 return new JsonResponse(array(
                     "questionName"=>$question->getName(),
-                    "answers"=>$answerManager->getNames($answers),
+                    "answers"=>$answerManager->getAnswersNames($answers),
                     "id"=>$question->getId()
                 ));
-            } catch (AnswerException $exception){
-                return new JsonResponse(array("message"=>$exception->getMessage(),"answer"=>true),400);
+            } catch (AnswerException $exception) {
+                return new JsonResponse(array("message" => $exception->getMessage(), "answer" => true),400);
             }
         }
 
-        return new JsonResponse(array("message"=>$this->getErrorMessages($form), "question"=>true),400);
+        return new JsonResponse(array("message" => $this->getErrorMessages($form), "question" => true),400);
     }
 
     protected function getErrorMessages(\Symfony\Component\Form\Form $form)

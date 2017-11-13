@@ -19,7 +19,7 @@
                 {{ form_end(form) }}
                 {% if started_quizzes|length %}
                 {% for started_quiz in started_quizzes %}
-                {% if started_quiz.quiz.enabled %}
+                {% if started_quiz.quiz.isEnabled %}
                 <div class="container-fluid quiz active">
                     <a href="{{ path('_quiz', {'id': started_quiz.quiz.id}) }}"  class="text-white">
                         {% else %}
@@ -33,7 +33,7 @@
                                     <div class="col">{{ "started_quizzes_page.last_question_number"|trans }}{{ started_quiz.lastQuestionNumber }}/{{ started_quiz.quiz.countOfQuestions }}</div>
                                     <div class="col">
                                         {{ "homepage.status"|trans }}
-                                        {% if started_quiz.quiz.enabled %}
+                                        {% if started_quiz.quiz.isEnabled %}
                                             {{ "homepage.status_activated"|trans }}
                                         {% else %}
                                             {{ "homepage.status_deactivated"|trans }}

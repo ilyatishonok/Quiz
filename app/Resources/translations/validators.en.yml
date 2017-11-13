@@ -4,3 +4,6 @@ security:
      username_error: "This username is already exists!"
   password_resetting:
     match: "Passwords don't match!"
+
+errors:
+  question_error: "This question already exist!"

@@ -1,6 +1,6 @@
 {% trans_default_domain "translations" %}
 
-<link rel="stylesheet" href="{{ asset("static/styles/errors/error404.css?v1.0") }}">
+<link rel="stylesheet" href="{{ asset("static/styles/errors/error403.css?v1.0") }}">
 <link rel="stylesheet" href="{{ asset("static/styles/bootstrap.min.css") }}">
 <link rel="stylesheet" href="{{ asset("static/styles/bootstrap-grid.min.css") }}">
 <link rel="stylesheet" href="{{ asset("static/styles/font-awesome/css/font-awesome.min.css") }}">
@@ -11,12 +11,12 @@
             <div class="col-md-12">
                 <div class="error-template">
                     <h1>{{ "errors.oops"|trans }}!</h1>
-                    <h2>{{ "error404.head"|trans }}</h2>
+                    <h2>{{ "error403.head"|trans }}</h2>
                     <div class="error-details">
-                        {{ "error404.body"|trans }}
+                        {{ "error403.body"|trans }}
                     </div>
                     <div class="error-actions">
-                        <a href="{{ path("_homepage") }}" class="btn btn-primary btn-lg "><i class="fa fa-home" aria-hidden="true" style="margin-right: 5px"></i>{{ "error404.btn"|trans }}</a>
+                        <a href="{{ path("_homepage") }}" class="btn btn-primary btn-lg "><i class="fa fa-home" aria-hidden="true" style="margin-right: 5px"></i>{{ "error403.btn"|trans }}</a>
                     </div>
                 </div>
             </div>
