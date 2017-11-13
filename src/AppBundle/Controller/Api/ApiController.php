@@ -51,7 +51,7 @@ class ApiController extends Controller
         $quiz = $quizRepository->findOneBy(array("name" => $arrayContent['quizName']));
 
         if ($quiz ){
-            return new JsonResponse("quiz.quiz_exist",400);
+            return new JsonResponse("Quiz with this name is exist!",400);
         }
 
         $quizManager = $this->get("quiz_manager");
@@ -65,7 +65,7 @@ class ApiController extends Controller
 
         $this->getDoctrine()->getManager()->flush();
 
-        return new Response("Success", 200);
+        return new JsonResponse("Success", 200);
     }
 
     /**
@@ -159,7 +159,7 @@ class ApiController extends Controller
     }
 
     /**
-     * @Route("/admin/api/question");
+     * @Route("/admin/api/question", name="_admin_question", options={"expose"=true});
      */
     public function getQuestionAction(Request $request): Response
     {
@@ -246,7 +246,7 @@ class ApiController extends Controller
     }
 
     /**
-     * @Route("/api/questions");
+     * @Route("/api/questions", name="_admin_questions", options={"expose"=true});
      */
     public function getQuestionsAction(Request $request): Response
     {
@@ -254,7 +254,7 @@ class ApiController extends Controller
         $entityManager = $this->getDoctrine()->getManager();
 
         /** @var QuestionRepository $questionRepository */
-        $questionRepository = $entityManager->getRepository("AppBundle\Entity\Question");
+        $questionRepository = $entityManager->getRepository(Question::class);
 
         $questions = $questionRepository->loadQuestionsByRegular($regular);
 

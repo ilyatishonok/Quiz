@@ -3,7 +3,7 @@
 {% trans_default_domain "translations" %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset("static/styles/admin/quiz.css?v1.51") }}">
+    <link rel="stylesheet" href="{{ asset("static/styles/admin/quiz.css?v1.54") }}">
     <link rel="stylesheet" href="{{ asset("static/styles/admin/question.new.css?v1.1") }}">
     <link rel="stylesheet" href="{{ asset("static/styles/jquery-ui.min.css") }}">
 {% endblock %}
@@ -34,9 +34,8 @@
                     <div class="question-creator-wrapper">
                         {% include "admin/question_create_form.html.twig" %}
                     </div>
-                    <div class="questions-errors">
+                    <div class="questions-errors"></div>
                     <button class="btn btn-large add-question-button">Create Question</button>
-                </div>
                 <button class="btn btn-large create-quiz-btn">Create quiz</button>
             </div>
         </div>
@@ -50,7 +49,7 @@
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
     <script src="{{ asset("static/scripts/admin/jquery.question.creator.js?v1.85") }}"></script>
     <script src="{{ asset("static/scripts/jquery-ui.min.js") }}"></script>
-    <script src="{{ asset("static/scripts/admin/quiz.js?v1.85") }}"></script>
+    <script src="{{ asset("static/scripts/admin/quiz.js?v1.92") }}"></script>
 {% endblock %}
 
 

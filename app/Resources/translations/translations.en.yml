@@ -62,6 +62,9 @@ security:
                 Regards,
                 the Team
 
+base:
+
+
 
 admin:
   question:
@@ -157,6 +160,12 @@ error403:
   body: "Sorry, you have not access to this page."
   btn: "Take Me Home"
 
+question:
+  add_question_label: "Add Question: "
+  error: "Error:"
+  add_answer_label: "Answers: "
+  add_answer_btn: "Add Answer"
+  create_question_btn: "Create Question"
 
 message:
   error: "Error"

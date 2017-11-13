@@ -38,16 +38,24 @@ $(document).ready(function () {
 
     $(".question-search").autocomplete({
         source: function (request,response) {
+            let data = {
+                regular: $(".question-search").val(),
+            }
             $.ajax({
-                url: "/app_dev.php/api/questions?regular="+$(".question-search").val(),
+                url: Routing.generate("_admin_questions"),
+                data:data,
                 success: (data)=>{
                     response(data);
                 }
             })
         },
         select: (event, ui)=>{
+            let data = {
+                questionName : ui.item.value,
+            }
             $.ajax({
-                url: "/app_dev.php/admin/api/question?questionName=" + ui.item.value,
+                url: Routing.generate("_admin_question"),
+                data: data,
                 success: (response)=>{
                     if(questionIds.indexOf(response.id) !== -1){
                         $(".question-errors").html("This question is already exist!");
@@ -97,10 +105,10 @@ $(document).ready(function () {
                 type: "POST",
                 data: jsonData,
                 success: (response)=>{
-                    console.log(response);
+                    $(".content").html("<div class='success-wrapper'><h1 class='success-created>'>The quiz was sucessfly created</h1></div>")
                 },
                 error: (response)=>{
-                    showError(Translator.trans(response.responseText));
+                    showError(response.responseText);
                 }
             })
         }
