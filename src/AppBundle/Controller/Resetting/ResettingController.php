@@ -81,7 +81,7 @@ class ResettingController extends Controller
             $em->persist($user);
             $em->flush();
 
-            return new Response("A message has been sent to your email address.");
+            return $this->render('resetting/reset_message.html.twig');
         }
 
         return $this->render('resetting/reset.html.twig', array('form' => $form->createView()));

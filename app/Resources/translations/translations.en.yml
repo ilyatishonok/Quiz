@@ -51,6 +51,7 @@ security:
                 password: "input password"
                 repeat_password: "repeat password"
         subject: "Password recover"
+        reset_message: "A message has been sent to your email address."
         message:
                 Hello %username%!
 
@@ -60,6 +61,7 @@ security:
 
                 Regards,
                 the Team
+
 
 admin:
   question:
